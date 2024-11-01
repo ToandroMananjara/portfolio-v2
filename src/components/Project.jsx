@@ -1,10 +1,15 @@
 import React from "react";
+import homepageIntegration from "../assets/projects/integration_newsHomePage.png";
+import portfolioV1 from "../assets/projects/mon_portfolio.png";
+import quiz from "../assets/projects/quiz.png";
+import todoList from "../assets/projects/todoList.png";
+import dataSales from "../assets/projects/data_sales.png";
 
 function Project({ handleMenu, orderPopUp }) {
   const projects = [
     {
       id: 0,
-      name: "/src/assets/projects/integration_newsHomePage.png",
+      name: homepageIntegration,
       alt: "",
       code_link:
         "https://github.com/DTC-Formation/evaluation-html-css-ToandroMananjara.git",
@@ -13,7 +18,7 @@ function Project({ handleMenu, orderPopUp }) {
     },
     {
       id: 1,
-      name: "/src/assets/projects/mon_portfolio.png",
+      name: portfolioV1,
       alt: "",
       code_link:
         "https://github.com/DTC-Formation/my-portfolio-ToandroMananjara.git",
@@ -22,7 +27,7 @@ function Project({ handleMenu, orderPopUp }) {
     },
     {
       id: 2,
-      name: "/src/assets/projects/quiz.png",
+      name: quiz,
       alt: "",
       code_link: "https://github.com/ToandroMananjara/quiz-capital.git",
       site_link: "https://quiz-by-toandro.netlify.app/",
@@ -30,7 +35,7 @@ function Project({ handleMenu, orderPopUp }) {
     },
     {
       id: 3,
-      name: "/src/assets/projects/todoList.png",
+      name: todoList,
       alt: "",
       code_link: "https://github.com/ToandroMananjara/newTodo_list.git",
       site_link: "https://todo-by-toandro.netlify.app/",
@@ -38,7 +43,7 @@ function Project({ handleMenu, orderPopUp }) {
     },
     {
       id: 4,
-      name: "/src/assets/projects/data_sales.png",
+      name: dataSales,
       alt: "",
       code_link:
         "https://github.com/ToandroMananjara/manipulation_data_sales.git",

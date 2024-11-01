@@ -1,52 +1,63 @@
 import React from "react";
+import me from "../assets/me.png";
+import langageC from "../assets/skills/C.svg";
+import langageCpp from "../assets/skills/CPP.svg";
+import html from "../assets/skills/HTML.svg";
+import css from "../assets/skills/CSS.svg";
+import JavaScript from "../assets/skills/JavaScript.svg";
+import Bootstrap from "../assets/skills/Bootstrap.svg";
+import ReactDark from "../assets/skills/React-Dark.svg";
+import PHPDark from "../assets/skills/PHP-Dark.svg";
+import MySQLDark from "../assets/skills/MySQL-Dark.svg";
+import myCv from "../assets/data/CV_Toandro.pdf";
 
 function About({ handleMenu, orderPopUp }) {
   const skills = [
     {
       id: 0,
-      src: "/src/assets/skills/C.svg",
+      src: langageC,
       alt: "Langage C",
       title: "Langage C",
       description: "",
     },
     {
       id: 1,
-      src: "/src/assets/skills/CPP.svg",
+      src: langageCpp,
       alt: "CPP",
     },
     {
       id: 2,
-      src: "/src/assets/skills/HTML.svg",
+      src: html,
       alt: "html",
     },
     {
       id: 3,
-      src: "/src/assets/skills/CSS.svg",
+      src: css,
       alt: "css",
     },
     {
       id: 4,
-      src: "/src/assets/skills/JavaScript.svg",
+      src: JavaScript,
       alt: "javascript",
     },
     {
       id: 5,
-      src: "/src/assets/skills/Bootstrap.svg",
+      src: Bootstrap,
       alt: "bootstrap",
     },
     {
       id: 6,
-      src: "/src/assets/skills/React-Dark.svg",
+      src: ReactDark,
       alt: "react js",
     },
     {
       id: 7,
-      src: "/src/assets/skills/PHP-Dark.svg",
+      src: PHPDark,
       alt: "php",
     },
     {
       id: 8,
-      src: "/src/assets/skills/MySQL-Dark.svg",
+      src: MySQLDark,
       alt: "MySql",
     },
   ];
@@ -60,7 +71,7 @@ function About({ handleMenu, orderPopUp }) {
       <div className=" flex md:flex-row gap-y-2 flex-col py:6 md:my-14 w-full">
         <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-0">
           <img
-            src="/src/assets/me.png"
+            src={me}
             alt=""
             className=" h-[15em] md:h-[20em] bg-white bg-opacity-80 rounded-full "
           />
@@ -79,7 +90,7 @@ function About({ handleMenu, orderPopUp }) {
             </p>
             <div className="w-full min-h-fit flex justify-start mt-6">
               <a
-                href="/src/assets/data/CV_Toandro.pdf"
+                href={myCv}
                 download
                 className="text-xl sm:text-2xl text-white_primary py-2  bg-yellow_primary px-7 rounded-lg cursor-pointer hover:bg-white_primary hover:text-gray_primary transition-all duration-500 ease-in-out"
               >
