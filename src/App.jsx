@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Project from "./components/Project";
+import Education from "./components/Education";
 
 function App() {
   const [orderPopUp, setOrderPopUp] = useState(false);
@@ -23,6 +24,7 @@ function App() {
       <Hero handleMenu={handleMenu} orderPopUp={orderPopUp} />
       <About handleMenu={handleMenu} orderPopUp={orderPopUp} />
       <Project handleMenu={handleMenu} orderPopUp={orderPopUp} />
+      <Education />
     </>
   );
 }
