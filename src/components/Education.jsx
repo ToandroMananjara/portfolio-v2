@@ -16,7 +16,7 @@ function Education() {
     {
       id: 3,
       year: "2023",
-      school: "Digital Trainning Center",
+      school: "Digital Training Center",
       description: "Web Development Training",
     },
     {
