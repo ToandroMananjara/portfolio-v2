@@ -67,7 +67,9 @@ function About({ handleMenu, orderPopUp }) {
       className=" pt-[70px] px-4 sm:px-10 md:px-14"
       onClick={() => orderPopUp && handleMenu()}
     >
-      <h1 className=" m-4 md:m-0 text-center text-3xl md:text-5xl">About Me</h1>
+      <h1 className=" m-4 md:m-0 text-yellow_primary text-center text-3xl md:text-5xl">
+        About Me
+      </h1>
       <div className=" flex md:flex-row gap-y-2 flex-col py:6 md:my-14 w-full">
         <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-0">
           <img
@@ -101,7 +103,7 @@ function About({ handleMenu, orderPopUp }) {
         </div>
       </div>
       <div className="">
-        <h1 className=" text-center text-3xl md:text-5xl m-4 md:m-0">
+        <h1 className="text-yellow_primary text-center text-3xl md:text-5xl m-4 md:m-0">
           My Skills
         </h1>
 

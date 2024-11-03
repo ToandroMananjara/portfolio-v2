@@ -53,12 +53,16 @@ function Project({ handleMenu, orderPopUp }) {
   ];
   return (
     <div id="projects" className="pt-[70px] px-4 sm:px-10 md:px-14">
-      <h1 className=" mb-4  text-center text-3xl md:text-5xl">My Projects</h1>
+      <h1 className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl">
+        My Projects
+      </h1>
 
       <div className="w-full flex flex-wrap">
         {projects.map((project, index) => (
           <div className="group text-white_primary  w-full sm:w-1/2 xl:w-1/3 p-4 shadow-md cursor-pointer">
-            <div className="rounded-lg  overflow-hidden ">
+            <div className="rounded-lg  overflow-hidden bg-[rgba(136,136,136,.05)]  ">
+              <h1 className="text-2xl text-center py-7 ">{project.title}</h1>
+
               <div className="overflow-hidden ">
                 <img
                   src={project.name}
@@ -67,9 +71,9 @@ function Project({ handleMenu, orderPopUp }) {
                   className="h-[200px] lg:h-[300px] w-full group-hover:scale-110 transition-all duration-300 ease-in-out"
                 />
               </div>
-              <div className="bg-[rgba(136,136,136,.05)] p-3">
-                <h1 className="text-2xl text-center pb-4 ">{project.title}</h1>
-                <div className="flex justify-center gap-4 ">
+              <div className="bg-[rgba(136,136,136,.05)] px-3">
+                {/* <h1 className="text-2xl text-center pb-4 ">{project.title}</h1> */}
+                <div className="flex justify-center gap-x-6 py-7">
                   <a
                     href={project.site_link}
                     target="blank_"
