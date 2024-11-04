@@ -1,9 +1,10 @@
 import React from "react";
-import homepageIntegration from "../assets/projects/integration_newsHomePage.png";
-import portfolioV1 from "../assets/projects/mon_portfolio.png";
+import homepageIntegration from "../assets/projects/integration-newsHomePage.png";
+import portfolioV1 from "../assets/projects/mon-portfolio.png";
 import quiz from "../assets/projects/quiz.png";
 import todoList from "../assets/projects/todoList.png";
-import dataSales from "../assets/projects/data_sales.png";
+import dataSales from "../assets/projects/data-sales.png";
+import watchStore from "../assets/projects/watch-store.png";
 
 function Project({ handleMenu, orderPopUp }) {
   const projects = [
@@ -49,6 +50,14 @@ function Project({ handleMenu, orderPopUp }) {
         "https://github.com/ToandroMananjara/manipulation_data_sales.git",
       site_link: "https://sales-gestion-by-toandro.netlify.app/",
       title: "Sales List",
+    },
+    {
+      id: 5,
+      name: watchStore,
+      alt: "",
+      code_link: "https://github.com/ToandroMananjara/watch-store.git",
+      site_link: "https://watch-store-by-toandro.netlify.app/",
+      title: "Watch Store",
     },
   ];
   return (

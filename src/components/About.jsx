@@ -86,9 +86,7 @@ function About({ handleMenu, orderPopUp }) {
             </h3>
             <p className="my-4 ">
               I am 23 years old and I am in my third year of a Bachelor's degree
-              in Mathematics and Computer Science at the University of
-              Antananarivo. Additionally, I am self-learning Programming and Web
-              Development.
+              at the University of Antananarivo in the MISA program.
             </p>
             <div className="w-full min-h-fit flex justify-start mt-6">
               <a

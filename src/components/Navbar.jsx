@@ -69,7 +69,7 @@ function Navbar({ handleMenu, orderPopUp, setOrderPopUp }) {
       <div className="navbar-right text-xl flex gap-2 md:gap-12">
         <div className="dark-mode flex items-center"> </div>
         <div
-          className={`menu-container   text-gray_primary md:text-white_primary absolute  md:static ${
+          className={`menu-container text-gray_primary md:text-white_primary absolute  md:static ${
             !orderPopUp
               ? "top-[-1000px] "
               : "top-0 bg-white_primary md:bg-transparent"
