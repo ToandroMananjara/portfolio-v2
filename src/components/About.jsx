@@ -12,6 +12,10 @@ import MySQLDark from "../assets/skills/MySQL-Dark.svg";
 import myCv from "../assets/data/CV_Toandro.pdf";
 
 function About({ handleMenu, orderPopUp }) {
+  const calculAge = (yearOfbirth) => {
+    let date = new Date();
+    return date.getFullYear() - yearOfbirth;
+  };
   const skills = [
     {
       id: 0,
@@ -61,6 +65,13 @@ function About({ handleMenu, orderPopUp }) {
       alt: "MySql",
     },
   ];
+
+  const myProfiles = {
+    myName: "MAHASALOTRA",
+    myFirstName: "Toandromananjara",
+    age: calculAge(2001),
+  };
+
   return (
     <div
       id="about"
@@ -82,11 +93,14 @@ function About({ handleMenu, orderPopUp }) {
           <div className=" border-l-2 px-4">
             <h3 className="m-0">
               My name is{" "}
-              <span className="text-xl">MAHASALOTRA Toandromananjara</span>
+              <span className="text-xl">
+                {myProfiles.myName + " " + myProfiles.myFirstName}
+              </span>
             </h3>
             <p className="my-4 ">
-              I am 23 years old and I am in my third year of a Bachelor's degree
-              at the University of Antananarivo in the MISA program.
+              I am {myProfiles.age} years old and I am in my third year of a
+              Bachelor's degree at the University of Antananarivo in the MISA
+              program.
             </p>
             <div className="w-full min-h-fit flex justify-start mt-6">
               <a
