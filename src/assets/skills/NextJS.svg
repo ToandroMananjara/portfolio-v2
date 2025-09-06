@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="nextjs-original-a" x1="64" x2="64" y1="117.997" y2="9.746" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#000000"/>
+      <stop offset="1" stop-color="#000000"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="64" fill="url(#nextjs-original-a)"/>
+  <path fill="#fff" d="M98.563 55.55L79.262 88.53h-5.898l6.67-9.745-15.878-23.236h6.177l12.34 18.284L94.01 55.55h4.553zM44.473 55.55v32.98h-5.055V59.924H28.493v-4.374h26.912v4.374H44.473z"/>
+  <path fill="#fff" d="M98.563 55.55L79.262 88.53h-5.898l6.67-9.745-15.878-23.236h6.177l12.34 18.284L94.01 55.55h4.553z"/>
+</svg>
