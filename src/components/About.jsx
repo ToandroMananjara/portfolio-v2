@@ -219,48 +219,46 @@ function About({ handleMenu, orderPopUp }) {
         {skills.map((category, categoryIndex) => (
           <motion.div
             key={category.category}
-            className="mb-8"
-            initial={{ y: 50, opacity: 0 }}
+            className="mb-6 md:mb-8"
+            initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
+            transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
             viewport={{ once: true }}
           >
             <motion.h3
-              className="text-blue_primary text-xl md:text-2xl font-semibold mb-4 text-center"
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.2 + 0.2 }}
+              className="text-blue_primary text-lg md:text-2xl font-semibold mb-3 md:mb-4 text-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: categoryIndex * 0.1 + 0.2 }}
               viewport={{ once: true }}
             >
               {category.category}
             </motion.h3>
-            <ul className="flex justify-center flex-wrap gap-3 mt-4 md:py-2">
+            <ul className="flex justify-center flex-wrap gap-2 md:gap-3 mt-3 md:mt-4">
               {category.skills.map((skill, skillIndex) => (
                 <motion.li
                   key={skill.id}
-                  className="group relative hover:scale-125 hover:mx-2 cursor-pointer transition-all duration-300 ease-in-out"
-                  initial={{ scale: 0, rotate: 180 }}
-                  whileInView={{ scale: 1, rotate: 0 }}
+                  className="group relative cursor-pointer transition-all duration-300 ease-in-out"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
                   transition={{
-                    duration: 0.5,
-                    delay: categoryIndex * 0.3 + skillIndex * 0.1,
-                    type: "spring",
-                    stiffness: 100,
+                    duration: 0.4,
+                    delay: categoryIndex * 0.1 + skillIndex * 0.05,
                   }}
                   whileHover={{
-                    scale: 1.3,
-                    y: -10,
-                    transition: { duration: 0.3 },
+                    scale: 1.1,
+                    y: -5,
+                    transition: { duration: 0.2 },
                   }}
                   viewport={{ once: true }}
                 >
                   <img
                     src={skill.src}
                     alt={skill.alt}
-                    className="w-[70px] h-[70px]"
+                    className="w-[50px] h-[50px] md:w-[70px] md:h-[70px] transition-transform duration-200"
                     title={skill.title}
                   />
-                  <div className="absolute bottom-[-40px] left-1/2 transform -translate-x-1/2 bg-gray_primary text-white_primary text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10">
+                  <div className="absolute bottom-[-35px] left-1/2 transform -translate-x-1/2 bg-gray_primary text-white_primary text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10 pointer-events-none">
                     {skill.title}
                   </div>
                 </motion.li>

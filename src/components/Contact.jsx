@@ -1,50 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Github,
-  Linkedin,
-  Facebook,
-} from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, Facebook } from "lucide-react";
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulation d'envoi d'email
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Créer un mailto link avec les données du formulaire
-    const mailtoLink = `mailto:mahasalotra@gmail.com?subject=${encodeURIComponent(
-      formData.subject
-    )}&body=${encodeURIComponent(
-      `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    )}`;
-
+  const handleEmailClick = () => {
+    const mailtoLink = `mailto:mahasalotra@gmail.com?subject=Contact depuis votre portfolio&body=Bonjour Toandro,%0D%0A%0D%0AJe vous contacte via votre portfolio...`;
     window.location.href = mailtoLink;
-
-    setIsSubmitting(false);
-    setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
   const contactInfo = [
@@ -211,143 +172,58 @@ function Contact() {
           </motion.div>
         </motion.div>
 
-        {/* Contact Form */}
+        {/* Email Contact Card */}
         <motion.div
-          className="bg-[rgba(136,136,136,.05)] rounded-xl p-8"
+          className="bg-[rgba(136,136,136,.05)] rounded-xl p-8 flex flex-col justify-center items-center text-center"
           initial={{ x: 100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <motion.h3
-            className="text-2xl font-bold text-white_primary mb-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+          <motion.div
+            className="w-20 h-20 bg-blue_primary/20 rounded-full flex items-center justify-center mb-6"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Envoyez-moi un message
+            <Mail className="w-10 h-10 text-blue_primary" />
+          </motion.div>
+
+          <motion.h3
+            className="text-2xl font-bold text-white_primary mb-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Envoyez-moi un email
           </motion.h3>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-white_primary font-medium mb-2"
-                >
-                  Nom complet
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-[rgba(136,136,136,.1)] border border-gray-600 rounded-lg text-white_primary focus:border-blue_primary focus:outline-none transition-colors duration-300"
-                  placeholder="Votre nom"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-white_primary font-medium mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-[rgba(136,136,136,.1)] border border-gray-600 rounded-lg text-white_primary focus:border-blue_primary focus:outline-none transition-colors duration-300"
-                  placeholder="votre@email.com"
-                />
-              </div>
-            </motion.div>
+          <motion.p
+            className="text-gray-300 text-lg mb-8 leading-relaxed"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            viewport={{ once: true }}
+          >
+            Cliquez sur le bouton ci-dessous pour ouvrir votre client de
+            messagerie et me contacter directement.
+          </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-              viewport={{ once: true }}
-            >
-              <label
-                htmlFor="subject"
-                className="block text-white_primary font-medium mb-2"
-              >
-                Sujet
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-[rgba(136,136,136,.1)] border border-gray-600 rounded-lg text-white_primary focus:border-blue_primary focus:outline-none transition-colors duration-300"
-                placeholder="Sujet de votre message"
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-              viewport={{ once: true }}
-            >
-              <label
-                htmlFor="message"
-                className="block text-white_primary font-medium mb-2"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows="5"
-                className="w-full px-4 py-3 bg-[rgba(136,136,136,.1)] border border-gray-600 rounded-lg text-white_primary focus:border-blue_primary focus:outline-none transition-colors duration-300 resize-vertical"
-                placeholder="Votre message..."
-              />
-            </motion.div>
-
-            <motion.button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-blue_primary to-yellow_primary text-white font-semibold py-4 px-6 rounded-lg hover:from-blue-600 hover:to-yellow-600 transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.4 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              viewport={{ once: true }}
-            >
-              {isSubmitting ? (
-                <motion.div
-                  className="w-6 h-6 border-2 border-white border-t-transparent rounded-full"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                />
-              ) : (
-                <>
-                  <Send className="w-5 h-5 mr-2" />
-                  Envoyer le message
-                </>
-              )}
-            </motion.button>
-          </form>
+          <motion.button
+            onClick={handleEmailClick}
+            className="bg-gradient-to-r from-blue_primary to-yellow_primary text-white font-semibold py-4 px-8 rounded-lg hover:from-blue-600 hover:to-yellow-600 transition-all duration-300 flex items-center space-x-2 text-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            viewport={{ once: true }}
+          >
+            <Mail className="w-5 h-5" />
+            <span>Ouvrir Email</span>
+          </motion.button>
         </motion.div>
       </div>
     </motion.div>
