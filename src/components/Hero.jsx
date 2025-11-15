@@ -1,9 +1,9 @@
-import React from "react";
+import { motion } from "framer-motion";
 import facebook from "/src/assets/socials/facebook.png";
 import linkedin from "/src/assets/socials/linkedin.png";
 import github from "/src/assets/socials/github.png";
 
-function Hero({ handleMenu, orderPopUp }) {
+function Hero() {
   const socials = [
     {
       id: 0,
@@ -22,45 +22,94 @@ function Hero({ handleMenu, orderPopUp }) {
     },
   ];
   return (
-    <div
+    <motion.div
       id="home"
-      className="bg-[url('/src/assets/bg/toandro-home-cover.jpg')] bg-center bg-cover h-screen flex flex-col items-center justify-center py-[60px] px-2 transition-all duration-500 ease-out"
-      onClick={() => orderPopUp && handleMenu()}
+      className="bg-[url('/src/assets/bg/toandro-home-cover.jpg')] bg-center bg-cover h-screen w-full flex flex-col items-center justify-center py-[60px] px-2 transition-all duration-500 ease-out overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
     >
-      <div className="grow">
+      <motion.div
+        className="grow"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
+      >
         <div className="flex flex-col justify-center h-full">
-          <h1 className="uppercase text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-wide text-center">
+          <motion.h1
+            className="uppercase text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-wide text-center"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
             Toandro Mananjara
-          </h1>
-          <h4 className="uppercase text-yellow_primary text-center text-xl sm:text-2xl lg:text-3xl m-2 lg:m-6 tracking-wide  ">
-            Front end Developer
-          </h4>
-          <div className="flex justify-center">
+          </motion.h1>
+          <motion.h4
+            className="uppercase text-yellow_primary text-center text-xl sm:text-2xl lg:text-3xl m-2 lg:m-6 tracking-wide"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
+            Full Stack Developer
+          </motion.h4>
+          <motion.div
+            className="flex justify-center"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+          >
             <ul className="flex gap-x-3 m-1">
-              {socials.map((social) => (
-                <li className="bg-white_primary rounded-full p-2 flex justify-center items-center hover:scale-125  hover:mx-2 cursor-pointer  transition-all duration-300 ease-in-out">
+              {socials.map((social, index) => (
+                <motion.li
+                  key={index}
+                  className="bg-white_primary rounded-full p-2 flex justify-center items-center hover:scale-125  hover:mx-2 cursor-pointer  transition-all duration-300 ease-in-out"
+                  initial={{ scale: 0, rotate: 180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 1.8 + index * 0.2,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                  whileHover={{
+                    scale: 1.2,
+                    rotate: 360,
+                    transition: { duration: 0.3 },
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                >
                   <a
                     href={social.link}
                     className="w-[35px] h-[35px]"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <img src={social.name} />
+                    <img src={social.name} alt={`Social ${index}`} />
                   </a>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="w-full flex justify-center">
-        <a href="/#about">
+      <motion.div
+        className="w-full flex justify-center"
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 2.5 }}
+      >
+        <motion.a
+          href="/#about"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <span className="text-2xl sm:text-4xl  bg-[#1a191d] shadow-md px-7 py-2 rounded-lg cursor-pointer hover:bg-white_primary hover:text-gray_primary transition-all duration-500 ease-in-out">
             See More
           </span>
-        </a>
-      </div>
-    </div>
+        </motion.a>
+      </motion.div>
+    </motion.div>
   );
 }
 

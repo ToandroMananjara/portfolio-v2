@@ -1,70 +1,14 @@
-import React from "react";
+import { motion } from "framer-motion";
+
 import me from "../assets/me.png";
-import langageC from "../assets/skills/C.svg";
-import langageCpp from "../assets/skills/CPP.svg";
-import html from "../assets/skills/HTML.svg";
-import css from "../assets/skills/CSS.svg";
-import JavaScript from "../assets/skills/JavaScript.svg";
-import Bootstrap from "../assets/skills/Bootstrap.svg";
-import ReactDark from "../assets/skills/React-Dark.svg";
-import PHPDark from "../assets/skills/PHP-Dark.svg";
-import MySQLDark from "../assets/skills/MySQL-Dark.svg";
+
 import myCv from "../assets/data/CV_Toandro.pdf";
 
-function About({ handleMenu, orderPopUp }) {
+function About() {
   const calculAge = (yearOfbirth) => {
     let date = new Date();
     return date.getFullYear() - yearOfbirth;
   };
-  const skills = [
-    {
-      id: 0,
-      src: langageC,
-      alt: "Langage C",
-      title: "Langage C",
-      description: "",
-    },
-    {
-      id: 1,
-      src: langageCpp,
-      alt: "CPP",
-    },
-    {
-      id: 2,
-      src: html,
-      alt: "html",
-    },
-    {
-      id: 3,
-      src: css,
-      alt: "css",
-    },
-    {
-      id: 4,
-      src: JavaScript,
-      alt: "javascript",
-    },
-    {
-      id: 5,
-      src: Bootstrap,
-      alt: "bootstrap",
-    },
-    {
-      id: 6,
-      src: ReactDark,
-      alt: "react js",
-    },
-    {
-      id: 7,
-      src: PHPDark,
-      alt: "php",
-    },
-    {
-      id: 8,
-      src: MySQLDark,
-      alt: "MySql",
-    },
-  ];
 
   const myProfiles = {
     myName: "MAHASALOTRA",
@@ -73,68 +17,96 @@ function About({ handleMenu, orderPopUp }) {
   };
 
   return (
-    <div
+    <motion.div
       id="about"
       className=" pt-[70px] px-4 sm:px-10 md:px-14"
-      onClick={() => orderPopUp && handleMenu()}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
     >
-      <h1 className=" m-4 md:m-0 text-yellow_primary text-center text-3xl md:text-5xl">
+      <motion.h1
+        className=" m-4 md:m-0 text-yellow_primary text-center text-3xl md:text-5xl"
+        initial={{ y: -50, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
         About Me
-      </h1>
+      </motion.h1>
       <div className=" flex md:flex-row gap-y-2 flex-col py:6 md:my-14 w-full">
-        <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-0">
-          <img
+        <motion.div
+          className="md:w-1/2 flex justify-center items-center mb-4 md:mb-0"
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          <motion.img
             src={me}
-            alt=""
+            alt="Toandro Mananjara"
             className=" h-[15em] md:h-[20em] bg-white bg-opacity-80 rounded-full "
+            whileHover={{
+              scale: 1.05,
+              rotate: 5,
+              transition: { duration: 0.3 },
+            }}
           />
-        </div>
-        <div className="text-sm md:text-xl bg-[rgba(136,136,136,.05)] shadow-md text-white_primary md:h-auto md:w-1/2  p-4 md:p-10 rounded-xl z-0">
+        </motion.div>
+        <motion.div
+          className="text-sm md:text-xl bg-[rgba(136,136,136,.05)] shadow-md text-white_primary md:h-auto md:w-1/2  p-4 md:p-10 rounded-xl z-0"
+          initial={{ x: 100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
           <div className=" border-l-2 px-4">
-            <h3 className="m-0">
+            <motion.h3
+              className="m-0"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              viewport={{ once: true }}
+            >
               My name is{" "}
               <span className="text-xl">
                 {myProfiles.myName + " " + myProfiles.myFirstName}
               </span>
-            </h3>
-            <p className="my-4 ">
-              I am {myProfiles.age} years old and I am in my third year of a
-              Bachelor's degree at the University of Antananarivo in the MISA
-              program.
-            </p>
-            <div className="w-full min-h-fit flex justify-start mt-6">
-              <a
+            </motion.h3>
+            <motion.p
+              className="my-4"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              viewport={{ once: true }}
+            >
+              I am {myProfiles.age} years old and I am a Full Stack Developer. I
+              have obtained my Bachelor&apos;s degree and I am currently in my
+              final year of Master&apos;s degree at the University of
+              Antananarivo in the MISA program. Passionate about creating
+              innovative web solutions using modern technologies.
+            </motion.p>
+            <motion.div
+              className="w-full min-h-fit flex justify-start mt-6"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+              viewport={{ once: true }}
+            >
+              <motion.a
                 href={myCv}
                 download
                 className="text-xl sm:text-2xl text-white_primary py-2  bg-yellow_primary px-7 rounded-lg cursor-pointer hover:bg-white_primary hover:text-gray_primary transition-all duration-500 ease-in-out"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <span className="">Download my CV</span>
-              </a>
-            </div>
+              </motion.a>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
-      <div className="">
-        <h1 className="text-yellow_primary text-center text-3xl md:text-5xl m-4 md:m-0">
-          My Skills
-        </h1>
-
-        <ul className="flex justify-center flex-wrap gap-3 mt-6  md:py-4 ">
-          {skills.map((skill) => (
-            <li
-              key={skill.id}
-              className="hover:scale-125  hover:mx-2 cursor-pointer  transition-all duration-300 ease-in-out"
-            >
-              <img
-                src={skill.src}
-                alt={skill.alt}
-                className="w-[70px] h-[70px]"
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </motion.div>
   );
 }
 

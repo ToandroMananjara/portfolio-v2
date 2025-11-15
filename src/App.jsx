@@ -1,31 +1,29 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Skills from "./components/Skills";
 import Project from "./components/Project";
+import Experience from "./components/Experience";
 import Education from "./components/Education";
+import Footer from "./components/Footer";
+import ParticleBackground from "./components/ParticleBackground";
+import Loader from "./components/Loader";
 
 function App() {
-  const [orderPopUp, setOrderPopUp] = useState(false);
-  const handleMenu = () => {
-    setOrderPopUp(!orderPopUp);
-  };
-
   return (
-    <>
-      <Navbar
-        handleMenu={handleMenu}
-        orderPopUp={orderPopUp}
-        setOrderPopUp={setOrderPopUp}
-      />
-      <Hero handleMenu={handleMenu} orderPopUp={orderPopUp} />
-      <About handleMenu={handleMenu} orderPopUp={orderPopUp} />
-      <Project handleMenu={handleMenu} orderPopUp={orderPopUp} />
+    <div className="overflow-x-hidden w-full">
+      <Loader />
+      <ParticleBackground />
+      <Navbar />
+      <Hero />
+      <About />
+      <Experience />
+      <Skills />
+      <Project />
       <Education />
-    </>
+      <Footer />
+    </div>
   );
 }
 
