@@ -124,13 +124,12 @@ function Footer() {
               </h4>
               <ul className="space-y-3">
                 {quickLinks.map((item, index) => (
-                  <motion.li key={index}>
+                  <motion.li key={index} className="list-none">
                     <a
                       href={item.link}
-                      className="text-gray-300 hover:text-blue_primary transition-colors duration-300 relative group flex items-center space-x-2"
+                      className="text-gray-300 hover:text-blue_primary transition-colors duration-300 relative group"
                     >
-                      <span className="w-1.5 h-1.5 bg-blue_primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <span>{item.name}</span>
+                      {item.name}
                     </a>
                   </motion.li>
                 ))}
