@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import homepageIntegration from "../assets/projects/integration-newsHomePage.png";
 import portfolioV1 from "../assets/projects/mon-portfolio.png";
@@ -7,7 +6,7 @@ import todoList from "../assets/projects/todoList.png";
 import dataSales from "../assets/projects/data-sales.png";
 import watchStore from "../assets/projects/watch-store.png";
 
-function Project({ handleMenu, orderPopUp }) {
+function Project() {
   const projects = [
     {
       id: 0,
@@ -39,7 +38,7 @@ function Project({ handleMenu, orderPopUp }) {
       site_link: "https://quiz-by-toandro.netlify.app/",
       title: "Capital Quiz App",
       description: "Interactive quiz application about world capitals",
-      technologies: ["React", "CSS3", "JavaScript"],
+      technologies: ["HTML5", "CSS3", "JavaScript"],
     },
     {
       id: 3,
@@ -49,7 +48,7 @@ function Project({ handleMenu, orderPopUp }) {
       site_link: "https://todo-by-toandro.netlify.app/",
       title: "Todo List App",
       description: "Task management application with CRUD operations",
-      technologies: ["React", "localStorage", "CSS3"],
+      technologies: ["HTML5", "localStorage", "CSS3"],
     },
     {
       id: 4,
@@ -60,7 +59,7 @@ function Project({ handleMenu, orderPopUp }) {
       site_link: "https://sales-gestion-by-toandro.netlify.app/",
       title: "Sales Data Manager",
       description: "Sales data manipulation and visualization tool",
-      technologies: ["React", "Chart.js", "JavaScript"],
+      technologies: ["HTML5", "Chart.js", "JavaScript"],
     },
     {
       id: 5,
@@ -70,7 +69,7 @@ function Project({ handleMenu, orderPopUp }) {
       site_link: "https://watch-store-by-toandro.netlify.app/",
       title: "Watch Store",
       description: "E-commerce platform for luxury watches",
-      technologies: ["React", "Redux", "CSS3"],
+      technologies: ["React", "CSS3"],
     },
   ];
 

@@ -25,8 +25,8 @@ const Loader = () => {
             {/* Logo Animation */}
             <motion.div
               className="mb-8"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
               transition={{
                 duration: 1.5,
                 type: "spring",
@@ -114,24 +114,23 @@ const Loader = () => {
           </div>
 
           {/* Background Particles */}
-          <div className="absolute inset-0 overflow-hidden">
-            {[...Array(20)].map((_, i) => (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(15)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 bg-blue_primary/30 rounded-full"
+                className="absolute w-1 h-1 bg-blue_primary/20 rounded-full"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
+                  left: `${20 + Math.random() * 60}%`,
+                  top: `${20 + Math.random() * 60}%`,
                 }}
                 animate={{
-                  y: [-20, 20, -20],
-                  x: [-10, 10, -10],
-                  opacity: [0.3, 0.8, 0.3],
+                  y: [-5, 5, -5],
+                  opacity: [0.2, 0.6, 0.2],
                 }}
                 transition={{
-                  duration: 3 + Math.random() * 2,
+                  duration: 2 + Math.random() * 1,
                   repeat: Infinity,
-                  delay: Math.random() * 2,
+                  delay: Math.random() * 1,
                 }}
               />
             ))}

@@ -1,10 +1,9 @@
-import React from "react";
 import { motion } from "framer-motion";
 import facebook from "/src/assets/socials/facebook.png";
 import linkedin from "/src/assets/socials/linkedin.png";
 import github from "/src/assets/socials/github.png";
 
-function Hero({ handleMenu, orderPopUp }) {
+function Hero() {
   const socials = [
     {
       id: 0,
@@ -25,8 +24,7 @@ function Hero({ handleMenu, orderPopUp }) {
   return (
     <motion.div
       id="home"
-      className="bg-[url('/src/assets/bg/toandro-home-cover.jpg')] bg-center bg-cover h-screen flex flex-col items-center justify-center py-[60px] px-2 transition-all duration-500 ease-out"
-      onClick={() => orderPopUp && handleMenu()}
+      className="bg-[url('/src/assets/bg/toandro-home-cover.jpg')] bg-center bg-cover h-screen w-full flex flex-col items-center justify-center py-[60px] px-2 transition-all duration-500 ease-out overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.5 }}
