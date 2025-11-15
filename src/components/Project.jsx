@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import homepageIntegration from "../assets/projects/integration-newsHomePage.png";
 import portfolioV1 from "../assets/projects/mon-portfolio.png";
 import quiz from "../assets/projects/quiz.png";
@@ -74,99 +73,38 @@ function Project() {
   ];
 
   return (
-    <motion.div
-      id="projects"
-      className="pt-[70px] px-4 sm:px-10 md:px-14"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      <motion.h1
-        className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl"
-        initial={{ y: -50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        viewport={{ once: true }}
-      >
+    <div id="projects" className="pt-[70px] px-4 sm:px-10 md:px-14">
+      <h1 className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl">
         My Projects
-      </motion.h1>
+      </h1>
 
       <div className="w-full flex flex-wrap">
         {projects.map((project, index) => (
-          <motion.div
+          <div
             key={index}
             className="group text-white_primary  w-full sm:w-1/2 xl:w-1/3 p-4 shadow-md cursor-pointer"
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1,
-            }}
-            whileHover={{
-              y: -5,
-              transition: { duration: 0.3 },
-            }}
-            viewport={{ once: true }}
           >
-            <motion.div
-              className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] relative border border-transparent"
-              whileHover={{
-                borderColor: "#d9af23",
-                boxShadow: "0 5px 20px rgba(217, 175, 35, 0.1)",
-                transition: { duration: 0.3 },
-              }}
-            >
-              <motion.div
-                className="relative overflow-hidden"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-                viewport={{ once: true }}
-              >
+            <div className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] relative border border-transparent hover:border-yellow_primary hover:shadow-lg transition-all duration-300">
+              <div className="relative overflow-hidden">
                 <img
                   src={project.name}
                   alt={project.alt}
                   className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <motion.div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
 
-              <motion.div
-                className="p-6"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                viewport={{ once: true }}
-              >
-                <motion.h1
-                  className="text-xl md:text-2xl text-blue_primary font-bold py-2"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.4 }}
-                  viewport={{ once: true }}
-                >
+              <div className="p-6">
+                <h1 className="text-xl md:text-2xl text-blue_primary font-bold py-2">
                   {project.title}
-                </motion.h1>
+                </h1>
 
-                <motion.p
-                  className="text-gray-300 py-2 leading-relaxed"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.5 }}
-                  viewport={{ once: true }}
-                >
+                <p className="text-gray-300 py-2 leading-relaxed">
                   {project.description}
-                </motion.p>
+                </p>
 
                 {/* Technologies */}
-                <motion.div
-                  className="flex flex-wrap gap-2 py-3"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
-                  viewport={{ once: true }}
-                >
+                <div className="flex flex-wrap gap-2 py-3">
                   {project.technologies.map((tech, techIndex) => (
                     <span
                       key={techIndex}
@@ -175,43 +113,33 @@ function Project() {
                       {tech}
                     </span>
                   ))}
-                </motion.div>
+                </div>
 
                 {/* Action Buttons */}
-                <motion.div
-                  className="flex space-x-4 pt-4"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.7 }}
-                  viewport={{ once: true }}
-                >
-                  <motion.a
+                <div className="flex space-x-4 pt-4">
+                  <a
                     href={project.code_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-2 px-4 py-2 bg-blue_primary/20 text-blue_primary rounded-lg hover:bg-blue_primary/30 transition-colors duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center space-x-2 px-4 py-2 bg-blue_primary/20 text-blue_primary rounded-lg hover:bg-blue_primary/30 transition-colors duration-300 hover:scale-105"
                   >
                     <span className="text-sm font-medium">Code</span>
-                  </motion.a>
-                  <motion.a
+                  </a>
+                  <a
                     href={project.site_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-2 px-4 py-2 bg-yellow_primary/20 text-yellow_primary rounded-lg hover:bg-yellow_primary/30 transition-colors duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center space-x-2 px-4 py-2 bg-yellow_primary/20 text-yellow_primary rounded-lg hover:bg-yellow_primary/30 transition-colors duration-300 hover:scale-105"
                   >
                     <span className="text-sm font-medium">Demo</span>
-                  </motion.a>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
 

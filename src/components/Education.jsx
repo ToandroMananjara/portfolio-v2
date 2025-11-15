@@ -1,6 +1,3 @@
-import React from "react";
-import { motion } from "framer-motion";
-
 function Education() {
   const educations = [
     {
@@ -47,51 +44,20 @@ function Education() {
     },
   ];
   return (
-    <motion.div
-      id="education"
-      className="pt-[70px] px-4 sm:px-10 md:px-14"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      <motion.h1
-        className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl"
-        initial={{ y: -50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        viewport={{ once: true }}
-      >
+    <div id="education" className="pt-[70px] px-4 sm:px-10 md:px-14">
+      <h1 className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl">
         Formation & Éducation
-      </motion.h1>
+      </h1>
 
       <div className="w-full flex flex-wrap">
         {educations.map((education, index) => (
-          <motion.div
+          <div
             key={index}
             className="group text-white_primary w-full sm:w-1/2 xl:w-1/3 p-4 shadow-md cursor-pointer"
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1,
-            }}
-            whileHover={{
-              y: -5,
-              transition: { duration: 0.3 },
-            }}
-            viewport={{ once: true }}
           >
-            <motion.div
-              className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] p-6 flex flex-col relative border border-transparent"
-              whileHover={{
-                borderColor: "#d9af23",
-                boxShadow: "0 5px 20px rgba(217, 175, 35, 0.1)",
-                transition: { duration: 0.3 },
-              }}
-            >
+            <div className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] p-6 flex flex-col relative border border-transparent hover:border-yellow_primary hover:shadow-lg transition-all duration-300">
               {/* Type Badge */}
-              <motion.div
+              <div
                 className={`inline-block w-fit px-3 py-1 rounded-full text-xs font-medium mb-4 ${
                   education.type === "University"
                     ? "bg-blue_primary/20 text-blue_primary"
@@ -99,64 +65,30 @@ function Education() {
                     ? "bg-yellow_primary/20 text-yellow_primary"
                     : "bg-purple-500/20 text-purple-400"
                 }`}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-                viewport={{ once: true }}
               >
                 {education.type}
-              </motion.div>
+              </div>
 
-              <motion.h1
-                className="text-xl md:text-2xl text-blue_primary font-bold py-2 leading-tight"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                viewport={{ once: true }}
-              >
+              <h1 className="text-xl md:text-2xl text-blue_primary font-bold py-2 leading-tight">
                 {education.school}
-              </motion.h1>
+              </h1>
 
-              <motion.div
-                className="flex-grow"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.4 }}
-                viewport={{ once: true }}
-              >
-                <motion.h2
-                  className="text-lg md:text-xl text-yellow_primary font-semibold py-2"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.5 }}
-                  viewport={{ once: true }}
-                >
+              <div className="flex-grow">
+                <h2 className="text-lg md:text-xl text-yellow_primary font-semibold py-2">
                   {education.year}
-                </motion.h2>
-                <motion.h3
-                  className="text-base md:text-lg text-gray-300 py-2 leading-relaxed"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
-                  viewport={{ once: true }}
-                >
+                </h2>
+                <h3 className="text-base md:text-lg text-gray-300 py-2 leading-relaxed">
                   {education.description}
-                </motion.h3>
-              </motion.div>
+                </h3>
+              </div>
 
               {/* Decorative element */}
-              <motion.div
-                className="h-1 w-0 bg-gradient-to-r from-blue_primary to-yellow_primary rounded-full mt-4 group-hover:w-full transition-all duration-500"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                transition={{ duration: 0.8, delay: index * 0.1 + 0.7 }}
-                viewport={{ once: true }}
-              />
-            </motion.div>
-          </motion.div>
+              <div className="h-1 w-0 bg-gradient-to-r from-blue_primary to-yellow_primary rounded-full mt-4 group-hover:w-full transition-all duration-500" />
+            </div>
+          </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
 export default Education;
