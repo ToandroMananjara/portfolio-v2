@@ -200,8 +200,17 @@ function Footer() {
           viewport={{ once: true }}
         >
           {/* Copyright */}
-          <motion.div className="flex items-center text-gray-300 text-sm">
+          <motion.div className="flex items-center text-gray-300 text-sm space-x-4">
             <span>© {currentYear} Toandro Mananjara. All rights reserved.</span>
+            {/* Visitor Counter */}
+            <div className="flex items-center space-x-2">
+              <span className="text-xs">Visitors:</span>
+              <img
+                src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://toandro-portfolio-v2.netlify.app&count_bg=%236EC1E4&title_bg=%23D9AF23&icon=&icon_color=%23FFFFFF&title=visits&edge_flat=false"
+                alt="Visitor Counter"
+                className="h-5"
+              />
+            </div>
           </motion.div>
 
           {/* Back to Top */}
