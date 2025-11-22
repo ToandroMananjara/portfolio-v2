@@ -148,6 +148,8 @@ function Project() {
       ],
       site_link: "",
       video_demo: "",
+      download_link:
+        "https://drive.google.com/file/d/1H2itfSnF5Tgiq1zpF3GtihVMWKPWHHo_/view?usp=sharing",
       title: "Application E-commerce",
       description: "Application E-commerce",
       technologies: ["ReactNative", "Expo", "LocalStorage", "TypeScript"],
@@ -171,6 +173,7 @@ function Project() {
       id: 6,
       name: footballStat,
       alt: "Fullstack Football Statistics Application",
+
       code_links: [
         {
           label: "Frontend",
@@ -181,6 +184,8 @@ function Project() {
           url: "https://github.com/ToandroMananjara/football-statistique-backend.git",
         },
       ],
+      video_demo: "",
+
       site_link: "",
       title: "Fullstack Football Statistics Application",
       description:
@@ -238,6 +243,32 @@ function Project() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-3 pt-4">
+                  {/* Download Button for Mobile Apps */}
+                  {project.download_link && (
+                    <a
+                      href={project.download_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-2 px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors duration-300 hover:scale-105"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        />
+                      </svg>
+                      <span className="text-sm font-medium">Download</span>
+                    </a>
+                  )}
+
                   {/* Demo Button */}
                   {project.video_demo ? (
                     <button
@@ -246,7 +277,7 @@ function Project() {
                     >
                       <span className="text-sm font-medium">Demo</span>
                     </button>
-                  ) : (
+                  ) : project.site_link ? (
                     <a
                       href={project.site_link}
                       target="_blank"
@@ -255,7 +286,7 @@ function Project() {
                     >
                       <span className="text-sm font-medium">Demo</span>
                     </a>
-                  )}
+                  ) : null}
 
                   {/* Code Button with Dropdown or Direct Link */}
                   {project.code_links.length > 1 ? (
