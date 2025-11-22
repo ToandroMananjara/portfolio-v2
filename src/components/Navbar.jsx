@@ -104,38 +104,158 @@ function Navbar() {
         {/* Desktop Menu - Always Visible */}
         <div className="hidden md:flex md:items-center">
           <div className="menu-link">
-            <ul className="flex flex-row gap-10">
-              {menu.map((menuItem, index) => (
-                <motion.li
-                  key={index}
-                  id={menuItem.id}
-                  className="cursor-pointer"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1 + 0.3,
-                    ease: "easeOut",
-                  }}
-                  whileHover={{
-                    scale: 1.1,
-                    y: -2,
-                    transition: { duration: 0.2 },
-                  }}
+            <ul className="flex flex-row gap-8">
+              {/* Home */}
+              <motion.li
+                className="cursor-pointer"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.3,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  y: -2,
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <a
+                  href="/#home"
+                  className="hover:text-blue_primary transition-all duration-300 ease-in-out relative group"
                 >
-                  <a
-                    href={menuItem.link}
-                    className="hover:text-blue_primary transition-all duration-300 ease-in-out relative group"
+                  Home
+                  <motion.span
+                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue_primary group-hover:w-full transition-all duration-300"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                  />
+                </a>
+              </motion.li>
+
+              {/* About Me Section */}
+              <motion.li
+                className="relative group cursor-pointer"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.4,
+                  ease: "easeOut",
+                }}
+              >
+                <span className="hover:text-blue_primary transition-all duration-300 ease-in-out flex items-center gap-1">
+                  About Me
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 transition-transform group-hover:rotate-180 duration-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    {menuItem.name}
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue_primary group-hover:w-full transition-all duration-300"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "100%" }}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
                     />
+                  </svg>
+                </span>
+                <div className="absolute top-full left-0 mt-2 bg-gray_primary/95 backdrop-blur-md rounded-lg shadow-xl border border-blue_primary/20 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[180px] z-50">
+                  <a
+                    href="/#about"
+                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
+                  >
+                    About
                   </a>
-                </motion.li>
-              ))}
+                  <a
+                    href="/#education"
+                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
+                  >
+                    Education
+                  </a>
+                </div>
+              </motion.li>
+
+              {/* Professional Section */}
+              <motion.li
+                className="relative group cursor-pointer"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.5,
+                  ease: "easeOut",
+                }}
+              >
+                <span className="hover:text-blue_primary transition-all duration-300 ease-in-out flex items-center gap-1">
+                  Portfolio
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 transition-transform group-hover:rotate-180 duration-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </span>
+                <div className="absolute top-full left-0 mt-2 bg-gray_primary/95 backdrop-blur-md rounded-lg shadow-xl border border-blue_primary/20 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[180px] z-50">
+                  <a
+                    href="/#experience"
+                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
+                  >
+                    Experience
+                  </a>
+                  <a
+                    href="/#skills"
+                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
+                  >
+                    Skills
+                  </a>
+                  <a
+                    href="/#projects"
+                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
+                  >
+                    Projects
+                  </a>
+                </div>
+              </motion.li>
+
+              {/* Contact */}
+              <motion.li
+                className="cursor-pointer"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.6,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  y: -2,
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <a
+                  href="mailto:mahasalotra@gmail.com"
+                  className="hover:text-blue_primary transition-all duration-300 ease-in-out relative group"
+                >
+                  Contact
+                  <motion.span
+                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue_primary group-hover:w-full transition-all duration-300"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                  />
+                </a>
+              </motion.li>
             </ul>
           </div>
         </div>
@@ -144,7 +264,7 @@ function Navbar() {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="menu-container text-gray_primary absolute top-0 right-0 bg-white_primary/50 backdrop-blur-sm px-10 py-5 flex flex-col items-start md:hidden"
+              className="menu-container text-white_primary absolute top-0 right-0 bg-gray_primary/95 backdrop-blur-sm px-10 py-5 flex flex-col items-start md:hidden"
               initial={{ x: 300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 300, opacity: 0 }}
