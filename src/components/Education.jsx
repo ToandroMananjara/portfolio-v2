@@ -4,49 +4,49 @@ function Education() {
       id: 1,
       year: "2024 - 2025",
       school: "University of Antananarivo (MISA)",
-      description: "Master 1 en Informatique",
+      description: "Master 1 in Computer Science",
       type: "University",
     },
     {
       id: 2,
       year: "2021 - 2024",
       school: "University of Antananarivo (MISA)",
-      description: "Licence en Informatique - Diplômé",
+      description: "Bachelor's Degree in Computer Science - Graduated",
       type: "University",
     },
     {
       id: 3,
       year: "2023",
       school: "Digital Training Center",
-      description: "Formation Développement Web - Full Stack Development",
+      description: "Web Development Training - Full Stack Development",
       type: "Formation",
     },
     {
       id: 4,
       year: "2020 - 2021",
       school: "University of Antananarivo",
-      description: "2ème année Licence en Mathématiques et Informatique",
+      description: "2nd year Bachelor's in Mathematics and Computer Science",
       type: "University",
     },
     {
       id: 5,
       year: "2019 - 2020",
       school: "University of Antananarivo",
-      description: "1ère année Licence en Mathématiques et Informatique",
+      description: "1st year Bachelor's in Mathematics and Computer Science",
       type: "University",
     },
     {
       id: 6,
       year: "2018",
       school: "Lycée Nanisana",
-      description: "Baccalauréat série C (Sciences)",
-      type: "Lycée",
+      description: "Baccalaureate series C (Sciences)",
+      type: "High School",
     },
   ];
   return (
     <div id="education" className="pt-[70px] px-4 sm:px-10 md:px-14">
       <h1 className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl">
-        Formation & Éducation
+        Education & Training
       </h1>
 
       <div className="w-full flex flex-wrap">

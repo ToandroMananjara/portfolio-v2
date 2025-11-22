@@ -151,7 +151,7 @@ function Project() {
       download_link:
         "https://drive.google.com/file/d/1H2itfSnF5Tgiq1zpF3GtihVMWKPWHHo_/view?usp=sharing",
       title: "Application E-commerce",
-      description: "Application E-commerce",
+      description: "E-commerce Application",
       technologies: ["ReactNative", "Expo", "LocalStorage", "TypeScript"],
     },
     {
