@@ -64,10 +64,10 @@ function Footer() {
                 className="flex items-center space-x-3"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-blue_primary to-yellow_primary rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center">
                   <Code className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue_primary to-yellow_primary bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold text-yellow_primary">
                   Toandro Mananjara
                 </h3>
               </motion.div>

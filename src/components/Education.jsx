@@ -55,7 +55,7 @@ function Education() {
             key={index}
             className="group text-white_primary w-full sm:w-1/2 xl:w-1/3 p-4 shadow-md cursor-pointer"
           >
-            <div className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] p-6 flex flex-col relative border border-transparent hover:border-yellow_primary hover:shadow-lg transition-all duration-300">
+            <div className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] p-6 flex flex-col relative border border-transparent hover:border-blue_primary/30 hover:shadow-lg transition-all duration-300">
               {/* Type Badge */}
               <div
                 className={`inline-block w-fit px-3 py-1 rounded-full text-xs font-medium mb-4 ${
@@ -83,7 +83,7 @@ function Education() {
               </div>
 
               {/* Decorative element */}
-              <div className="h-1 w-0 bg-gradient-to-r from-blue_primary to-yellow_primary rounded-full mt-4 group-hover:w-full transition-all duration-500" />
+              {/* <div className="h-1 w-0 bg-gradient-to-r from-blue_primary to-yellow_primary rounded-full mt-4 group-hover:w-full transition-all duration-500" /> */}
             </div>
           </div>
         ))}
