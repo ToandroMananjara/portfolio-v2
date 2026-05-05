@@ -32,7 +32,7 @@ function Hero() {
             Toandro Mananjara
           </h1>
           <h4 className="uppercase text-yellow_primary text-center text-xl sm:text-2xl lg:text-3xl m-2 lg:m-6 tracking-wide">
-            Full Stack Developer &amp; AI Enthusiast
+            Full Stack &amp; AI Developer
           </h4>
           <div className="flex justify-center">
             <ul className="flex gap-x-3 m-1">
