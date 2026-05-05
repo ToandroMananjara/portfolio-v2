@@ -1,343 +1,165 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
-import { Menu } from "lucide-react";
-
-const menu = [
-  {
-    id: 0,
-    name: "Home",
-    link: "/#home",
-  },
-  {
-    id: 1,
-    name: "About",
-    link: "/#about",
-  },
-  {
-    id: 2,
-    name: "Experience",
-    link: "/#experience",
-  },
-  {
-    id: 3,
-    name: "Skills",
-    link: "/#skills",
-  },
-  {
-    id: 4,
-    name: "Projects",
-    link: "/#projects",
-  },
-  {
-    id: 5,
-    name: "Education",
-    link: "/#education",
-  },
-  {
-    id: 6,
-    name: "Contact",
-    link: "mailto:mahasalotra@gmail.com",
-  },
-];
+import { Menu, X } from "lucide-react";
+import { navItems } from "../data/navigation";
 
 function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
-
-  const handleScroll = () => {
-    if (window.scrollY > 50) {
-      setScrolling(true);
-    } else {
-      setScrolling(false);
-    }
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeId, setActiveId] = useState("home");
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const sectionIds = navItems
+      .filter((i) => i.href.startsWith("#"))
+      .map((i) => i.href.slice(1));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveId(visible.target.id);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
-    <motion.div
-      className={` ${
-        scrolling
-          ? "bg-gray_primary bg-opacity-90 backdrop-blur-md"
+    <motion.header
+      initial={{ y: -32, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-[999] transition-colors duration-300 ${
+        scrolled
+          ? "bg-gray_primary/85 backdrop-blur-md border-b border-white/5"
           : "bg-transparent"
-      } fixed w-full left-0 right-0 z-[999] dark:text-white flex justify-between px-5 sm:px-10 md:px-14 py-3 transition-all duration-500 ease-in-out`}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      }`}
     >
-      <motion.div
-        className="navbar-left"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        <motion.div
-          className="logo flex text-3xl gap-1"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+      <nav className="max-w-content mx-auto flex items-center justify-between px-5 sm:px-10 md:px-14 h-[var(--nav-height,72px)]">
+        <a
+          href="#home"
+          className="font-mono text-2xl font-semibold text-blue_primary hover:text-yellow_primary transition-colors"
+          aria-label="Toandro Mananjara — home"
         >
-          <div className="logo-text text-blue_primary">
-            <a href="/">
-              <strong>TM</strong>
-            </a>
-          </div>
-        </motion.div>
-      </motion.div>
+          <span className="text-yellow_primary">{"<"}</span>TM
+          <span className="text-yellow_primary">{" />"}</span>
+        </a>
 
-      <div className="navbar-right text-xl flex gap-2 md:gap-12">
-        <div className="dark-mode flex items-center"> </div>
-
-        {/* Desktop Menu - Always Visible */}
-        <div className="hidden md:flex md:items-center">
-          <div className="menu-link">
-            <ul className="flex flex-row gap-8">
-              {/* Home */}
-              <motion.li
-                className="cursor-pointer"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.3,
-                  ease: "easeOut",
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  y: -2,
-                  transition: { duration: 0.2 },
-                }}
-              >
+        <ul className="hidden md:flex items-center gap-7 font-mono text-sm">
+          {navItems.map((item) => {
+            const isActive = activeId === item.id && item.href.startsWith("#");
+            return (
+              <li key={item.id}>
                 <a
-                  href="/#home"
-                  className="hover:text-blue_primary transition-all duration-300 ease-in-out relative group"
+                  href={item.href}
+                  className={`group inline-flex items-center gap-1 transition-colors ${
+                    isActive
+                      ? "text-blue_primary"
+                      : "text-gray-300 hover:text-blue_primary"
+                  }`}
                 >
-                  Home
-                  <motion.span
-                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue_primary group-hover:w-full transition-all duration-300"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                  />
+                  <span
+                    className={`text-yellow_primary/80 transition-opacity ${
+                      isActive ? "opacity-100" : "opacity-50 group-hover:opacity-100"
+                    }`}
+                  >
+                    {"//"}
+                  </span>
+                  <span>{item.label}</span>
                 </a>
-              </motion.li>
+              </li>
+            );
+          })}
+        </ul>
 
-              {/* About Me Section */}
-              <motion.li
-                className="relative group cursor-pointer"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.4,
-                  ease: "easeOut",
-                }}
-              >
-                <span className="hover:text-blue_primary transition-all duration-300 ease-in-out flex items-center gap-1">
-                  About Me
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 transition-transform group-hover:rotate-180 duration-300"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </span>
-                <div className="absolute top-full left-0 mt-2 bg-gray_primary/95 backdrop-blur-md rounded-lg shadow-xl border border-blue_primary/20 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[180px] z-50">
-                  <a
-                    href="/#about"
-                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
-                  >
-                    About
-                  </a>
-                  <a
-                    href="/#education"
-                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
-                  >
-                    Education
-                  </a>
-                </div>
-              </motion.li>
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="md:hidden p-2 -mr-2 text-white_primary hover:text-blue_primary transition-colors"
+          aria-label="Open menu"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+      </nav>
 
-              {/* Professional Section */}
-              <motion.li
-                className="relative group cursor-pointer"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.5,
-                  ease: "easeOut",
-                }}
-              >
-                <span className="hover:text-blue_primary transition-all duration-300 ease-in-out flex items-center gap-1">
-                  Portfolio
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 transition-transform group-hover:rotate-180 duration-300"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </span>
-                <div className="absolute top-full left-0 mt-2 bg-gray_primary/95 backdrop-blur-md rounded-lg shadow-xl border border-blue_primary/20 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[180px] z-50">
-                  <a
-                    href="/#experience"
-                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
-                  >
-                    Experience
-                  </a>
-                  <a
-                    href="/#skills"
-                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
-                  >
-                    Skills
-                  </a>
-                  <a
-                    href="/#projects"
-                    className="block px-5 py-3 hover:bg-blue_primary/20 hover:text-blue_primary hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue_primary"
-                  >
-                    Projects
-                  </a>
-                </div>
-              </motion.li>
-
-              {/* Contact */}
-              <motion.li
-                className="cursor-pointer"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.6,
-                  ease: "easeOut",
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  y: -2,
-                  transition: { duration: 0.2 },
-                }}
-              >
-                <a
-                  href="mailto:mahasalotra@gmail.com"
-                  className="hover:text-blue_primary transition-all duration-300 ease-in-out relative group"
-                >
-                  Contact
-                  <motion.span
-                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue_primary group-hover:w-full transition-all duration-300"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                  />
-                </a>
-              </motion.li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              className="menu-container text-white_primary absolute top-0 right-0 bg-gray_primary/95 backdrop-blur-sm px-10 py-5 flex flex-col items-start md:hidden"
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: 300, opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed inset-0 z-[1000] md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setIsOpen(false)}
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            />
+            <motion.aside
+              role="dialog"
+              aria-modal="true"
+              className="absolute top-0 right-0 h-full w-72 max-w-[85vw] bg-gray_primary border-l border-white/10 px-6 py-6 flex flex-col"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
             >
-              <motion.div
-                className="relative mb-3"
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: 90 }}
-                transition={{ duration: 0.3 }}
-              >
-                <X
-                  className="absolute  top-[-10px] left-[0px] w-[230px] h-[30px] cursor-pointer"
-                  onClick={closeMenu}
-                />
-              </motion.div>
-              <div className="menu-link">
-                <ul className="flex flex-col gap-10 gap-y-2">
-                  {menu.map((menuItem, index) => (
-                    <motion.li
-                      key={index}
-                      id={menuItem.id}
-                      className="cursor-pointer"
-                      onClick={() => {
-                        closeMenu();
-                      }}
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: index * 0.1 + 0.3,
-                        ease: "easeOut",
-                      }}
-                      whileHover={{
-                        scale: 1.1,
-                        y: -2,
-                        transition: { duration: 0.2 },
-                      }}
-                    >
-                      <a
-                        href={menuItem.link}
-                        className="hover:text-blue_primary transition-all duration-300 ease-in-out relative group"
-                      >
-                        {menuItem.name}
-                        <motion.span
-                          className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue_primary group-hover:w-full transition-all duration-300"
-                          initial={{ width: 0 }}
-                          whileHover={{ width: "100%" }}
-                        />
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 -mr-2 text-white_primary hover:text-blue_primary transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X className="w-6 h-6" />
+                </button>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <motion.div
-          className="cart md:hidden flex items-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <Menu
-            className="cursor-pointer w-[40px] h-[40px]"
-            onClick={toggleMenu}
-          />
-        </motion.div>
-      </div>
-    </motion.div>
+              <ul className="mt-6 flex flex-col gap-2 font-mono">
+                {navItems.map((item, i) => (
+                  <motion.li
+                    key={item.id}
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.05 * i, duration: 0.3 }}
+                  >
+                    <a
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-3 rounded-md text-gray-200 hover:text-blue_primary hover:bg-white/5 transition-colors"
+                    >
+                      <span className="text-yellow_primary/80 mr-2">{"//"}</span>
+                      {item.label}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.aside>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }
 

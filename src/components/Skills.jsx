@@ -1,133 +1,100 @@
-// Front-End Skills
-import html from "../assets/skills/HTML.svg";
-import css from "../assets/skills/CSS.svg";
-import JavaScript from "../assets/skills/JavaScript.svg";
-import typescript from "../assets/skills/TypeScript.svg";
-import ReactDark from "../assets/skills/React-Dark.svg";
-import nextjs from "../assets/skills/NextJS.svg";
-import reactNative from "../assets/skills/ReactNative.svg";
-import tailwindcss from "../assets/skills/TailwindCSS.svg";
-import Bootstrap from "../assets/skills/Bootstrap.svg";
-import materialui from "../assets/skills/MaterialUI.svg";
-
-// Back-End Skills
-import nodejs from "../assets/skills/NodeJS.svg";
-import expressJs from "../assets/skills/ExpressJs.svg";
-
-import nestjs from "../assets/skills/NestJS.svg";
-
-// Databases
-import MySQLDark from "../assets/skills/MySQL-Dark.svg";
-import postgresql from "../assets/skills/PostgreSQL.svg";
-import mongodb from "../assets/skills/MongoDB.svg";
-
-// Programming Languages
-import python from "../assets/skills/Python.svg";
-import java from "../assets/skills/Java.svg";
-import langageC from "../assets/skills/C.svg";
-import langageCpp from "../assets/skills/CPP.svg";
-import PHPDark from "../assets/skills/PHP-Dark.svg";
-
-// Tools & DevOps
-import git from "../assets/skills/Git.svg";
-import github from "../assets/skills/Github.svg";
-import docker from "../assets/skills/Docker.svg";
+import { motion } from "framer-motion";
+import Section from "./ui/Section";
+import { expertise } from "../data/expertise";
+import { skillCategories } from "../data/skills";
+import { fadeUp, stagger } from "../lib/motion";
 
 function Skills() {
-  const skills = [
-    // Front-End Development
-    {
-      category: "Front-End",
-      skills: [
-        { id: 0, src: html, alt: "HTML5", title: "HTML5" },
-        { id: 1, src: css, alt: "CSS3", title: "CSS3" },
-        {
-          id: 2,
-          src: JavaScript,
-          alt: "JavaScript",
-          title: "JavaScript (ES6+)",
-        },
-        { id: 3, src: typescript, alt: "TypeScript", title: "TypeScript" },
-        { id: 4, src: ReactDark, alt: "React", title: "React" },
-        { id: 5, src: nextjs, alt: "Next.js", title: "Next.js" },
-        { id: 6, src: reactNative, alt: "React Native", title: "React Native" },
-        { id: 7, src: tailwindcss, alt: "Tailwind CSS", title: "Tailwind CSS" },
-        { id: 8, src: Bootstrap, alt: "Bootstrap", title: "Bootstrap" },
-        { id: 9, src: materialui, alt: "Material-UI", title: "Material-UI" },
-      ],
-    },
-    // Back-End Development
-    {
-      category: "Back-End",
-      skills: [
-        { id: 10, src: nodejs, alt: "Node.js", title: "Node.js" },
-        { id: 11, src: nestjs, alt: "NestJS", title: "NestJS" },
-        { id: 12, src: expressJs, alt: "Express.js", title: "Express.js" },
-      ],
-    },
-    // Databases
-    {
-      category: "Databases",
-      skills: [
-        { id: 13, src: MySQLDark, alt: "MySQL", title: "MySQL" },
-        { id: 14, src: postgresql, alt: "PostgreSQL", title: "PostgreSQL" },
-        { id: 15, src: mongodb, alt: "MongoDB", title: "MongoDB" },
-      ],
-    },
-    // Programming Languages
-    {
-      category: "Other Languages",
-      skills: [
-        { id: 15, src: python, alt: "Python", title: "Python" },
-        { id: 16, src: java, alt: "Java", title: "Java" },
-        { id: 17, src: langageC, alt: "C", title: "C" },
-        { id: 18, src: langageCpp, alt: "C++", title: "C++" },
-        { id: 19, src: PHPDark, alt: "PHP", title: "PHP" },
-      ],
-    },
-    // Tools & DevOps
-    {
-      category: "Tools & DevOps",
-      skills: [
-        { id: 20, src: git, alt: "Git", title: "Git" },
-        { id: 21, src: github, alt: "GitHub", title: "GitHub" },
-        { id: 22, src: docker, alt: "Docker", title: "Docker" },
-      ],
-    },
-  ];
-
   return (
-    <div id="skills" className="pt-[70px] px-4 sm:px-10 md:px-14">
-      <h1 className="text-yellow_primary text-center text-3xl md:text-5xl m-4 md:m-0">
-        Technical Skills
-      </h1>
+    <Section
+      id="expertise"
+      index="02"
+      eyebrow="expertise"
+      title="What I do, and how."
+      subtitle="I work across the stack with a focus on shipping maintainable products. Below are the three areas I focus on day-to-day, and the tools I reach for."
+    >
+      <motion.div
+        variants={stagger(0.05, 0.12)}
+        className="grid md:grid-cols-3 gap-6"
+      >
+        {expertise.map((item) => {
+          const Icon = item.icon;
+          return (
+            <motion.article
+              key={item.id}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 hover:border-blue_primary/30 transition-colors"
+            >
+              <div className="w-12 h-12 rounded-xl bg-blue_primary/10 text-blue_primary flex items-center justify-center mb-5 group-hover:bg-blue_primary/15 transition-colors">
+                <Icon className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-semibold text-white_primary">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-gray-400 leading-relaxed">
+                {item.summary}
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-gray-300">
+                {item.bullets.map((b) => (
+                  <li key={b} className="flex gap-2">
+                    <span className="font-mono text-yellow_primary">›</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.article>
+          );
+        })}
+      </motion.div>
 
-      {skills.map((category) => (
-        <div key={category.category} className="mb-6 md:mb-8">
-          <h3 className="text-blue_primary text-lg md:text-2xl font-semibold mb-3 md:mb-4 text-center">
-            {category.category}
-          </h3>
-          <ul className="flex justify-center flex-wrap gap-2 md:gap-3 mt-3 md:mt-4">
-            {category.skills.map((skill) => (
-              <li
-                key={skill.id}
-                className="group relative cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 hover:-translate-y-1"
-              >
-                <img
-                  src={skill.src}
-                  alt={skill.alt}
-                  className="w-[50px] h-[50px] md:w-[70px] md:h-[70px] transition-transform duration-200"
-                  title={skill.title}
-                />
-                <div className="absolute bottom-[-35px] left-1/2 transform -translate-x-1/2 bg-gray_primary text-white_primary text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10 pointer-events-none">
-                  {skill.title}
-                </div>
-              </li>
-            ))}
-          </ul>
+      <motion.div variants={fadeUp} className="mt-16 md:mt-20">
+        <p className="font-mono text-sm text-blue_primary mb-6">
+          <span className="text-yellow_primary">{"//"}</span> tech-stack
+        </p>
+        <div className="space-y-8">
+          {skillCategories.map((category) => (
+            <div
+              key={category.id}
+              className="grid md:grid-cols-[140px_1fr] gap-4 md:gap-6 items-start"
+            >
+              <h4 className="text-sm font-mono text-gray-400 uppercase tracking-wider md:pt-3">
+                {category.label}
+              </h4>
+              <ul className="flex flex-wrap gap-3">
+                {category.items.map((skill) => {
+                  const Icon = skill.icon;
+                  return (
+                    <li
+                      key={skill.name}
+                      className="group flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.02] border border-white/5 hover:border-blue_primary/40 hover:bg-white/[0.04] transition-colors"
+                    >
+                      {skill.src ? (
+                        <img
+                          src={skill.src}
+                          alt=""
+                          aria-hidden="true"
+                          className="w-5 h-5"
+                        />
+                      ) : Icon ? (
+                        <Icon
+                          className="w-5 h-5 text-blue_primary"
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                      <span className="text-sm text-gray-300 group-hover:text-white_primary transition-colors">
+                        {skill.name}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </motion.div>
+    </Section>
   );
 }
 

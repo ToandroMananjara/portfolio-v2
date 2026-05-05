@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Loader = () => {
+const EASE = [0.16, 1, 0.3, 1];
+
+function Loader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2500);
-
+    const timer = setTimeout(() => setIsLoading(false), 1600);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isLoading ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isLoading]);
 
   return (
     <AnimatePresence>
@@ -18,127 +24,46 @@ const Loader = () => {
         <motion.div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-gray_primary"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          exit={{ opacity: 0, transition: { duration: 0.5, ease: EASE } }}
         >
-          <div className="text-center">
-            {/* Logo Animation */}
-            <motion.div
-              className="mb-8"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{
-                duration: 1.5,
-                type: "spring",
-                stiffness: 100,
-                damping: 10,
-              }}
-            >
-              <motion.h1
-                className="text-6xl md:text-8xl font-bold text-blue_primary"
-                animate={{
-                  textShadow: [
-                    "0 0 10px #6ec1e4",
-                    "0 0 20px #6ec1e4",
-                    "0 0 10px #6ec1e4",
-                  ],
-                }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                TM
-              </motion.h1>
-            </motion.div>
-
-            {/* Loading Text */}
-            <motion.div
-              className="mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            >
-              <motion.h2
-                className="text-2xl md:text-3xl font-semibold text-white_primary"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                Toandro Mananjara
-              </motion.h2>
-              <motion.p
-                className="text-lg text-yellow_primary mt-2"
-                animate={{ opacity: [0.3, 0.8, 0.3] }}
-                transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-              >
-                Full Stack Developer
-              </motion.p>
-            </motion.div>
-
-            {/* Loading Spinner */}
-            <motion.div
-              className="flex justify-center space-x-2"
+          <div className="text-center font-mono">
+            <motion.p
+              className="text-sm text-gray-400"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1 }}
+              transition={{ duration: 0.4 }}
             >
-              {[0, 1, 2].map((index) => (
-                <motion.div
-                  key={index}
-                  className="w-3 h-3 bg-blue_primary rounded-full"
-                  animate={{
-                    y: [-10, 10, -10],
-                    scale: [0.8, 1.2, 0.8],
-                  }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    delay: index * 0.2,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-            </motion.div>
+              <span className="text-yellow_primary">{"//"}</span> initializing
+            </motion.p>
+            <motion.h1
+              className="mt-3 text-5xl md:text-7xl font-bold text-blue_primary"
+              initial={{ y: 18, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, ease: EASE }}
+            >
+              <span className="text-yellow_primary">{"<"}</span>TM
+              <span className="animate-blink text-yellow_primary">|</span>
+              <span className="text-yellow_primary">{" />"}</span>
+            </motion.h1>
 
-            {/* Progress Bar */}
             <motion.div
-              className="mt-8 w-64 h-1 bg-gray-700 rounded-full mx-auto overflow-hidden"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
+              className="mt-8 mx-auto w-44 h-[2px] bg-white/10 overflow-hidden rounded-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
             >
               <motion.div
-                className="h-full bg-gradient-to-r from-blue_primary to-yellow_primary rounded-full"
+                className="h-full bg-blue_primary"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
-                transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
+                transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
               />
             </motion.div>
-          </div>
-
-          {/* Background Particles */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(15)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-blue_primary/20 rounded-full"
-                style={{
-                  left: `${20 + Math.random() * 60}%`,
-                  top: `${20 + Math.random() * 60}%`,
-                }}
-                animate={{
-                  y: [-5, 5, -5],
-                  opacity: [0.2, 0.6, 0.2],
-                }}
-                transition={{
-                  duration: 2 + Math.random() * 1,
-                  repeat: Infinity,
-                  delay: Math.random() * 1,
-                }}
-              />
-            ))}
           </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-};
+}
 
 export default Loader;

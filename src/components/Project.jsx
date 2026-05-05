@@ -1,480 +1,288 @@
-import { useState, useEffect, useRef } from "react";
-import homepageIntegration from "../assets/projects/integration-newsHomePage.png";
-import portfolioV1 from "../assets/projects/mon-portfolio.png";
-import quiz from "../assets/projects/quiz.png";
-import todoList from "../assets/projects/todoList.png";
-import varotra from "../assets/projects/varotra.png";
-import watchStore from "../assets/projects/watch-store.png";
-import footballStat from "../assets/projects/football.png";
-function Project() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentVideo, setCurrentVideo] = useState("");
-  const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
-  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
+import { useEffect, useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Code2, Download, Eye, Star, X } from "lucide-react";
+import Section from "./ui/Section";
+import { projects, projectCategories } from "../data/projects";
+import { fadeUp, stagger } from "../lib/motion";
+import { useBodyScrollLock } from "../lib/useBodyScrollLock";
 
-  const openModal = (videoUrl) => {
-    setCurrentVideo(videoUrl);
-    setIsModalOpen(true);
-  };
+function ProjectImage({ project, className = "" }) {
+  return (
+    <div
+      className={`relative overflow-hidden ${
+        project.isMobile ? "flex items-center justify-center bg-black/30" : ""
+      } ${className}`}
+    >
+      <img
+        src={project.image}
+        alt={project.title}
+        loading="lazy"
+        className={`w-full h-full ${
+          project.isMobile ? "object-contain p-4" : "object-cover"
+        } transition-transform duration-500 group-hover:scale-105`}
+      />
+    </div>
+  );
+}
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setCurrentVideo("");
-  };
+function TechList({ items, className = "" }) {
+  return (
+    <ul className={`flex flex-wrap gap-2 ${className}`}>
+      {items.map((tech) => (
+        <li
+          key={tech}
+          className="font-mono text-xs px-2.5 py-1 rounded-md text-yellow_primary bg-yellow_primary/5 border border-yellow_primary/20"
+        >
+          {tech}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-  const dropdownRef = useRef(null);
+function ProjectActions({ project, onDetails }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {project.site && (
+        <a
+          href={project.site}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-blue_primary/30 text-blue_primary hover:bg-blue_primary/10 transition-colors"
+        >
+          <Eye className="w-4 h-4" />
+          Live
+        </a>
+      )}
+      {project.download && (
+        <a
+          href={project.download}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-emerald-400/30 text-emerald-400 hover:bg-emerald-400/10 transition-colors"
+        >
+          <Download className="w-4 h-4" />
+          Download
+        </a>
+      )}
+      {project.links?.map((link) => (
+        <a
+          key={link.label}
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-white/10 text-gray-300 hover:border-white/30 hover:text-white_primary transition-colors"
+        >
+          <Code2 className="w-4 h-4" />
+          {link.label}
+        </a>
+      ))}
+      <button
+        type="button"
+        onClick={onDetails}
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-white/10 text-gray-300 hover:border-white/30 hover:text-white_primary transition-colors"
+      >
+        Details
+        <ArrowUpRight className="w-4 h-4" />
+      </button>
+    </div>
+  );
+}
 
-  const toggleDropdown = (index) => {
-    setOpenDropdownIndex(openDropdownIndex === index ? null : index);
-  };
+function FeaturedProject({ project, onDetails }) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-white/5 bg-white/[0.02] hover:border-blue_primary/30 transition-colors mb-10"
+    >
+      <ProjectImage
+        project={project}
+        className="aspect-[16/10] md:aspect-auto"
+      />
+      <div className="p-6 md:p-8 flex flex-col">
+        <div className="flex items-center gap-2 font-mono text-xs text-yellow_primary mb-3">
+          <Star className="w-4 h-4 fill-current" />
+          featured project
+        </div>
+        <h3 className="text-2xl md:text-3xl font-bold text-white_primary mb-3">
+          {project.title}
+        </h3>
+        <p className="text-gray-400 leading-relaxed mb-5">
+          {project.description}
+        </p>
+        <TechList items={project.technologies} className="mb-6" />
+        <div className="mt-auto">
+          <ProjectActions project={project} onDetails={onDetails} />
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
-  const openDetailsModal = (project) => {
-    setSelectedProject(project);
-    setIsDetailsModalOpen(true);
-  };
+function ProjectCard({ project, onDetails }) {
+  return (
+    <article className="group h-full flex flex-col rounded-xl overflow-hidden border border-white/5 bg-white/[0.02] hover:border-blue_primary/30 hover:-translate-y-1 transition-all duration-300">
+      <ProjectImage project={project} className="h-48" />
+      <div className="p-5 flex flex-col flex-1">
+        <h3 className="text-lg font-semibold text-white_primary">
+          {project.title}
+        </h3>
+        <p className="mt-1 text-sm text-gray-400 leading-relaxed line-clamp-2">
+          {project.description}
+        </p>
+        <TechList items={project.technologies} className="mt-4" />
+        <div className="mt-5 pt-4 border-t border-white/5">
+          <ProjectActions project={project} onDetails={onDetails} />
+        </div>
+      </div>
+    </article>
+  );
+}
 
-  const closeDetailsModal = () => {
-    setIsDetailsModalOpen(false);
-    setSelectedProject(null);
-  };
+function DetailsModal({ project, onClose }) {
+  useBodyScrollLock(Boolean(project));
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setOpenDropdownIndex(null);
-      }
-    };
-
-    if (openDropdownIndex !== null) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [openDropdownIndex]);
-
-  // Bloquer le scroll quand un modal est ouvert
-  useEffect(() => {
-    if (isModalOpen || isDetailsModalOpen) {
-      // Sauvegarder la position actuelle du scroll
-      const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
-      document.body.style.overflow = "hidden";
-    } else {
-      // Restaurer la position du scroll
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflow = "";
-      window.scrollTo(0, parseInt(scrollY || "0") * -1);
-    }
-  }, [isModalOpen, isDetailsModalOpen]);
-  const projects = [
-    {
-      id: 0,
-      name: homepageIntegration,
-      alt: "Homepage Integration Project",
-      code_links: [
-        {
-          label: "Frontend",
-          url: "https://github.com/DTC-Formation/evaluation-html-css-ToandroMananjara.git",
-        },
-      ],
-      site_link: "https://evaluation-toandro.netlify.app/",
-      title: "Homepage Integration",
-      description: "Responsive website integration using HTML5 and CSS3",
-      technologies: ["HTML5", "CSS3", "JavaScript"],
-    },
-    {
-      id: 1,
-      name: portfolioV1,
-      alt: "Portfolio Version 1",
-      code_links: [
-        {
-          label: "Frontend",
-          url: "https://github.com/DTC-Formation/my-portfolio-ToandroMananjara.git",
-        },
-      ],
-      site_link: "https://toandro.netlify.app/",
-      title: "Portfolio v1",
-      description: "First version of my personal portfolio",
-      technologies: ["HTML5", "CSS3", "JavaScript"],
-    },
-    {
-      id: 2,
-      name: quiz,
-      alt: "Capital Quiz Application",
-      code_links: [
-        {
-          label: "Frontend",
-          url: "https://github.com/ToandroMananjara/quiz-capital.git",
-        },
-      ],
-      site_link: "https://quiz-by-toandro.netlify.app/",
-      title: "Capital Quiz App",
-      description: "Interactive quiz application about world capitals",
-      technologies: ["HTML5", "CSS3", "JavaScript"],
-    },
-    {
-      id: 3,
-      name: todoList,
-      alt: "Todo List Application",
-      code_links: [
-        {
-          label: "Frontend",
-          url: "https://github.com/ToandroMananjara/newTodo_list.git",
-        },
-      ],
-      site_link: "https://todo-by-toandro.netlify.app/",
-      title: "Todo List App",
-      description: "Task management application with CRUD operations",
-      technologies: ["HTML5", "localStorage", "CSS3"],
-    },
-    {
-      id: 4,
-      name: varotra,
-      alt: "Application E-commerce",
-      isMobile: true,
-      code_links: [
-        {
-          label: "Mobile App",
-          url: "https://github.com/ToandroMananjara/test.mobile.git",
-        },
-      ],
-      site_link: "",
-      video_demo: "",
-      download_link:
-        "https://drive.google.com/file/d/1H2itfSnF5Tgiq1zpF3GtihVMWKPWHHo_/view?usp=sharing",
-      title: "Application E-commerce",
-      description: "E-commerce Application",
-      technologies: ["ReactNative", "Expo", "LocalStorage", "TypeScript"],
-    },
-    {
-      id: 5,
-      name: watchStore,
-      alt: "Watch E-commerce Store",
-      code_links: [
-        {
-          label: "Frontend",
-          url: "https://github.com/ToandroMananjara/watch-store.git",
-        },
-      ],
-      site_link: "https://watch-store-by-toandro.netlify.app/",
-      title: "Watch Store",
-      description: "E-commerce platform for luxury watches",
-      technologies: ["React", "CSS3"],
-    },
-    {
-      id: 6,
-      name: footballStat,
-      alt: "Fullstack Football Statistics Application",
-
-      code_links: [
-        {
-          label: "Frontend",
-          url: "https://github.com/ToandroMananjara/football-statistique.git",
-        },
-        {
-          label: "Backend",
-          url: "https://github.com/ToandroMananjara/football-statistique-backend.git",
-        },
-      ],
-      video_demo: "",
-
-      site_link: "",
-      title: "Fullstack Football Statistics Application",
-      description:
-        "Complete football statistics platform with frontend and backend",
-      technologies: ["React", "TypeScript", "PHP", "MVC", "MySql"],
-    },
-  ];
+    if (!project) return undefined;
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [project, onClose]);
 
   return (
-    <div id="projects" className="pt-[70px] px-4 sm:px-10 md:px-14">
-      <h1 className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl">
-        My Projects
-      </h1>
-
-      <div className="w-full flex flex-wrap">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className="group text-white_primary  w-full sm:w-1/2 xl:w-1/3 p-4 shadow-md cursor-pointer"
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <button
+            type="button"
+            aria-label="Close details"
+            onClick={onClose}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          />
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={project.title}
+            initial={{ y: 24, opacity: 0, scale: 0.98 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 12, opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-2xl rounded-2xl overflow-hidden bg-gray_primary border border-white/10 shadow-2xl"
           >
-            <div
-              className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] relative border border-transparent hover:border-blue_primary/30 hover:shadow-lg transition-all duration-300
-            "
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white_primary transition-colors"
             >
-              <div
-                className={`relative overflow-hidden ${
-                  project.isMobile
-                    ? "flex items-center justify-center bg-gray-800/30"
-                    : ""
-                }`}
-              >
-                <img
-                  src={project.name}
-                  alt={project.alt}
-                  className={`w-full h-48 ${
-                    project.isMobile ? "object-contain" : "object-cover"
-                  } transition-transform duration-500 group-hover:scale-110`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-
-              <div className="p-6">
-                <h1 className="text-xl md:text-2xl text-blue_primary font-bold py-2">
-                  {project.title}
-                </h1>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 py-3">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-2 py-1 bg-yellow_primary/20 text-yellow_primary text-xs rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex flex-wrap gap-3 pt-4">
-                  {/* Download Button for Mobile Apps */}
-                  {project.download_link && (
-                    <a
-                      href={project.download_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-2 px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors duration-300 hover:scale-105"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                        />
-                      </svg>
-                      <span className="text-sm font-medium">Download</span>
-                    </a>
-                  )}
-
-                  {/* Demo Button */}
-                  {project.video_demo ? (
-                    <button
-                      onClick={() => openModal(project.video_demo)}
-                      className="flex items-center space-x-2 px-4 py-2 bg-yellow_primary/20 text-yellow_primary rounded-lg hover:bg-yellow_primary/30 transition-colors duration-300 hover:scale-105"
-                    >
-                      <span className="text-sm font-medium">Demo</span>
-                    </button>
-                  ) : project.site_link ? (
-                    <a
-                      href={project.site_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-2 px-4 py-2 bg-yellow_primary/20 text-yellow_primary rounded-lg hover:bg-yellow_primary/30 transition-colors duration-300 hover:scale-105"
-                    >
-                      <span className="text-sm font-medium">Demo</span>
-                    </a>
-                  ) : null}
-
-                  {/* Code Button with Dropdown or Direct Link */}
-                  {project.code_links.length > 1 ? (
-                    <div
-                      className="relative"
-                      ref={openDropdownIndex === index ? dropdownRef : null}
-                    >
-                      <button
-                        onClick={() => toggleDropdown(index)}
-                        className="flex items-center space-x-2 px-4 py-2 bg-blue_primary/20 text-blue_primary rounded-lg hover:bg-blue_primary/30 transition-colors duration-300 hover:scale-105"
-                      >
-                        <span className="text-sm font-medium">Code</span>
-                      </button>
-
-                      {/* Dropdown Menu */}
-                      {openDropdownIndex === index && (
-                        <div className="absolute bottom-full mb-2 left-0 min-w-[140px] bg-[rgba(136,136,136,.15)] backdrop-blur-sm border border-blue_primary/30 rounded-lg shadow-2xl overflow-hidden z-50 flex flex-col">
-                          {project.code_links.map((codeLink, idx) => (
-                            <a
-                              key={idx}
-                              href={codeLink.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center px-4 py-3 text-blue_primary hover:bg-blue_primary/20 transition-all duration-200 text-sm font-medium hover:scale-105"
-                              onClick={() => setOpenDropdownIndex(null)}
-                            >
-                              {codeLink.label}
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <a
-                      href={project.code_links[0].url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-2 px-4 py-2 bg-blue_primary/20 text-blue_primary rounded-lg hover:bg-blue_primary/30 transition-colors duration-300 hover:scale-105"
-                    >
-                      <span className="text-sm font-medium">Code</span>
-                    </a>
-                  )}
-
-                  {/* Details Button */}
-                  <button
-                    onClick={() => openDetailsModal(project)}
-                    className="flex items-center space-x-2 px-4 py-2 bg-white_primary/20 text-white_primary rounded-lg hover:bg-white_primary/30 transition-colors duration-300 hover:scale-105"
-                  >
-                    <span className="text-sm font-medium">Details</span>
-                  </button>
-                </div>
-              </div>
+              <X className="w-5 h-5" />
+            </button>
+            <ProjectImage project={project} className="h-64" />
+            <div className="p-6 md:p-8">
+              <h3 className="text-2xl font-bold text-white_primary">
+                {project.title}
+              </h3>
+              <p className="mt-3 text-gray-300 leading-relaxed">
+                {project.description}
+              </p>
+              <p className="mt-6 font-mono text-xs text-blue_primary mb-2">
+                <span className="text-yellow_primary">{"//"}</span> tech
+              </p>
+              <TechList items={project.technologies} />
             </div>
-          </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function Project() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [selected, setSelected] = useState(null);
+
+  const featured = useMemo(() => projects.find((p) => p.featured), []);
+  const showFeatured = activeFilter === "all";
+  const filtered = useMemo(() => {
+    const base = showFeatured ? projects.filter((p) => !p.featured) : projects;
+    return activeFilter === "all"
+      ? base
+      : base.filter((p) => p.category === activeFilter);
+  }, [activeFilter, showFeatured]);
+
+  return (
+    <Section
+      id="work"
+      index="04"
+      eyebrow="work"
+      title="Selected projects."
+      subtitle="A handful of things I've built — from full-stack platforms to mobile apps and frontend work."
+    >
+      <motion.div
+        variants={stagger(0.04, 0.08)}
+        className="flex flex-wrap gap-2 mb-8 font-mono text-sm"
+      >
+        {projectCategories.map((category) => {
+          const isActive = activeFilter === category.id;
+          return (
+            <motion.button
+              key={category.id}
+              variants={fadeUp}
+              type="button"
+              onClick={() => setActiveFilter(category.id)}
+              className={`px-3 py-1.5 rounded-md border transition-colors ${
+                isActive
+                  ? "border-blue_primary text-blue_primary bg-blue_primary/10"
+                  : "border-white/10 text-gray-400 hover:text-white_primary hover:border-white/30"
+              }`}
+            >
+              <span className="text-yellow_primary/70 mr-1">{"//"}</span>
+              {category.label}
+            </motion.button>
+          );
+        })}
+      </motion.div>
+
+      {featured && showFeatured && (
+        <FeaturedProject
+          project={featured}
+          onDetails={() => setSelected(featured)}
+        />
+      )}
+
+      <motion.div
+        key={activeFilter}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+      >
+        {filtered.map((project) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            onDetails={() => setSelected(project)}
+          />
         ))}
-      </div>
+      </motion.div>
 
-      {/* Details Modal */}
-      {isDetailsModalOpen && selectedProject && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4"
-          onClick={closeDetailsModal}
-        >
-          <div
-            className="relative w-full max-w-2xl bg-gray_primary rounded-lg overflow-hidden shadow-2xl p-6 md:p-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={closeDetailsModal}
-              className="absolute top-4 right-4 z-10 bg-white_primary/10 hover:bg-white_primary/20 text-white_primary rounded-full p-2 transition-all duration-200"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-
-            {/* Modal Content */}
-            <div className="space-y-4">
-              <h2 className="text-2xl md:text-3xl font-bold text-yellow_primary pr-8">
-                {selectedProject.title}
-              </h2>
-
-              <div
-                className={`relative overflow-hidden rounded-lg ${
-                  selectedProject.isMobile
-                    ? "flex items-center justify-center bg-gray-800/50"
-                    : ""
-                }`}
-              >
-                <img
-                  src={selectedProject.name}
-                  alt={selectedProject.alt}
-                  className={`w-full h-64 ${
-                    selectedProject.isMobile ? "object-contain" : "object-cover"
-                  }`}
-                />
-              </div>
-
-              <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-blue_primary">
-                  Description
-                </h3>
-                <p className="text-gray-300 leading-relaxed">
-                  {selectedProject.description}
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-blue_primary">
-                  Technologies
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-3 py-1 bg-yellow_primary/20 text-yellow_primary text-sm rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {filtered.length === 0 && (
+        <p className="font-mono text-sm text-gray-500 mt-4">
+          <span className="text-yellow_primary/70">{"//"}</span> no projects in
+          this category yet.
+        </p>
       )}
 
-      {/* Video Modal */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4"
-          onClick={closeModal}
-        >
-          <div
-            className="relative w-full max-w-4xl bg-gray_primary rounded-lg overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 z-10 bg-white_primary/10 hover:bg-white_primary/20 text-white_primary rounded-full p-2 transition-all duration-200"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-
-            {/* Video Container */}
-            <div className="relative pt-[56.25%]">
-              <iframe
-                src={currentVideo}
-                className="absolute top-0 left-0 w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title="Project Demo"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      <DetailsModal project={selected} onClose={() => setSelected(null)} />
+    </Section>
   );
 }
 
