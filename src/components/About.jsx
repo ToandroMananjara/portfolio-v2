@@ -22,7 +22,7 @@ function About() {
       index="01"
       eyebrow="about-me"
       title="A developer who cares about the details."
-      subtitle={`I'm Toandro Mananjara, a ${age}-year-old full-stack developer from Antananarivo. I build modern web and mobile products with a strong eye for code quality, accessibility and craft.`}
+      subtitle={`I'm MAHASALOTRA Toandromananjara, a ${age}-year-old full-stack developer from Antananarivo. I build modern web and mobile products with a strong eye for code quality, accessibility and craft.`}
     >
       <div className="grid md:grid-cols-12 gap-10 items-center">
         <motion.div
@@ -44,21 +44,22 @@ function About() {
         <motion.div variants={fadeUp} className="md:col-span-7 space-y-6">
           <div className="space-y-4 text-gray-300 leading-relaxed">
             <p>
-              I currently study at the{" "}
+              I&apos;m finishing my{" "}
               <span className="text-white_primary font-medium">
-                University of Antananarivo (MISA)
-              </span>{" "}
-              where I earned my Bachelor&apos;s degree and am now in my second
-              year of Master&apos;s (M2) in Computer Science.
+                M2 in Computer Science at the University of Antananarivo (MISA)
+              </span>
+              , after earning my Bachelor&apos;s degree there.
             </p>
             <p>
-              On the engineering side, I focus on{" "}
-              <span className="text-blue_primary">React</span>,{" "}
-              <span className="text-blue_primary">Next.js</span>,{" "}
-              <span className="text-blue_primary">NestJS</span>, and{" "}
-              <span className="text-blue_primary">React Native</span>. I care
-              about clean architecture, sensible state management and reliable
-              deployments.
+              I work{" "}
+              <span className="text-blue_primary">across the stack</span> —
+              frontend, backend and mobile — and increasingly ship{" "}
+              <span className="text-blue_primary">AI-powered features</span> in
+              production. With AI, the differentiator is no longer which
+              framework you know but how you think: understanding the problem,
+              picking the right trade-offs, and shipping something maintainable.
+              That&apos;s what I care about — clean architecture, sensible
+              state management and reliable deployments.
             </p>
             <p className="text-gray-400 italic border-l-2 border-yellow_primary/60 pl-4">
               &ldquo;Code is read more often than it is written — so I write it

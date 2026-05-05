@@ -4,13 +4,12 @@ export const experiences = [
     period: "2026 — Present",
     title: "Full-Stack & AI Developer",
     company: "Redsmite",
-    location: "Remote",
+    location: "Madagascar",
     type: "Freelance",
     description:
       "Consultant on full-stack and AI engagements. Implementing AI-powered features (LLM integration, voice / TTS, automation workflows) on top of modern web stacks, with a focus on production-ready integrations.",
     technologies: [
       "Next.js",
-      "NestJS",
       "TypeScript",
       "FastAPI",
       "LLMs",
@@ -47,10 +46,16 @@ export const experiences = [
     title: "Mobile Developer",
     company: "Paika Sarl",
     location: "Madagascar",
-    type: "Contract",
+    type: "Internship",
     description:
       "Full-stack mobile development with React Native, NestJS, TypeScript and Zustand. PostgreSQL design and feature implementation under Agile Scrum.",
-    technologies: ["React Native", "NestJS", "TypeScript", "PostgreSQL", "Zustand"],
+    technologies: [
+      "React Native",
+      "NestJS",
+      "TypeScript",
+      "PostgreSQL",
+      "Zustand",
+    ],
   },
   {
     id: "kinga-web",

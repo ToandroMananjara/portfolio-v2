@@ -55,14 +55,16 @@ export const projects = [
   {
     id: "watch-store",
     title: "Watch Store",
-    description:
-      "E-commerce front-end for a curated luxury watch catalogue.",
+    description: "E-commerce front-end for a curated luxury watch catalogue.",
     image: watchStore,
     category: "frontend",
     technologies: ["React", "CSS3"],
     site: "https://watch-store-by-toandro.netlify.app/",
     links: [
-      { label: "Repository", url: "https://github.com/ToandroMananjara/watch-store.git" },
+      {
+        label: "Repository",
+        url: "https://github.com/ToandroMananjara/watch-store.git",
+      },
     ],
   },
   {
@@ -71,10 +73,13 @@ export const projects = [
     description: "Task manager with full CRUD and persistent local storage.",
     image: todoList,
     category: "frontend",
-    technologies: ["HTML5", "CSS3", "localStorage"],
+    technologies: ["React", "TypeScript", "localStorage"],
     site: "https://todo-by-toandro.netlify.app/",
     links: [
-      { label: "Repository", url: "https://github.com/ToandroMananjara/newTodo_list.git" },
+      {
+        label: "Repository",
+        url: "https://github.com/ToandroMananjara/newTodo_list.git",
+      },
     ],
   },
   {
@@ -86,7 +91,10 @@ export const projects = [
     technologies: ["HTML5", "CSS3", "JavaScript"],
     site: "https://quiz-by-toandro.netlify.app/",
     links: [
-      { label: "Repository", url: "https://github.com/ToandroMananjara/quiz-capital.git" },
+      {
+        label: "Repository",
+        url: "https://github.com/ToandroMananjara/quiz-capital.git",
+      },
     ],
   },
   {
