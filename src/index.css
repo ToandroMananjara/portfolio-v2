@@ -2,149 +2,139 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
+@layer base {
+  :root {
+    --color-bg: #1a191d;
+    --color-bg-soft: #1f1e23;
+    --color-fg: #efefef;
+    --color-accent: #6ec1e4;
+    --color-accent-warm: #d9af23;
+    --nav-height: 72px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Roboto", "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Poppins", sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* Anchor scroll offset for fixed navbar — replaces ad-hoc pt-[70px] */
+  section[id],
+  div[id] {
+    scroll-margin-top: var(--nav-height);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background: rgba(110, 193, 228, 0.3);
+    color: #fff;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  width: 100%;
+@layer components {
+  .glass {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-body {
-  background: linear-gradient(135deg, #1a191d 0%, #1f1e23 50%, #1a191d 100%);
-  color: #efefef;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  line-height: 1.6;
-  overflow-x: hidden;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* Custom scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
-
 ::-webkit-scrollbar-track {
   background: #1a191d;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6ec1e4, #d9af23);
-  border-radius: 4px;
+  background: #2c2b30;
+  border-radius: 8px;
+  border: 2px solid #1a191d;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #5da8cf, #c49a1f);
+  background: #3a393e;
 }
 
-/* Selection styles */
-::selection {
-  background: rgba(110, 193, 228, 0.3);
-  color: #fff;
-}
-
-::-moz-selection {
-  background: rgba(110, 193, 228, 0.3);
-  color: #fff;
-}
-
-/* Focus styles */
-*:focus {
-  outline: 2px solid #6ec1e4;
-  outline-offset: 2px;
-}
-
-/* Smooth transitions for all elements */
-* {
-  transition: all 0.3s ease;
-}
-
-/* Custom animations */
+/* Animations */
 @keyframes float {
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
-@keyframes pulse-glow {
+@keyframes blink {
   0%,
-  100% {
-    box-shadow: 0 0 5px rgba(110, 193, 228, 0.5);
+  49% {
+    opacity: 1;
   }
-  50% {
-    box-shadow: 0 0 20px rgba(110, 193, 228, 0.8);
+  50%,
+  100% {
+    opacity: 0;
   }
 }
 
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Utility classes */
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+.animate-blink {
+  animation: blink 1s steps(1) infinite;
 }
 
-.gradient-text {
-  background: linear-gradient(45deg, #6ec1e4, #d9af23);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-shift 3s ease infinite;
-  background-size: 200% 200%;
-}
-
-/* Glassmorphism effect */
-.glass {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Hide scrollbar but keep functionality */
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Text shadows for better readability */
-.text-shadow {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Loading animation */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
-}
-
-.animate-spin {
-  animation: spin 1s linear infinite;
 }

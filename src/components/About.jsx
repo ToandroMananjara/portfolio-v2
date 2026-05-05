@@ -1,60 +1,100 @@
+import { motion } from "framer-motion";
+import { Download } from "lucide-react";
 import me from "../assets/me.png";
-
 import myCv from "../assets/data/CV_Toandro.pdf";
+import Section from "./ui/Section";
+import { fadeUp } from "../lib/motion";
+
+const calculateAge = (birthYear) => new Date().getFullYear() - birthYear;
+
+const stats = [
+  { value: "4+", label: "Years coding" },
+  { value: "10+", label: "Projects shipped" },
+  { value: "M2", label: "MISA — Antananarivo" },
+];
 
 function About() {
-  const calculAge = (yearOfbirth) => {
-    let date = new Date();
-    return date.getFullYear() - yearOfbirth;
-  };
-
-  const myProfiles = {
-    myName: "MAHASALOTRA",
-    myFirstName: "Toandromananjara",
-    age: calculAge(2001),
-  };
+  const age = calculateAge(2001);
 
   return (
-    <div id="about" className=" pt-[70px] px-4 sm:px-10 md:px-14">
-      <h1 className=" m-4 md:m-0 text-yellow_primary text-center text-3xl md:text-5xl">
-        About Me
-      </h1>
-      <div className=" flex md:flex-row gap-y-2 flex-col py:6 md:my-14 w-full">
-        <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-0">
-          <img
-            src={me}
-            alt="Toandro Mananjara"
-            className=" h-[15em] md:h-[20em] bg-white bg-opacity-80 rounded-full transition-transform duration-200 hover:scale-105"
-          />
-        </div>
-        <div className="text-sm md:text-xl bg-[rgba(136,136,136,.05)] shadow-md text-white_primary md:h-auto md:w-1/2  p-4 md:p-10 rounded-xl z-0">
-          <div className=" border-l-2 px-4">
-            <h3 className="m-0">
-              My name is{" "}
-              <span className="text-xl">
-                {myProfiles.myName + " " + myProfiles.myFirstName}
-              </span>
-            </h3>
-            <p className="my-4">
-              I am {myProfiles.age} years old and I am a Full Stack Developer. I
-              have obtained my Bachelor&apos;s degree and I am currently in my
-              final year of Master&apos;s degree at the University of
-              Antananarivo in the MISA program. Passionate about creating
-              innovative web solutions using modern technologies.
-            </p>
-            <div className="w-full min-h-fit flex justify-start mt-6">
-              <a
-                href={myCv}
-                download
-                className="text-xl sm:text-2xl text-white_primary py-2  bg-yellow_primary px-7 rounded-lg cursor-pointer hover:bg-white_primary hover:text-gray_primary transition-all duration-500 ease-in-out"
-              >
-                <span className="">Download my CV</span>
-              </a>
-            </div>
+    <Section
+      id="about"
+      index="01"
+      eyebrow="about-me"
+      title="A developer who cares about the details."
+      subtitle={`I'm Toandro Mananjara, a ${age}-year-old full-stack developer from Antananarivo. I build modern web and mobile products with a strong eye for code quality, accessibility and craft.`}
+    >
+      <div className="grid md:grid-cols-12 gap-10 items-center">
+        <motion.div
+          variants={fadeUp}
+          className="md:col-span-5 flex justify-center md:justify-start"
+        >
+          <div className="relative">
+            <div className="absolute -inset-2 rounded-2xl border border-blue_primary/30" />
+            <div className="absolute -bottom-3 -right-3 w-24 h-24 border-2 border-yellow_primary/60 rounded-2xl" />
+            <img
+              src={me}
+              alt="Toandro Mananjara"
+              loading="lazy"
+              className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-2xl bg-white/80 shadow-xl"
+            />
           </div>
-        </div>
+        </motion.div>
+
+        <motion.div variants={fadeUp} className="md:col-span-7 space-y-6">
+          <div className="space-y-4 text-gray-300 leading-relaxed">
+            <p>
+              I currently study at the{" "}
+              <span className="text-white_primary font-medium">
+                University of Antananarivo (MISA)
+              </span>{" "}
+              where I earned my Bachelor&apos;s degree and am now in my second
+              year of Master&apos;s (M2) in Computer Science.
+            </p>
+            <p>
+              On the engineering side, I focus on{" "}
+              <span className="text-blue_primary">React</span>,{" "}
+              <span className="text-blue_primary">Next.js</span>,{" "}
+              <span className="text-blue_primary">NestJS</span>, and{" "}
+              <span className="text-blue_primary">React Native</span>. I care
+              about clean architecture, sensible state management and reliable
+              deployments.
+            </p>
+            <p className="text-gray-400 italic border-l-2 border-yellow_primary/60 pl-4">
+              &ldquo;Code is read more often than it is written — so I write it
+              for the next person who has to maintain it.&rdquo;
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-2">
+            {stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-4 text-center"
+              >
+                <div className="text-2xl md:text-3xl font-bold text-blue_primary">
+                  {stat.value}
+                </div>
+                <div className="text-xs md:text-sm text-gray-400 mt-1">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pt-2">
+            <a
+              href={myCv}
+              download
+              className="inline-flex items-center gap-2 px-6 py-3 border border-yellow_primary text-yellow_primary rounded-lg font-medium hover:bg-yellow_primary hover:text-gray_primary transition-colors duration-300"
+            >
+              <Download className="w-4 h-4" />
+              Download CV
+            </a>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </Section>
   );
 }
 

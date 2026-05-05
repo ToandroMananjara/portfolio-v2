@@ -1,0 +1,51 @@
+export const education = [
+  {
+    id: "misa-m2",
+    year: "2025 — 2026",
+    school: "University of Antananarivo (MISA)",
+    description: "Master 2 in Computer Science — In progress",
+    type: "University",
+  },
+  {
+    id: "misa-m1",
+    year: "2024 — 2025",
+    school: "University of Antananarivo (MISA)",
+    description: "Master 1 in Computer Science — Validated",
+    type: "University",
+  },
+  {
+    id: "misa-bachelor",
+    year: "2021 — 2024",
+    school: "University of Antananarivo (MISA)",
+    description: "Bachelor's Degree in Computer Science — Graduated",
+    type: "University",
+  },
+  {
+    id: "dtc",
+    year: "2023",
+    school: "Digital Training Center",
+    description: "Full-Stack Web Development Training",
+    type: "Formation",
+  },
+  {
+    id: "math-info-2",
+    year: "2020 — 2021",
+    school: "University of Antananarivo",
+    description: "2nd year Bachelor's in Mathematics & Computer Science",
+    type: "University",
+  },
+  {
+    id: "math-info-1",
+    year: "2019 — 2020",
+    school: "University of Antananarivo",
+    description: "1st year Bachelor's in Mathematics & Computer Science",
+    type: "University",
+  },
+  {
+    id: "bac",
+    year: "2018",
+    school: "Lycée Nanisana",
+    description: "Baccalaureate, Series C (Sciences)",
+    type: "High School",
+  },
+];

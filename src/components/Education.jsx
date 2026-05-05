@@ -1,94 +1,60 @@
-function Education() {
-  const educations = [
-    {
-      id: 1,
-      year: "2024 - 2025",
-      school: "University of Antananarivo (MISA)",
-      description: "Master 1 in Computer Science",
-      type: "University",
-    },
-    {
-      id: 2,
-      year: "2021 - 2024",
-      school: "University of Antananarivo (MISA)",
-      description: "Bachelor's Degree in Computer Science - Graduated",
-      type: "University",
-    },
-    {
-      id: 3,
-      year: "2023",
-      school: "Digital Training Center",
-      description: "Web Development Training - Full Stack Development",
-      type: "Formation",
-    },
-    {
-      id: 4,
-      year: "2020 - 2021",
-      school: "University of Antananarivo",
-      description: "2nd year Bachelor's in Mathematics and Computer Science",
-      type: "University",
-    },
-    {
-      id: 5,
-      year: "2019 - 2020",
-      school: "University of Antananarivo",
-      description: "1st year Bachelor's in Mathematics and Computer Science",
-      type: "University",
-    },
-    {
-      id: 6,
-      year: "2018",
-      school: "Lycée Nanisana",
-      description: "Baccalaureate series C (Sciences)",
-      type: "High School",
-    },
-  ];
-  return (
-    <div id="education" className="pt-[70px] px-4 sm:px-10 md:px-14">
-      <h1 className=" mb-4 text-yellow_primary text-center text-3xl md:text-5xl">
-        Education & Training
-      </h1>
+import { motion } from "framer-motion";
+import { GraduationCap } from "lucide-react";
+import Section from "./ui/Section";
+import { education } from "../data/education";
+import { fadeUp, stagger } from "../lib/motion";
 
-      <div className="w-full flex flex-wrap">
-        {educations.map((education, index) => (
-          <div
-            key={index}
-            className="group text-white_primary w-full sm:w-1/2 xl:w-1/3 p-4 shadow-md cursor-pointer"
+const TYPE_STYLES = {
+  University: "text-blue_primary border-blue_primary/30 bg-blue_primary/5",
+  Formation: "text-yellow_primary border-yellow_primary/30 bg-yellow_primary/5",
+  "High School": "text-purple_primary border-purple_primary/30 bg-purple_primary/5",
+};
+
+function Education() {
+  return (
+    <Section
+      id="education"
+      index="05"
+      eyebrow="education"
+      title="Background & training."
+    >
+      <motion.div
+        variants={stagger(0.05, 0.08)}
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+      >
+        {education.map((entry) => (
+          <motion.article
+            key={entry.id}
+            variants={fadeUp}
+            whileHover={{ y: -3 }}
+            transition={{ type: "spring", stiffness: 300, damping: 22 }}
+            className="group rounded-xl border border-white/5 bg-white/[0.02] p-6 hover:border-blue_primary/30 transition-colors"
           >
-            <div className="h-full rounded-lg overflow-hidden bg-[rgba(136,136,136,.05)] p-6 flex flex-col relative border border-transparent hover:border-blue_primary/30 hover:shadow-lg transition-all duration-300">
-              {/* Type Badge */}
-              <div
-                className={`inline-block w-fit px-3 py-1 rounded-full text-xs font-medium mb-4 ${
-                  education.type === "University"
-                    ? "bg-blue_primary/20 text-blue_primary"
-                    : education.type === "Formation"
-                    ? "bg-yellow_primary/20 text-yellow_primary"
-                    : "bg-purple-500/20 text-purple-400"
+            <div className="flex items-start justify-between mb-4">
+              <div className="w-10 h-10 rounded-lg bg-blue_primary/10 text-blue_primary flex items-center justify-center">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <span
+                className={`text-[11px] font-mono px-2 py-1 rounded-md border ${
+                  TYPE_STYLES[entry.type] ??
+                  "text-gray-300 border-white/10 bg-white/[0.03]"
                 }`}
               >
-                {education.type}
-              </div>
-
-              <h1 className="text-xl md:text-2xl text-blue_primary font-bold py-2 leading-tight">
-                {education.school}
-              </h1>
-
-              <div className="flex-grow">
-                <h2 className="text-lg md:text-xl text-yellow_primary font-semibold py-2">
-                  {education.year}
-                </h2>
-                <h3 className="text-base md:text-lg text-gray-300 py-2 leading-relaxed">
-                  {education.description}
-                </h3>
-              </div>
-
-              {/* Decorative element */}
-              {/* <div className="h-1 w-0 bg-gradient-to-r from-blue_primary to-yellow_primary rounded-full mt-4 group-hover:w-full transition-all duration-500" /> */}
+                {entry.type}
+              </span>
             </div>
-          </div>
+            <p className="font-mono text-xs text-yellow_primary">{entry.year}</p>
+            <h3 className="mt-1 text-lg font-semibold text-white_primary leading-tight">
+              {entry.school}
+            </h3>
+            <p className="mt-2 text-sm text-gray-400 leading-relaxed">
+              {entry.description}
+            </p>
+          </motion.article>
         ))}
-      </div>
-    </div>
+      </motion.div>
+    </Section>
   );
 }
+
 export default Education;

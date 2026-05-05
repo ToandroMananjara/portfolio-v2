@@ -10,10 +10,30 @@ export default {
         gray_primary: "#1a191d",
         gray_secondary: "#54595f",
         gray_text: "#7a7a7a",
-        purple_primary: "#b7f",
+        purple_primary: "#bb77ff",
         blue_secondary: "#2c3599",
         white_primary: "#efefef",
         yellow_primary: "#d9af23",
+      },
+      fontFamily: {
+        sans: [
+          "Poppins",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        mono: [
+          "Roboto Mono",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "monospace",
+        ],
+      },
+      maxWidth: {
+        content: "1200px",
       },
     },
     screens: {
