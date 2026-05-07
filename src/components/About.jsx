@@ -4,25 +4,27 @@ import me from "../assets/me.png";
 import myCv from "../assets/data/CV_Toandro.pdf";
 import Section from "./ui/Section";
 import { fadeUp } from "../lib/motion";
+import { useLang } from "../lib/i18n.jsx";
 
 const calculateAge = (birthYear) => new Date().getFullYear() - birthYear;
 
-const stats = [
-  { value: "4+", label: "Years coding" },
-  { value: "10+", label: "Projects shipped" },
-  { value: "M2", label: "MISA — Antananarivo" },
-];
-
 function About() {
+  const { t } = useLang();
   const age = calculateAge(2001);
+
+  const stats = [
+    { value: "4+", label: t("about.stat.years") },
+    { value: "10+", label: t("about.stat.projects") },
+    { value: "M2", label: t("about.stat.misa") },
+  ];
 
   return (
     <Section
       id="about"
       index="01"
-      eyebrow="about-me"
-      title="A developer who cares about the details."
-      subtitle={`I'm MAHASALOTRA Toandromananjara, a ${age}-year-old full-stack developer from Antananarivo. I build modern web and mobile products with a strong eye for code quality, accessibility and craft.`}
+      eyebrow={t("about.eyebrow")}
+      title={t("about.title")}
+      subtitle={t("about.subtitle").replace("{age}", age)}
     >
       <div className="grid md:grid-cols-12 gap-10 items-center">
         <motion.div
@@ -44,26 +46,15 @@ function About() {
         <motion.div variants={fadeUp} className="md:col-span-7 space-y-6">
           <div className="space-y-4 text-gray-300 leading-relaxed">
             <p>
-              I&apos;m finishing my{" "}
+              {t("about.p1.before")}
               <span className="text-white_primary font-medium">
-                M2 in Computer Science at the University of Antananarivo (MISA)
+                {t("about.p1.highlight")}
               </span>
-              , after earning my Bachelor&apos;s degree there.
+              {t("about.p1.after")}
             </p>
-            <p>
-              I work{" "}
-              <span className="text-blue_primary">across the stack</span> —
-              frontend, backend and mobile — and increasingly ship{" "}
-              <span className="text-blue_primary">AI-powered features</span> in
-              production. With AI, the differentiator is no longer which
-              framework you know but how you think: understanding the problem,
-              picking the right trade-offs, and shipping something maintainable.
-              That&apos;s what I care about — clean architecture, sensible
-              state management and reliable deployments.
-            </p>
+            <p>{t("about.p2")}</p>
             <p className="text-gray-400 italic border-l-2 border-yellow_primary/60 pl-4">
-              &ldquo;Code is read more often than it is written — so I write it
-              for the next person who has to maintain it.&rdquo;
+              {t("about.quote")}
             </p>
           </div>
 
@@ -90,7 +81,7 @@ function About() {
               className="inline-flex items-center gap-2 px-6 py-3 border border-yellow_primary text-yellow_primary rounded-lg font-medium hover:bg-yellow_primary hover:text-gray_primary transition-colors duration-300"
             >
               <Download className="w-4 h-4" />
-              Download CV
+              {t("about.cv")}
             </a>
           </div>
         </motion.div>

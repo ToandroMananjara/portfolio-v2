@@ -5,8 +5,10 @@ import Section from "./ui/Section";
 import { projects, projectCategories } from "../data/projects";
 import { fadeUp, stagger } from "../lib/motion";
 import { useBodyScrollLock } from "../lib/useBodyScrollLock";
+import { useLang } from "../lib/i18n.jsx";
 
 function ProjectImage({ project, className = "" }) {
+  const { pick } = useLang();
   return (
     <div
       className={`relative overflow-hidden ${
@@ -15,7 +17,7 @@ function ProjectImage({ project, className = "" }) {
     >
       <img
         src={project.image}
-        alt={project.title}
+        alt={pick(project.title)}
         loading="lazy"
         className={`w-full h-full ${
           project.isMobile ? "object-contain p-4" : "object-cover"
@@ -40,18 +42,23 @@ function TechList({ items, className = "" }) {
   );
 }
 
-function ProjectActions({ project, onDetails }) {
+function ProjectActions({ project, onDetails, compact = false }) {
+  const { t } = useLang();
+  const btnHeight = compact ? "h-9" : "h-10";
+  const size = compact ? `${btnHeight} px-3 text-[15px]` : `${btnHeight} px-3.5 text-base`;
+  const iconBtnSize = compact ? `${btnHeight} px-5` : `${btnHeight} px-6`;
+  const iconSize = compact ? "w-4 h-4" : "w-[18px] h-[18px]";
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap items-center gap-1.5">
       {project.site && (
         <a
           href={project.site}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-blue_primary/30 text-blue_primary hover:bg-blue_primary/10 transition-colors"
+          className={`inline-flex items-center gap-1.5 ${size} rounded-md border border-blue_primary/30 text-blue_primary hover:bg-blue_primary/10 transition-colors`}
         >
-          <Eye className="w-4 h-4" />
-          Live
+          <Eye className={iconSize} />
+          {t("work.live")}
         </a>
       )}
       {project.download && (
@@ -59,37 +66,41 @@ function ProjectActions({ project, onDetails }) {
           href={project.download}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-emerald-400/30 text-emerald-400 hover:bg-emerald-400/10 transition-colors"
+          aria-label={t("work.download")}
+          title={t("work.download")}
+          className={`inline-flex items-center justify-center ${iconBtnSize} rounded-md border border-emerald-400/30 text-emerald-400 hover:bg-emerald-400/10 transition-colors`}
         >
-          <Download className="w-4 h-4" />
-          Download
+          <Download className={iconSize} />
         </a>
       )}
       {project.links?.map((link) => (
         <a
-          key={link.label}
+          key={link.labelKey}
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-white/10 text-gray-300 hover:border-white/30 hover:text-white_primary transition-colors"
+          aria-label={t(link.labelKey)}
+          title={t(link.labelKey)}
+          className={`inline-flex items-center gap-1.5 ${size} rounded-md border border-white/10 text-gray-300 hover:border-white/30 hover:text-white_primary transition-colors`}
         >
-          <Code2 className="w-4 h-4" />
-          {link.label}
+          <Code2 className={iconSize} />
+          {t(link.labelKey)}
         </a>
       ))}
       <button
         type="button"
         onClick={onDetails}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-white/10 text-gray-300 hover:border-white/30 hover:text-white_primary transition-colors"
+        className={`inline-flex items-center gap-1.5 ${size} rounded-md border border-white/10 text-gray-300 hover:border-white/30 hover:text-white_primary transition-colors`}
       >
-        Details
-        <ArrowUpRight className="w-4 h-4" />
+        {t("work.details")}
+        <ArrowUpRight className={iconSize} />
       </button>
     </div>
   );
 }
 
 function FeaturedProject({ project, onDetails }) {
+  const { t, pick } = useLang();
   return (
     <motion.article
       initial={{ opacity: 0, y: 16 }}
@@ -104,13 +115,13 @@ function FeaturedProject({ project, onDetails }) {
       <div className="p-6 md:p-8 flex flex-col">
         <div className="flex items-center gap-2 font-mono text-xs text-yellow_primary mb-3">
           <Star className="w-4 h-4 fill-current" />
-          featured project
+          {t("work.featured")}
         </div>
         <h3 className="text-2xl md:text-3xl font-bold text-white_primary mb-3">
-          {project.title}
+          {pick(project.title)}
         </h3>
         <p className="text-gray-400 leading-relaxed mb-5">
-          {project.description}
+          {pick(project.description)}
         </p>
         <TechList items={project.technologies} className="mb-6" />
         <div className="mt-auto">
@@ -122,19 +133,20 @@ function FeaturedProject({ project, onDetails }) {
 }
 
 function ProjectCard({ project, onDetails }) {
+  const { pick } = useLang();
   return (
     <article className="group h-full flex flex-col rounded-xl overflow-hidden border border-white/5 bg-white/[0.02] hover:border-blue_primary/30 hover:-translate-y-1 transition-all duration-300">
       <ProjectImage project={project} className="h-48" />
       <div className="p-5 flex flex-col flex-1">
         <h3 className="text-lg font-semibold text-white_primary">
-          {project.title}
+          {pick(project.title)}
         </h3>
-        <p className="mt-1 text-sm text-gray-400 leading-relaxed line-clamp-2">
-          {project.description}
+        <p className="mt-1 text-sm text-gray-400 leading-relaxed line-clamp-2 min-h-[2.625rem]">
+          {pick(project.description)}
         </p>
         <TechList items={project.technologies} className="mt-4" />
-        <div className="mt-5 pt-4 border-t border-white/5">
-          <ProjectActions project={project} onDetails={onDetails} />
+        <div className="mt-auto pt-4 border-t border-white/5">
+          <ProjectActions project={project} onDetails={onDetails} compact />
         </div>
       </div>
     </article>
@@ -142,6 +154,7 @@ function ProjectCard({ project, onDetails }) {
 }
 
 function DetailsModal({ project, onClose }) {
+  const { t, pick } = useLang();
   useBodyScrollLock(Boolean(project));
 
   useEffect(() => {
@@ -170,7 +183,7 @@ function DetailsModal({ project, onClose }) {
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label={project.title}
+            aria-label={pick(project.title)}
             initial={{ y: 24, opacity: 0, scale: 0.98 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 12, opacity: 0, scale: 0.98 }}
@@ -188,13 +201,13 @@ function DetailsModal({ project, onClose }) {
             <ProjectImage project={project} className="h-64" />
             <div className="p-6 md:p-8">
               <h3 className="text-2xl font-bold text-white_primary">
-                {project.title}
+                {pick(project.title)}
               </h3>
               <p className="mt-3 text-gray-300 leading-relaxed">
-                {project.description}
+                {pick(project.description)}
               </p>
               <p className="mt-6 font-mono text-xs text-blue_primary mb-2">
-                <span className="text-yellow_primary">{"//"}</span> tech
+                <span className="text-yellow_primary">{"//"}</span> {t("work.tech")}
               </p>
               <TechList items={project.technologies} />
             </div>
@@ -206,6 +219,7 @@ function DetailsModal({ project, onClose }) {
 }
 
 function Project() {
+  const { t } = useLang();
   const [activeFilter, setActiveFilter] = useState("all");
   const [selected, setSelected] = useState(null);
 
@@ -222,9 +236,9 @@ function Project() {
     <Section
       id="work"
       index="04"
-      eyebrow="work"
-      title="Selected projects."
-      subtitle="A handful of things I've built — from full-stack platforms to mobile apps and frontend work."
+      eyebrow={t("work.eyebrow")}
+      title={t("work.title")}
+      subtitle={t("work.subtitle")}
     >
       <motion.div
         variants={stagger(0.04, 0.08)}
@@ -245,7 +259,7 @@ function Project() {
               }`}
             >
               <span className="text-yellow_primary/70 mr-1">{"//"}</span>
-              {category.label}
+              {t(category.labelKey)}
             </motion.button>
           );
         })}
@@ -276,8 +290,7 @@ function Project() {
 
       {filtered.length === 0 && (
         <p className="font-mono text-sm text-gray-500 mt-4">
-          <span className="text-yellow_primary/70">{"//"}</span> no projects in
-          this category yet.
+          <span className="text-yellow_primary/70">{"//"}</span> {t("work.empty")}
         </p>
       )}
 

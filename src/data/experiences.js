@@ -1,13 +1,15 @@
 export const experiences = [
   {
     id: "redsmite",
-    period: "2026 — Present",
-    title: "Full-Stack & AI Developer",
+    period: { en: "2026 — Present", fr: "2026 — Aujourd'hui" },
+    title: { en: "Full-Stack Developer & AI Engineer", fr: "Développeur Full-Stack & AI Engineer" },
     company: "Redsmite",
     location: "Madagascar",
     type: "Freelance",
-    description:
-      "Consultant on full-stack and AI engagements. Implementing AI-powered features (LLM integration, voice / TTS, automation workflows) on top of modern web stacks, with a focus on production-ready integrations.",
+    description: {
+      en: "Consultant on full-stack and AI engagements. Implementing AI-powered features (LLM integration, voice / TTS, automation workflows) on top of modern web stacks, with a focus on production-ready integrations.",
+      fr: "Consultant sur des missions full-stack et IA. J'intègre des fonctionnalités IA (LLM, voix / TTS, workflows d'automatisation) sur des stacks web modernes, avec un focus sur la mise en production.",
+    },
     technologies: [
       "Next.js",
       "TypeScript",
@@ -20,35 +22,41 @@ export const experiences = [
   },
   {
     id: "freelance-fullstack",
-    period: "Jun 2025 — Present",
-    title: "Full-Stack Developer",
+    period: { en: "Jun 2025 — Present", fr: "Juin 2025 — Aujourd'hui" },
+    title: { en: "Full-Stack Developer", fr: "Développeur Full-Stack" },
     company: "Freelance",
-    location: "Remote",
+    location: { en: "Remote", fr: "Remote" },
     type: "Freelance",
-    description:
-      "Building complete web applications with Next.js, NestJS, TypeScript and PostgreSQL. Database design, REST API implementation, frontend performance work, and deployment on VPS (Docker + Nginx).",
+    description: {
+      en: "Building complete web applications with Next.js, NestJS, TypeScript and PostgreSQL. Database design, REST API implementation, frontend performance, and deployment on VPS (Docker + Nginx).",
+      fr: "Conception d'applications web complètes (Next.js, NestJS, TypeScript, PostgreSQL). Modélisation BDD, APIs REST, optimisation frontend et déploiement VPS (Docker + Nginx).",
+    },
     technologies: ["Next.js", "NestJS", "TypeScript", "PostgreSQL", "Docker"],
   },
   {
     id: "freelance-frontend",
-    period: "Aug 2025",
-    title: "Front-End Developer",
+    period: { en: "Aug 2025", fr: "Août 2025" },
+    title: { en: "Front-End Developer", fr: "Développeur Front-End" },
     company: "Freelance",
-    location: "Remote",
+    location: { en: "Remote", fr: "Remote" },
     type: "Freelance",
-    description:
-      "Designed an AI-powered web application for the music industry. Built a dynamic, responsive interface with React and TypeScript.",
+    description: {
+      en: "Designed an AI-powered web application for the music industry. Built a dynamic, responsive interface with React and TypeScript.",
+      fr: "Conception d'une application web IA pour l'industrie musicale. Interface dynamique et responsive en React et TypeScript.",
+    },
     technologies: ["React", "TypeScript", "AI Integration"],
   },
   {
     id: "paika-mobile",
-    period: "Jul — Aug 2025",
-    title: "Mobile Developer",
+    period: { en: "Jul — Aug 2025", fr: "Juil. — Août 2025" },
+    title: { en: "Mobile Developer", fr: "Développeur Mobile" },
     company: "Paika Sarl",
     location: "Madagascar",
     type: "Internship",
-    description:
-      "Full-stack mobile development with React Native, NestJS, TypeScript and Zustand. PostgreSQL design and feature implementation under Agile Scrum.",
+    description: {
+      en: "Full-stack mobile development with React Native, NestJS, TypeScript and Zustand. PostgreSQL design and feature implementation under Agile Scrum.",
+      fr: "Développement mobile full-stack en React Native, NestJS, TypeScript et Zustand. Modélisation PostgreSQL et livraison de features en Agile Scrum.",
+    },
     technologies: [
       "React Native",
       "NestJS",
@@ -59,13 +67,15 @@ export const experiences = [
   },
   {
     id: "kinga-web",
-    period: "Mar — May 2025",
-    title: "Web Developer",
+    period: { en: "Mar — May 2025", fr: "Mars — Mai 2025" },
+    title: { en: "Web Developer", fr: "Développeur Web" },
     company: "Kinga IT",
     location: "Madagascar",
     type: "Contract",
-    description:
-      "Contributed to full-stack development with React, NestJS, TypeScript, MongoDB and PostgreSQL. Shipped features collaboratively in an Agile Scrum setting.",
+    description: {
+      en: "Contributed to full-stack development with React, NestJS, TypeScript, MongoDB and PostgreSQL. Shipped features collaboratively in an Agile Scrum setting.",
+      fr: "Développement full-stack en React, NestJS, TypeScript, MongoDB et PostgreSQL. Livraison de features en équipe, en Agile Scrum.",
+    },
     technologies: ["React", "NestJS", "TypeScript", "MongoDB", "PostgreSQL"],
   },
 ];

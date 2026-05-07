@@ -3,6 +3,7 @@ import { GraduationCap } from "lucide-react";
 import Section from "./ui/Section";
 import { education } from "../data/education";
 import { fadeUp, stagger } from "../lib/motion";
+import { useLang } from "../lib/i18n.jsx";
 
 const TYPE_STYLES = {
   University: "text-blue_primary border-blue_primary/30 bg-blue_primary/5",
@@ -10,13 +11,21 @@ const TYPE_STYLES = {
   "High School": "text-purple_primary border-purple_primary/30 bg-purple_primary/5",
 };
 
+const TYPE_KEYS = {
+  University: "edu.type.University",
+  Formation: "edu.type.Formation",
+  "High School": "edu.type.HighSchool",
+};
+
 function Education() {
+  const { t, pick } = useLang();
+
   return (
     <Section
       id="education"
       index="05"
-      eyebrow="education"
-      title="Background & training."
+      eyebrow={t("edu.eyebrow")}
+      title={t("edu.title")}
     >
       <motion.div
         variants={stagger(0.05, 0.08)}
@@ -40,15 +49,15 @@ function Education() {
                   "text-gray-300 border-white/10 bg-white/[0.03]"
                 }`}
               >
-                {entry.type}
+                {t(TYPE_KEYS[entry.type] ?? entry.type)}
               </span>
             </div>
             <p className="font-mono text-xs text-yellow_primary">{entry.year}</p>
             <h3 className="mt-1 text-lg font-semibold text-white_primary leading-tight">
-              {entry.school}
+              {pick(entry.school)}
             </h3>
             <p className="mt-2 text-sm text-gray-400 leading-relaxed">
-              {entry.description}
+              {pick(entry.description)}
             </p>
           </motion.article>
         ))}
