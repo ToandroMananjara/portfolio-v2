@@ -3,19 +3,22 @@ import Section from "./ui/Section";
 import { expertise } from "../data/expertise";
 import { skillCategories } from "../data/skills";
 import { fadeUp, stagger } from "../lib/motion";
+import { useLang } from "../lib/i18n.jsx";
 
 function Skills() {
+  const { t, pick } = useLang();
+
   return (
     <Section
       id="expertise"
       index="02"
-      eyebrow="expertise"
-      title="What I do, and how."
-      subtitle="I work across the stack with a focus on shipping maintainable products. Below are the three areas I focus on day-to-day, and the tools I reach for."
+      eyebrow={t("skills.eyebrow")}
+      title={t("skills.title")}
+      subtitle={t("skills.subtitle")}
     >
       <motion.div
         variants={stagger(0.05, 0.12)}
-        className="grid md:grid-cols-3 gap-6"
+        className="grid sm:grid-cols-2 gap-6"
       >
         {expertise.map((item) => {
           const Icon = item.icon;
@@ -27,20 +30,22 @@ function Skills() {
               transition={{ type: "spring", stiffness: 300, damping: 22 }}
               className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 hover:border-blue_primary/30 transition-colors"
             >
-              <div className="w-12 h-12 rounded-xl bg-blue_primary/10 text-blue_primary flex items-center justify-center mb-5 group-hover:bg-blue_primary/15 transition-colors">
-                <Icon className="w-6 h-6" />
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-lg bg-blue_primary/10 text-blue_primary flex items-center justify-center shrink-0 group-hover:bg-blue_primary/15 transition-colors">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-semibold text-white_primary">
+                  {pick(item.title)}
+                </h3>
               </div>
-              <h3 className="text-xl font-semibold text-white_primary">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-gray-400 leading-relaxed">
-                {item.summary}
+              <p className="text-sm text-gray-400 leading-relaxed">
+                {pick(item.summary)}
               </p>
               <ul className="mt-4 space-y-2 text-sm text-gray-300">
-                {item.bullets.map((b) => (
-                  <li key={b} className="flex gap-2">
+                {item.bullets.map((b, i) => (
+                  <li key={i} className="flex gap-2">
                     <span className="font-mono text-yellow_primary">›</span>
-                    <span>{b}</span>
+                    <span>{pick(b)}</span>
                   </li>
                 ))}
               </ul>
@@ -51,7 +56,7 @@ function Skills() {
 
       <motion.div variants={fadeUp} className="mt-16 md:mt-20">
         <p className="font-mono text-sm text-blue_primary mb-6">
-          <span className="text-yellow_primary">{"//"}</span> tech-stack
+          <span className="text-yellow_primary">{"//"}</span> {t("skills.techStack")}
         </p>
         <div className="space-y-8">
           {skillCategories.map((category) => (
@@ -60,7 +65,7 @@ function Skills() {
               className="grid md:grid-cols-[140px_1fr] gap-4 md:gap-6 items-start"
             >
               <h4 className="text-sm font-mono text-gray-400 uppercase tracking-wider md:pt-3">
-                {category.label}
+                {t(category.labelKey)}
               </h4>
               <ul className="flex flex-wrap gap-3">
                 {category.items.map((skill) => {

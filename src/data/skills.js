@@ -22,12 +22,22 @@ import php from "../assets/skills/PHP-Dark.svg";
 import git from "../assets/skills/Git.svg";
 import github from "../assets/skills/Github.svg";
 import docker from "../assets/skills/Docker.svg";
-import { Braces, Sparkles, Workflow, AudioLines, Database } from "lucide-react";
+import {
+  Braces,
+  Sparkles,
+  Workflow,
+  AudioLines,
+  Database,
+  Bot,
+  Brain,
+  Network,
+  MessageSquare,
+} from "lucide-react";
 
 export const skillCategories = [
   {
     id: "frontend",
-    label: "Frontend",
+    labelKey: "skills.cat.frontend",
     items: [
       { name: "HTML5", src: html },
       { name: "CSS3", src: css },
@@ -43,7 +53,7 @@ export const skillCategories = [
   },
   {
     id: "backend",
-    label: "Backend",
+    labelKey: "skills.cat.backend",
     items: [
       { name: "Node.js", src: nodejs },
       { name: "NestJS", src: nestjs },
@@ -53,7 +63,7 @@ export const skillCategories = [
   },
   {
     id: "databases",
-    label: "Databases & BaaS",
+    labelKey: "skills.cat.databases",
     items: [
       { name: "PostgreSQL", src: postgresql },
       { name: "MySQL", src: mysql },
@@ -63,16 +73,21 @@ export const skillCategories = [
   },
   {
     id: "ai",
-    label: "AI & Automation",
+    labelKey: "skills.cat.ai",
     items: [
-      { name: "LLM Integration", icon: Sparkles },
+      { name: "OpenAI", icon: Sparkles },
+      { name: "Anthropic Claude", icon: Brain },
+      { name: "Gemini", icon: Bot },
+      { name: "LangChain", icon: Network },
+      { name: "RAG / Vector DB", icon: Database },
+      { name: "Prompt Engineering", icon: MessageSquare },
       { name: "ElevenLabs", icon: AudioLines },
       { name: "Trigger.dev", icon: Workflow },
     ],
   },
   {
     id: "languages",
-    label: "Languages",
+    labelKey: "skills.cat.languages",
     items: [
       { name: "Python", src: python },
       { name: "Java", src: java },
@@ -83,7 +98,7 @@ export const skillCategories = [
   },
   {
     id: "tools",
-    label: "Tools & DevOps",
+    labelKey: "skills.cat.tools",
     items: [
       { name: "Git", src: git },
       { name: "GitHub", src: github },

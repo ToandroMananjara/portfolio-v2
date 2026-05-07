@@ -2,8 +2,10 @@ import facebook from "/src/assets/socials/facebook.png";
 import linkedin from "/src/assets/socials/linkedin.png";
 import github from "/src/assets/socials/github.png";
 import { ArrowDown } from "lucide-react";
+import { useLang } from "../lib/i18n.jsx";
 
 function Hero() {
+  const { t } = useLang();
   const socials = [
     {
       id: 0,
@@ -32,7 +34,7 @@ function Hero() {
             Toandro Mananjara
           </h1>
           <h4 className="uppercase text-yellow_primary text-center text-xl sm:text-2xl lg:text-3xl m-2 lg:m-6 tracking-wide">
-            Full Stack &amp; AI Developer
+            {t("hero.role")}
           </h4>
           <div className="flex justify-center">
             <ul className="flex gap-x-3 m-1">

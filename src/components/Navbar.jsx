@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { navItems } from "../data/navigation";
+import { useLang } from "../lib/i18n.jsx";
 
 function Navbar() {
+  const { lang, toggle, t } = useLang();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeId, setActiveId] = useState("home");
@@ -45,17 +47,18 @@ function Navbar() {
   }, [isOpen]);
 
   return (
-    <motion.header
-      initial={{ y: -32, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-[999] transition-colors duration-300 ${
-        scrolled
-          ? "bg-gray_primary/85 backdrop-blur-md border-b border-white/5"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="max-w-content mx-auto flex items-center justify-between px-5 sm:px-10 md:px-14 h-[var(--nav-height,72px)]">
+    <>
+      <motion.header
+        initial={{ y: -32, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-[999] transition-colors duration-300 ${
+          scrolled
+            ? "bg-gray_primary/85 backdrop-blur-md border-b border-white/5"
+            : "bg-transparent"
+        }`}
+      >
+        <nav className="max-w-content mx-auto flex items-center justify-between px-5 sm:px-10 md:px-14 h-[var(--nav-height,72px)]">
         <a
           href="#home"
           className="font-mono text-2xl font-semibold text-blue_primary hover:text-yellow_primary transition-colors"
@@ -85,22 +88,45 @@ function Navbar() {
                   >
                     {"//"}
                   </span>
-                  <span>{item.label}</span>
+                  <span>{t(item.labelKey)}</span>
                 </a>
               </li>
             );
           })}
+          <li>
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label={t("nav.langLabel")}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-white/10 text-gray-300 hover:text-blue_primary hover:border-blue_primary/40 transition-colors"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span className="uppercase">{lang}</span>
+            </button>
+          </li>
         </ul>
 
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="md:hidden p-2 -mr-2 text-white_primary hover:text-blue_primary transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu className="w-6 h-6" />
-        </button>
-      </nav>
+        <div className="md:hidden flex items-center gap-1">
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={t("nav.langLabel")}
+            className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-white/10 text-gray-300 hover:text-blue_primary text-xs font-mono"
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span className="uppercase">{lang}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className="p-2 -mr-2 text-white_primary hover:text-blue_primary transition-colors"
+            aria-label={t("nav.menuOpen")}
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
+        </nav>
+      </motion.header>
 
       <AnimatePresence>
         {isOpen && (
@@ -131,7 +157,7 @@ function Navbar() {
                   type="button"
                   onClick={() => setIsOpen(false)}
                   className="p-2 -mr-2 text-white_primary hover:text-blue_primary transition-colors"
-                  aria-label="Close menu"
+                  aria-label={t("nav.menuClose")}
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -150,7 +176,7 @@ function Navbar() {
                       className="block px-3 py-3 rounded-md text-gray-200 hover:text-blue_primary hover:bg-white/5 transition-colors"
                     >
                       <span className="text-yellow_primary/80 mr-2">{"//"}</span>
-                      {item.label}
+                      {t(item.labelKey)}
                     </a>
                   </motion.li>
                 ))}
@@ -159,7 +185,7 @@ function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }
 
