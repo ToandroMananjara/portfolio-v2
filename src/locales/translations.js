@@ -61,6 +61,7 @@ export const translations = {
   "skills.cat.backend": { en: "Backend", fr: "Backend" },
   "skills.cat.databases": { en: "Databases & BaaS", fr: "Bases de données" },
   "skills.cat.ai": { en: "AI & Automation", fr: "IA & Automatisation" },
+  "skills.cat.testing": { en: "Testing & Quality", fr: "Tests & Qualité" },
   "skills.cat.languages": { en: "Languages", fr: "Langages" },
   "skills.cat.tools": { en: "Tools & DevOps", fr: "Outils & DevOps" },
 
@@ -89,11 +90,9 @@ export const translations = {
   "work.featured": { en: "featured project", fr: "projet phare" },
   "work.live": { en: "Live", fr: "Voir" },
   "work.download": { en: "Download", fr: "Télécharger" },
-  "work.details": { en: "Details", fr: "Détails" },
   "work.repo": { en: "Repo", fr: "Code" },
   "work.frontend": { en: "Frontend", fr: "Frontend" },
   "work.backend": { en: "Backend", fr: "Backend" },
-  "work.tech": { en: "tech", fr: "tech" },
   "work.empty": {
     en: "no projects in this category yet.",
     fr: "aucun projet dans cette catégorie.",
@@ -107,6 +106,8 @@ export const translations = {
   "work.highlights": { en: "what I built", fr: "ce que j'ai construit" },
   "work.more": { en: "more", fr: "de plus" },
   "work.less": { en: "Show less", fr: "Réduire" },
+  "work.zoom": { en: "enlarge", fr: "agrandir" },
+  "work.close": { en: "Close", fr: "Fermer" },
 
   // Education
   "edu.eyebrow": { en: "education", fr: "formation" },

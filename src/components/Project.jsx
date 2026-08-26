@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ArrowUpRight,
   Code2,
   Download,
   Eye,
   X,
+  ZoomIn,
 } from "lucide-react";
 import Section from "./ui/Section";
 import { projects, projectGroups } from "../data/projects";
@@ -21,15 +21,12 @@ import { useLang } from "../lib/i18n.jsx";
  * <img src={undefined}> declenche une requete vers l'URL de la page et laisse
  * une zone cassee dans la grille.
  */
-function ProjectImage({ project, className = "" }) {
-  const { pick } = useLang();
+function ProjectImage({ project, className = "", onZoom }) {
+  const { t, pick } = useLang();
   if (!project.image) return null;
-  return (
-    <div
-      className={`relative overflow-hidden ${
-        project.isMobile ? "flex items-center justify-center bg-black/30" : ""
-      } ${className}`}
-    >
+
+  const media = (
+    <>
       <img
         src={project.image}
         alt={pick(project.title)}
@@ -38,7 +35,98 @@ function ProjectImage({ project, className = "" }) {
           project.isMobile ? "object-contain p-4" : "object-cover"
         } transition-transform duration-500 group-hover:scale-105`}
       />
-    </div>
+      {onZoom && (
+        // Le curseur loupe suffit a signaler l'action a la souris, mais reste
+        // invisible au tactile et pour qui ne survole pas. Cette pastille rend
+        // l'agrandissement decouvrable.
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          <span className="rounded-full bg-black/60 p-3 text-white_primary backdrop-blur-sm">
+            <ZoomIn className="w-5 h-5" />
+          </span>
+        </span>
+      )}
+    </>
+  );
+
+  const base = `relative overflow-hidden ${
+    project.isMobile ? "flex items-center justify-center bg-black/30" : ""
+  } ${className}`;
+
+  if (!onZoom) return <div className={base}>{media}</div>;
+
+  return (
+    <button
+      type="button"
+      onClick={onZoom}
+      aria-label={`${pick(project.title)} — ${t("work.zoom")}`}
+      className={`${base} cursor-zoom-in w-full text-left`}
+    >
+      {media}
+    </button>
+  );
+}
+
+/**
+ * Visionneuse plein ecran. Volontairement minimale : une image, un fond, et
+ * trois facons d'en sortir (Echap, le fond, la croix). Le curseur passe en
+ * zoom-out sur le fond pour indiquer que cliquer referme.
+ */
+function Lightbox({ project, onClose }) {
+  const { t, pick } = useLang();
+  useBodyScrollLock(Boolean(project));
+
+  useEffect(() => {
+    if (!project) return undefined;
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [project, onClose]);
+
+  return (
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          /*
+            w-screen (100vw) plutot que inset-0 : 100vw inclut la largeur de la
+            barre de defilement, alors que inset-0 s'arrete au bord de la zone
+            de contenu. Sans cela, une bande de la couleur du site reste visible
+            a droite, le long du fond noir.
+          */
+          className="fixed top-0 left-0 w-screen h-screen z-[10000] flex items-center justify-center p-4 sm:p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <button
+            type="button"
+            aria-label={t("work.close")}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/95 cursor-zoom-out"
+          />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t("work.close")}
+            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white_primary transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <motion.img
+            src={project.image}
+            alt={pick(project.title)}
+            initial={{ scale: 0.94, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.96, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="relative max-w-full max-h-full object-contain rounded-lg shadow-2xl pointer-events-none"
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -112,20 +200,19 @@ function HighlightList({ items, visible = 2 }) {
 }
 
 /**
- * Les projets d'entreprise n'ont ni lien ni bouton « Détails » : leurs puces
- * sont deja lisibles sur la carte via le repli, un modal ne montrerait rien de
- * plus. On evite donc d'afficher une barre d'actions vide.
+ * Une carte n'affiche sa barre d'actions que si elle a un lien a proposer.
+ * Il n'y a plus de bouton « Détails » : tout le contenu est deja sur la carte
+ * (puces repliables comprises), un modal ne montrerait rien de plus.
  */
 function hasActions(project) {
   return (
     Boolean(project.site) ||
     Boolean(project.download) ||
-    (project.links?.length ?? 0) > 0 ||
-    project.group === "personal"
+    (project.links?.length ?? 0) > 0
   );
 }
 
-function ProjectActions({ project, onDetails, compact = false }) {
+function ProjectActions({ project, compact = false }) {
   const { t } = useLang();
   const btnHeight = compact ? "h-9" : "h-10";
   const size = compact
@@ -172,16 +259,6 @@ function ProjectActions({ project, onDetails, compact = false }) {
           {t(link.labelKey)}
         </a>
       ))}
-      {project.group === "personal" && (
-        <button
-          type="button"
-          onClick={onDetails}
-          className={`inline-flex items-center gap-1.5 ${size} rounded-md border border-white/10 text-gray-300 hover:border-white/30 hover:text-white_primary transition-colors`}
-        >
-          {t("work.details")}
-          <ArrowUpRight className={iconSize} />
-        </button>
-      )}
     </div>
   );
 }
@@ -190,7 +267,7 @@ function ProjectActions({ project, onDetails, compact = false }) {
  * Projet mis en avant. Le layout s'adapte a la presence d'une image :
  * deux colonnes avec visuel, une seule colonne sans.
  */
-function FeaturedProject({ project, onDetails }) {
+function FeaturedProject({ project, onZoom }) {
   const { t, pick } = useLang();
   const hasImage = Boolean(project.image);
 
@@ -203,7 +280,11 @@ function FeaturedProject({ project, onDetails }) {
         hasImage ? "md:grid-cols-2" : ""
       }`}
     >
-      <ProjectImage project={project} className="aspect-[16/10] md:aspect-auto" />
+      <ProjectImage
+        project={project}
+        className="aspect-[16/10] md:aspect-auto"
+        onZoom={onZoom}
+      />
       <div className="p-6 md:p-8 flex flex-col">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3">
           <span className="font-mono text-xs text-yellow_primary">
@@ -237,7 +318,7 @@ function FeaturedProject({ project, onDetails }) {
         <TechList items={project.technologies} className="mt-6" />
         {hasActions(project) && (
           <div className="mt-6">
-            <ProjectActions project={project} onDetails={onDetails} />
+            <ProjectActions project={project} />
           </div>
         )}
       </div>
@@ -245,11 +326,11 @@ function FeaturedProject({ project, onDetails }) {
   );
 }
 
-function ProjectCard({ project, onDetails }) {
+function ProjectCard({ project, onZoom }) {
   const { pick } = useLang();
   return (
     <article className="group h-full flex flex-col rounded-xl overflow-hidden border border-white/5 bg-white/[0.02] hover:border-blue_primary/30 hover:-translate-y-1 transition-all duration-300">
-      <ProjectImage project={project} className="h-48" />
+      <ProjectImage project={project} className="h-48" onZoom={onZoom} />
       <div className="p-5 flex flex-col flex-1">
         <ProjectMeta project={project} />
         <h3 className="mt-1.5 text-lg font-semibold text-white_primary">
@@ -286,7 +367,7 @@ function ProjectCard({ project, onDetails }) {
         />
         {hasActions(project) && (
           <div className="pt-4 border-t border-white/5">
-            <ProjectActions project={project} onDetails={onDetails} compact />
+            <ProjectActions project={project} compact />
           </div>
         )}
       </div>
@@ -294,99 +375,11 @@ function ProjectCard({ project, onDetails }) {
   );
 }
 
-function DetailsModal({ project, onClose }) {
-  const { t, pick } = useLang();
-  useBodyScrollLock(Boolean(project));
-
-  useEffect(() => {
-    if (!project) return undefined;
-    const onKey = (e) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [project, onClose]);
-
-  return (
-    <AnimatePresence>
-      {project && (
-        <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <button
-            type="button"
-            aria-label="Close details"
-            onClick={onClose}
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-          />
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label={pick(project.title)}
-            initial={{ y: 24, opacity: 0, scale: 0.98 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 12, opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-gray_primary border border-white/10 shadow-2xl"
-          >
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close"
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white_primary transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <ProjectImage project={project} className="h-64" />
-
-            <div className="p-6 md:p-8">
-              <ProjectMeta project={project} />
-              <h3 className="mt-2 text-2xl font-bold text-white_primary">
-                {pick(project.title)}
-              </h3>
-              {project.tagline && (
-                <p className="mt-2 text-blue_primary/90 leading-relaxed">
-                  {pick(project.tagline)}
-                </p>
-              )}
-              <p className="mt-3 text-gray-300 leading-relaxed">
-                {pick(project.description)}
-              </p>
-
-              {project.highlights && (
-                <>
-                  <p className="mt-6 font-mono text-xs text-gray-500 mb-3">
-                    <span className="text-yellow_primary/70">{"//"}</span>{" "}
-                    {t("work.highlights")}
-                  </p>
-                  {/* Dans le modal on montre tout : c'est le lieu du detail. */}
-                  <HighlightList
-                    items={project.highlights}
-                    visible={project.highlights.length}
-                  />
-                </>
-              )}
-
-              <p className="mt-6 font-mono text-xs text-blue_primary mb-2">
-                <span className="text-yellow_primary">{"//"}</span>{" "}
-                {t("work.tech")}
-              </p>
-              <TechList items={project.technologies} />
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
 function Project() {
   const { t } = useLang();
   const [activeGroup, setActiveGroup] = useState("enterprise");
-  const [selected, setSelected] = useState(null);
+  // Projet dont l'image est affichee en plein ecran.
+  const [zoomed, setZoomed] = useState(null);
 
   const { featured, rest } = useMemo(() => {
     const inGroup = projects.filter((p) => p.group === activeGroup);
@@ -436,7 +429,7 @@ function Project() {
         <FeaturedProject
           key={featured.id}
           project={featured}
-          onDetails={() => setSelected(featured)}
+          onZoom={featured.image ? () => setZoomed(featured) : undefined}
         />
       )}
 
@@ -451,7 +444,7 @@ function Project() {
           <ProjectCard
             key={project.id}
             project={project}
-            onDetails={() => setSelected(project)}
+            onZoom={project.image ? () => setZoomed(project) : undefined}
           />
         ))}
       </motion.div>
@@ -463,7 +456,7 @@ function Project() {
         </p>
       )}
 
-      <DetailsModal project={selected} onClose={() => setSelected(null)} />
+      <Lightbox project={zoomed} onClose={() => setZoomed(null)} />
     </Section>
   );
 }
