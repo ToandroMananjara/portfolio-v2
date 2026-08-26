@@ -21,6 +21,11 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    /* Reserve en permanence la place de la barre de defilement. Sans cela,
+       verrouiller le scroll la fait disparaitre et tout le contenu se decale
+       de sa largeur -- y compris la navbar, qui est en position fixed et
+       qu'un padding sur le body ne compenserait pas. */
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -96,6 +101,19 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #3a393e;
+}
+
+/* Scroll verrouille (modal, visionneuse) : la place de la barre reste
+   reservee par scrollbar-gutter, mais on la rend transparente pour qu'aucun
+   rail gris ne subsiste le long du fond sombre. */
+html[data-scroll-locked]::-webkit-scrollbar-track,
+html[data-scroll-locked]::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-color: transparent;
+}
+
+html[data-scroll-locked] {
+  scrollbar-color: transparent transparent;
 }
 
 /* Animations */
