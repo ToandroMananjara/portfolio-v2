@@ -81,10 +81,10 @@ export const translations = {
 
   // Projects
   "work.eyebrow": { en: "work", fr: "projets" },
-  "work.title": { en: "Selected projects.", fr: "Projets sélectionnés." },
+  "work.title": { en: "Things I've shipped.", fr: "Ce que j'ai livré." },
   "work.subtitle": {
-    en: "A handful of things I've built — from full-stack platforms to mobile apps and frontend work.",
-    fr: "Quelques projets que j'ai construits — du full-stack au mobile en passant par le frontend.",
+    en: "Production work built with teams, and personal projects. Client names are withheld — the products are described, not the companies behind them.",
+    fr: "Du travail livré en équipe, et des projets personnels. Les noms des clients ne sont pas divulgués — je décris les produits, pas les entreprises derrière.",
   },
   "work.featured": { en: "featured project", fr: "projet phare" },
   "work.live": { en: "Live", fr: "Voir" },
@@ -98,10 +98,15 @@ export const translations = {
     en: "no projects in this category yet.",
     fr: "aucun projet dans cette catégorie.",
   },
-  "work.cat.all": { en: "All", fr: "Tous" },
-  "work.cat.fullstack": { en: "Full-Stack", fr: "Full-Stack" },
-  "work.cat.frontend": { en: "Frontend", fr: "Frontend" },
-  "work.cat.mobile": { en: "Mobile", fr: "Mobile" },
+
+  // Groupes de projets
+  "work.group.enterprise": { en: "Enterprise", fr: "Entreprise" },
+  "work.group.personal": { en: "Personal", fr: "Perso" },
+
+  // Cartes projet
+  "work.highlights": { en: "what I built", fr: "ce que j'ai construit" },
+  "work.more": { en: "more", fr: "de plus" },
+  "work.less": { en: "Show less", fr: "Réduire" },
 
   // Education
   "edu.eyebrow": { en: "education", fr: "formation" },

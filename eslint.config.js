@@ -36,4 +36,13 @@ export default [
       ],
     },
   },
+  {
+    // Code serveur : les fonctions de api/ et le plugin de dev tournent dans
+    // Node, pas dans le navigateur. Sans ce bloc, ESLint signale process et
+    // Buffer comme non definis alors qu'ils sont parfaitement legitimes ici.
+    files: ['api/**/*.js', 'vite-plugin-api.js', '*.config.js'],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+  },
 ]

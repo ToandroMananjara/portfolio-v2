@@ -1,32 +1,426 @@
-import homepageIntegration from "../assets/projects/integration-newsHomePage.png";
-import portfolioV1 from "../assets/projects/mon-portfolio.png";
-import quiz from "../assets/projects/quiz.png";
-import todoList from "../assets/projects/todoList.png";
 import varotra from "../assets/projects/varotra.png";
-import watchStore from "../assets/projects/watch-store.png";
 import footballStat from "../assets/projects/football.png";
+import misara from "../assets/projects/misara.png";
 
-export const projectCategories = [
-  { id: "all", labelKey: "work.cat.all" },
-  { id: "fullstack", labelKey: "work.cat.fullstack" },
-  { id: "frontend", labelKey: "work.cat.frontend" },
-  { id: "mobile", labelKey: "work.cat.mobile" },
+/**
+ * Deux groupes seulement : le travail professionnel et les projets personnels.
+ * Les anciens filtres par technologie ont ete retires -- les technos restent
+ * lisibles sur chaque carte, un troisieme niveau de filtrage n'apportait rien.
+ */
+export const projectGroups = [
+  { id: "enterprise", labelKey: "work.group.enterprise" },
+  { id: "personal", labelKey: "work.group.personal" },
 ];
 
+/**
+ * Projets d'entreprise : pas d'image, pas de lien -- ce code ne m'appartient pas.
+ * Les noms de clients sont volontairement absents : chaque projet est presente
+ * sous un nom de code et decrit a un niveau qui ne permet pas de les identifier.
+ */
 export const projects = [
+  // ---------------------------------------------------------------- ENTREPRISE
+  {
+    id: "voice-interview-agent",
+    group: "enterprise",
+    featured: true,
+    org: "Redsmite",
+    title: {
+      en: "Voice Interview Agent",
+      fr: "Agent d'Interviews Vocales",
+    },
+    tagline: {
+      en: "AI-powered automated voice interviews, from the call to structured data",
+      fr: "Interviews vocales automatisées par IA, de l'appel à la donnée structurée",
+    },
+    description: {
+      en: "Automated voice interview system: a real-time conversational agent calls establishments, conducts the interview and turns the answers into structured data.",
+      fr: "Système d'interviews vocales automatisées : un agent conversationnel temps réel appelle les établissements, mène l'entretien et transforme les réponses en données structurées.",
+    },
+    highlights: [
+      {
+        en: "Real-time conversational voice agent combining speech synthesis, transcription and bidirectional audio streaming",
+        fr: "Agent vocal conversationnel temps réel combinant synthèse vocale, transcription et flux audio bidirectionnel",
+      },
+      {
+        en: "Outbound calls over WhatsApp Business API and telephony, driven by a dedicated state machine with automatic retries on failure",
+        fr: "Appels sortants via WhatsApp Business API et téléphonie, pilotés par une machine à états dédiée avec reprises automatiques sur échec",
+      },
+      {
+        en: "LLM-based structured extraction of the answers, with transcript delivery by email",
+        fr: "Extraction structurée des réponses par LLM, avec livraison des transcripts par e-mail",
+      },
+      {
+        en: "Async FastAPI backend on PostgreSQL and Redis, interview campaigns orchestrated as background workflows",
+        fr: "Backend FastAPI asynchrone sur PostgreSQL et Redis, campagnes d'interviews orchestrées en workflows",
+      },
+      {
+        en: "Per-call cost tracking across voice and LLM usage to keep the running budget under control",
+        fr: "Suivi des coûts par appel, voix et LLM, pour piloter le budget d'exploitation",
+      },
+    ],
+    technologies: [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Redis",
+      "ElevenLabs",
+      "Deepgram",
+      "Pipecat",
+      "Twilio",
+      "WhatsApp API",
+      "LLMs",
+      "Trigger.dev",
+      "Docker",
+    ],
+  },
+  {
+    id: "stock-pilot",
+    group: "enterprise",
+    org: "Redsmite",
+    title: { en: "Stock Pilot", fr: "Stock Pilot" },
+    tagline: {
+      en: "Inventory monitoring and replenishment decisions for a multi-SKU B2B distributor",
+      fr: "Pilotage des stocks et décisions de réapprovisionnement pour un distributeur B2B multi-références",
+    },
+    description: {
+      en: "Decision-support tool that turns raw inventory exports into stock coverage indicators and concrete replenishment proposals.",
+      fr: "Outil d'aide à la décision qui transforme des exports de stock bruts en indicateurs de couverture et en propositions de réapprovisionnement concrètes.",
+    },
+    highlights: [
+      {
+        en: "Business data import from spreadsheet and text exports, with dedicated parsers, preview and draft state before validation",
+        fr: "Import de données métier depuis des exports tableur et texte, avec analyseurs dédiés, prévisualisation et brouillon avant validation",
+      },
+      {
+        en: "Stock coverage computed per reference and per period, surfacing priority replenishment targets",
+        fr: "Calcul de la couverture de stock par référence et par période, avec identification des cibles prioritaires",
+      },
+      {
+        en: "Order proposals generated from the analysis, with a finalisation workflow",
+        fr: "Génération de propositions de commande à partir de l'analyse, avec circuit de finalisation",
+      },
+      {
+        en: "Module-level role-based access control, with its own authentication and onboarding flow",
+        fr: "Contrôle d'accès par rôles propre au module, avec parcours d'authentification et d'onboarding dédié",
+      },
+      {
+        en: "End-to-end Playwright coverage on the critical paths: import, pagination, column selection, stock transitions",
+        fr: "Couverture Playwright bout en bout sur les parcours critiques : import, pagination, sélection de colonnes, transitions de stock",
+      },
+    ],
+    technologies: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Supabase",
+      "PostgreSQL",
+      "RBAC",
+      "Zod",
+      "Playwright",
+      "Tailwind",
+    ],
+  },
+  {
+    id: "meeting-reports",
+    group: "enterprise",
+    org: "Redsmite",
+    title: { en: "Meeting Reports", fr: "Comptes-Rendus Automatisés" },
+    tagline: {
+      en: "From meeting audio to a written, reviewed and automatically distributed report",
+      fr: "De l'audio d'une réunion au compte-rendu rédigé, relu et diffusé automatiquement",
+    },
+    description: {
+      en: "Meeting minutes pipeline: bots capture the audio, speakers are separated automatically, and the AI-written report is exported and sent on its own.",
+      fr: "Chaîne de comptes-rendus : des bots captent l'audio, les locuteurs sont séparés automatiquement, et le compte-rendu rédigé par IA est exporté puis envoyé tout seul.",
+    },
+    highlights: [
+      {
+        en: "Automatic transcription with speaker diarisation, participant mapping and per-speaker summaries",
+        fr: "Transcription automatique avec diarisation, association aux participants et synthèse par intervenant",
+      },
+      {
+        en: "Bots joining video calls to capture audio without any manual step",
+        fr: "Bots rejoignant les visioconférences pour capter l'audio sans intervention manuelle",
+      },
+      {
+        en: "AI-generated report at several levels of detail, with translation into the target language",
+        fr: "Compte-rendu généré par IA à plusieurs niveaux de détail, avec traduction dans la langue cible",
+      },
+      {
+        en: "Chunked upload with resume for large recordings, and waveform rendering computed in a Web Worker",
+        fr: "Upload par fragments avec reprise pour les gros enregistrements, et forme d'onde calculée dans un Web Worker",
+      },
+      {
+        en: "Correction tracking against a baseline version, plus Markdown and Word export with automatic email delivery",
+        fr: "Suivi des corrections par rapport à une version de référence, export Markdown et Word, envoi automatique par e-mail",
+      },
+    ],
+    technologies: [
+      "React",
+      "TypeScript",
+      "Supabase",
+      "AssemblyAI",
+      "Web Audio API",
+      "Web Workers",
+      "Trigger.dev",
+      "docx",
+      "Vitest",
+    ],
+  },
+  {
+    id: "mail-agent",
+    group: "enterprise",
+    org: "Redsmite",
+    title: { en: "Mail Agent", fr: "Mail Agent" },
+    tagline: {
+      en: "AI agent drafting replies to inbound sales enquiries, with a human-reviewed memory",
+      fr: "Agent IA qui rédige les réponses aux demandes commerciales, avec une mémoire revue par l'humain",
+    },
+    description: {
+      en: "AI agent that reads inbound enquiry threads and drafts replies grounded in a real product catalogue, with a review loop that lets the team correct what it learns.",
+      fr: "Agent IA qui lit les fils de demandes entrantes et rédige des réponses fondées sur un catalogue produits réel, avec une boucle de revue permettant à l'équipe de corriger ce qu'il apprend.",
+    },
+    highlights: [
+      {
+        en: "Reply drafts generated from inbound email threads, including text extracted from attachments",
+        fr: "Brouillons de réponse générés à partir des fils d'e-mails entrants, pièces jointes comprises",
+      },
+      {
+        en: "Answers grounded in a product catalogue and its technical specifications, rather than free-form generation",
+        fr: "Réponses fondées sur un catalogue produits et ses spécifications techniques, plutôt qu'en génération libre",
+      },
+      {
+        en: "Agent memory with a human review loop: validation queue, metrics page and directives steered through conversation",
+        fr: "Mémoire de l'agent avec boucle de revue humaine : file de validation, page de métriques et directives pilotées par conversation",
+      },
+      {
+        en: "Thread management: client linking, typed drafts, trash and full processing traceability",
+        fr: "Gestion des fils : rattachement client, brouillons typés, corbeille et traçabilité des traitements",
+      },
+      {
+        en: "Usage and cost tracking on every AI call",
+        fr: "Suivi de la consommation et du coût de chaque appel IA",
+      },
+    ],
+    technologies: [
+      "React",
+      "TypeScript",
+      "Supabase",
+      "LLMs",
+      "Trigger.dev",
+      "Zod",
+      "Vitest",
+    ],
+  },
+  {
+    id: "newsletter-engine",
+    group: "enterprise",
+    org: "Redsmite",
+    title: { en: "Newsletter Engine", fr: "Newsletter Engine" },
+    tagline: {
+      en: "Automation pipeline producing a full newsletter, from web research to a ready-to-send email",
+      fr: "Pipeline d'automatisation qui produit une newsletter complète, de la veille web à l'e-mail prêt à envoyer",
+    },
+    description: {
+      en: "End-to-end content pipeline: automated web research, LLM-assisted writing, image processing and email rendering, with an authenticated back-office to steer it.",
+      fr: "Chaîne de contenu de bout en bout : veille web automatisée, rédaction assistée par LLM, traitement d'images et rendu e-mail, avec un back-office authentifié pour la piloter.",
+    },
+    highlights: [
+      {
+        en: "Automated source gathering through web search and headless-browser scraping, with a retry policy on failure",
+        fr: "Collecte de sources automatisée par recherche web et scraping en navigateur headless, avec politique de reprise sur erreur",
+      },
+      {
+        en: "LLM-assisted writing plugged into several providers, with automatic company-data enrichment from the legal registry",
+        fr: "Rédaction assistée par LLM branchée sur plusieurs fournisseurs, avec enrichissement automatique des données d'entreprise via le registre légal",
+      },
+      {
+        en: "Automated image processing: background removal, vector conversion and retouching",
+        fr: "Traitement d'images automatisé : détourage, conversion vectorielle et retouche",
+      },
+      {
+        en: "Email rendering optimised for real-world clients: inlined CSS, minification, cross-client compatibility",
+        fr: "Rendu e-mail optimisé pour les clients de messagerie réels : CSS inliné, minification, compatibilité inter-clients",
+      },
+      {
+        en: "Containerised deployment on a VPS behind a reverse proxy, with pytest coverage",
+        fr: "Déploiement conteneurisé sur VPS derrière un reverse proxy, avec couverture pytest",
+      },
+    ],
+    technologies: [
+      "Python",
+      "FastAPI",
+      "Supabase",
+      "LLMs",
+      "Playwright",
+      "OpenCV",
+      "Jinja2",
+      "Docker",
+      "Caddy",
+      "pytest",
+    ],
+  },
+  {
+    id: "ai-music-platform",
+    group: "enterprise",
+    org: { en: "Freelance", fr: "Freelance" },
+    title: { en: "AI Music Platform", fr: "AI Music Platform" },
+    tagline: {
+      en: "Browser-based digital audio workstation to compose, edit and arrange tracks",
+      fr: "Station de travail audio numérique dans le navigateur, pour composer, éditer et arranger",
+    },
+    description: {
+      en: "A full DAW running in the browser: multitrack editing, interactive waveforms and real-time audio processing through the Web Audio API.",
+      fr: "Un DAW complet qui tourne dans le navigateur : édition multipiste, formes d'onde interactives et traitement audio temps réel via la Web Audio API.",
+    },
+    highlights: [
+      {
+        en: "Full multitrack interface: interactive waveforms, synchronised playback and drag-and-drop track arrangement",
+        fr: "Interface multipiste complète : formes d'onde interactives, lecture synchronisée et réorganisation des pistes par glisser-déposer",
+      },
+      {
+        en: "In-browser audio processing through the Web Audio API, with independent tempo and pitch shifting",
+        fr: "Traitement audio dans le navigateur via la Web Audio API, avec modification indépendante du tempo et de la hauteur",
+      },
+      {
+        en: "Project export to WAV straight from the browser",
+        fr: "Export des projets au format WAV directement depuis le navigateur",
+      },
+      {
+        en: "Audio files stored on object storage through presigned URLs",
+        fr: "Fichiers audio stockés sur du stockage objet via URLs présignées",
+      },
+      {
+        en: "Complex application state handled with a feature-based architecture",
+        fr: "État applicatif complexe géré dans une architecture par features",
+      },
+    ],
+    technologies: [
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Zustand",
+      "Web Audio API",
+      "Tone.js",
+      "wavesurfer.js",
+      "AWS S3",
+      "Tailwind",
+    ],
+  },
+  {
+    id: "health-booking",
+    group: "enterprise",
+    org: { en: "Freelance", fr: "Freelance" },
+    title: {
+      en: "Health Booking Platform",
+      fr: "Plateforme de Rendez-vous Santé",
+    },
+    tagline: {
+      en: "Connecting patients, healthcare professionals and pharmacies around appointment booking",
+      fr: "Mise en relation patients, professionnels de santé et pharmacies autour de la prise de rendez-vous",
+    },
+    description: {
+      en: "Booking platform with a modular REST API: practitioners, establishments, specialities, availability rules and a separate pharmacy track with delivery zones.",
+      fr: "Plateforme de réservation avec une API REST modulaire : praticiens, établissements, spécialités, règles de disponibilité et circuit pharmacie distinct avec zones de livraison.",
+    },
+    highlights: [
+      {
+        en: "Modular REST API covering patients, professionals, establishments, specialities, appointments and documents",
+        fr: "API REST modulaire couvrant patients, professionnels, établissements, spécialités, rendez-vous et documents",
+      },
+      {
+        en: "Availability engine: per-practitioner slot rules, with a distinct pipeline for the pharmacy track",
+        fr: "Moteur de disponibilités : règles de créneaux par praticien, avec un circuit distinct pour la partie pharmacie",
+      },
+      {
+        en: "Security: token-based authentication, password hashing, rate limiting and strict input validation",
+        fr: "Sécurité : authentification par jetons, hachage des mots de passe, limitation de débit et validation stricte des entrées",
+      },
+      {
+        en: "Document management with file upload and CSV import/export",
+        fr: "Gestion documentaire avec envoi de fichiers et import/export CSV",
+      },
+      {
+        en: "Auto-generated API documentation, consumed by a Next.js front end",
+        fr: "Documentation d'API auto-générée, consommée par un frontend Next.js",
+      },
+    ],
+    technologies: [
+      "NestJS",
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+      "JWT",
+      "Swagger",
+      "Next.js 15",
+      "React 19",
+      "Zustand",
+    ],
+  },
+  {
+    id: "food-truck-app",
+    group: "enterprise",
+    org: { en: "Internship · Paika Sarl", fr: "Stage · Paika Sarl" },
+    title: { en: "Food Truck App", fr: "Application Food Truck" },
+    tagline: {
+      en: "Mobile ordering and payment for a food truck network, with its backend",
+      fr: "Commande et paiement mobile pour un réseau de food trucks, avec son backend",
+    },
+    description: {
+      en: "Cross-platform mobile app and its modular backend: menus, orders, payments, schedules and notifications for a network of food trucks.",
+      fr: "Application mobile cross-platform et son backend modulaire : menus, commandes, paiements, plannings et notifications pour un réseau de food trucks.",
+    },
+    highlights: [
+      {
+        en: "Cross-platform mobile app shipped through the managed build pipeline",
+        fr: "Application mobile cross-platform livrée via la chaîne de build managée",
+      },
+      {
+        en: "Complete ordering flow with integrated card payment",
+        fr: "Parcours de commande complet avec paiement par carte intégré",
+      },
+      {
+        en: "Email and Google sign-in authentication",
+        fr: "Authentification par e-mail et connexion Google",
+      },
+      {
+        en: "Modular backend: food trucks, menus, orders, payments, schedules, cuisine types and notifications",
+        fr: "Backend modulaire : food trucks, menus, commandes, paiements, plannings, types de cuisine et notifications",
+      },
+      {
+        en: "Server-side fuzzy search, and production stability monitoring through crash reporting",
+        fr: "Recherche floue côté serveur, et suivi de stabilité en production via le reporting de crashs",
+      },
+    ],
+    technologies: [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "NestJS",
+      "Prisma",
+      "PostgreSQL",
+      "Stripe",
+      "Firebase",
+    ],
+  },
+
+  // ------------------------------------------------------------------- PERSO
   {
     id: "football-stats",
+    group: "personal",
     title: {
       en: "Football Statistics Platform",
       fr: "Plateforme de Statistiques Football",
+    },
+    tagline: {
+      en: "Live football statistics, aggregated and served through a typed interface",
+      fr: "Statistiques football en direct, agrégées et servies dans une interface typée",
     },
     description: {
       en: "Full-stack platform aggregating live football statistics, with a typed React frontend and a PHP MVC backend.",
       fr: "Plateforme full-stack qui agrège des stats foot en direct — frontend React typé, backend PHP MVC.",
     },
     image: footballStat,
-    category: "fullstack",
-    featured: true,
     technologies: ["React", "TypeScript", "PHP", "MVC", "MySQL"],
     links: [
       {
@@ -41,13 +435,17 @@ export const projects = [
   },
   {
     id: "varotra",
+    group: "personal",
     title: { en: "Varotra — E-commerce App", fr: "Varotra — App E-commerce" },
+    tagline: {
+      en: "Cross-platform mobile commerce, built end to end",
+      fr: "Commerce mobile cross-platform, construit de bout en bout",
+    },
     description: {
       en: "Cross-platform mobile commerce app built with React Native, Expo and TypeScript.",
       fr: "App mobile e-commerce cross-platform en React Native, Expo et TypeScript.",
     },
     image: varotra,
-    category: "mobile",
     isMobile: true,
     technologies: ["React Native", "Expo", "TypeScript"],
     download:
@@ -60,96 +458,36 @@ export const projects = [
     ],
   },
   {
-    id: "watch-store",
-    title: { en: "Watch Store", fr: "Watch Store" },
-    description: {
-      en: "E-commerce front-end for a curated luxury watch catalogue.",
-      fr: "Front-end e-commerce pour un catalogue de montres de luxe.",
-    },
-    image: watchStore,
-    category: "frontend",
-    technologies: ["React", "CSS3"],
-    site: "https://watch-store-by-toandro.netlify.app/",
-    links: [
-      {
-        labelKey: "work.repo",
-        url: "https://github.com/ToandroMananjara/watch-store.git",
-      },
-    ],
-  },
-  {
-    id: "todo-list",
-    title: { en: "Todo List App", fr: "App Todo List" },
-    description: {
-      en: "Task manager with full CRUD and persistent local storage.",
-      fr: "Gestionnaire de tâches avec CRUD complet et stockage local persistant.",
-    },
-    image: todoList,
-    category: "frontend",
-    technologies: ["React", "TypeScript", "localStorage"],
-    site: "https://todo-by-toandro.netlify.app/",
-    links: [
-      {
-        labelKey: "work.repo",
-        url: "https://github.com/ToandroMananjara/newTodo_list.git",
-      },
-    ],
-  },
-  {
-    id: "quiz",
-    title: { en: "Capital Quiz", fr: "Quiz des Capitales" },
-    description: {
-      en: "Interactive quiz testing world capitals knowledge.",
-      fr: "Quiz interactif sur les capitales du monde.",
-    },
-    image: quiz,
-    category: "frontend",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    site: "https://quiz-by-toandro.netlify.app/",
-    links: [
-      {
-        labelKey: "work.repo",
-        url: "https://github.com/ToandroMananjara/quiz-capital.git",
-      },
-    ],
-  },
-  {
-    id: "portfolio-v1",
-    title: { en: "Portfolio v1", fr: "Portfolio v1" },
-    description: {
-      en: "First iteration of my personal portfolio.",
-      fr: "Première version de mon portfolio personnel.",
-    },
-    image: portfolioV1,
-    category: "frontend",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    site: "https://toandro.netlify.app/",
-    links: [
-      {
-        labelKey: "work.repo",
-        url: "https://github.com/DTC-Formation/my-portfolio-ToandroMananjara.git",
-      },
-    ],
-  },
-  {
-    id: "homepage-integration",
-    title: {
-      en: "News Homepage Integration",
-      fr: "Intégration Homepage News",
+    id: "misara",
+    group: "personal",
+    title: { en: "MISAra — P2P File Transfer", fr: "MISAra — Transfert P2P" },
+    image: misara,
+    tagline: {
+      en: "Desktop peer-to-peer file transfer over local network",
+      fr: "Transfert de fichiers pair-à-pair sur réseau local, en application desktop",
     },
     description: {
-      en: "Pixel-perfect responsive integration of a news homepage.",
-      fr: "Intégration responsive pixel-perfect d'une homepage news.",
+      en: "Cross-platform desktop application transferring files directly between peers on a local network, with no intermediate server.",
+      fr: "Application desktop multiplateforme qui transfère des fichiers directement entre pairs sur un réseau local, sans serveur intermédiaire.",
     },
-    image: homepageIntegration,
-    category: "frontend",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    site: "https://evaluation-toandro.netlify.app/",
-    links: [
+    highlights: [
       {
-        labelKey: "work.repo",
-        url: "https://github.com/DTC-Formation/evaluation-html-css-ToandroMananjara.git",
+        en: "Peer discovery and direct transfer over the local network, without any intermediate server",
+        fr: "Découverte des pairs et transfert direct sur le réseau local, sans serveur intermédiaire",
+      },
+      {
+        en: "Cross-platform desktop packaging for Windows, Linux and macOS",
+        fr: "Empaquetage desktop multiplateforme pour Windows, Linux et macOS",
+      },
+      {
+        en: "Virtualised file listing to stay responsive on large directories",
+        fr: "Liste de fichiers virtualisée pour rester fluide sur de gros répertoires",
+      },
+      {
+        en: "Fully localised interface",
+        fr: "Interface entièrement localisée",
       },
     ],
+    technologies: ["Electron", "React", "TypeScript", "MobX", "Webpack"],
   },
 ];
