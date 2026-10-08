@@ -1,6 +1,11 @@
 import varotra from "../assets/projects/varotra.png";
 import footballStat from "../assets/projects/football.png";
 import misara from "../assets/projects/misara.png";
+import n8nWf1 from "../assets/projects/ai-business-automation/WF-1.png";
+import n8nWf2 from "../assets/projects/ai-business-automation/WF-2.png";
+import n8nWf3 from "../assets/projects/ai-business-automation/WF-3.png";
+import n8nWf0 from "../assets/projects/ai-business-automation/WF-0.png";
+import n8nSlack from "../assets/projects/ai-business-automation/slack.png";
 
 /**
  * Deux groupes seulement : le travail professionnel et les projets personnels.
@@ -411,6 +416,123 @@ export const projects = [
   },
 
   // ------------------------------------------------------------------- PERSO
+  {
+    id: "ai-business-automation",
+    group: "personal",
+    featured: true,
+    org: {
+      en: "Personal project · prototype, fictitious data",
+      fr: "Projet perso · prototype, données fictives",
+    },
+    period: { en: "October 2026", fr: "Octobre 2026" },
+    title: {
+      en: "AI Business Automation — n8n",
+      fr: "AI Business Automation — n8n",
+    },
+    tagline: {
+      en: "AI automation of request handling for a call centre",
+      fr: "Automatisation IA du traitement des demandes d'un centre d'appel",
+    },
+    description: {
+      en: "Prototype for a call centre serving tradespeople: each email is qualified by an LLM, routed to the right team and gets a draft reply grounded in the FAQ, always reviewed by a human. CVs and invoices are extracted with automatic checks.",
+      fr: "Prototype pour un centre d'appel au service d'artisans : chaque email est qualifié par un LLM, aiguillé vers la bonne équipe et reçoit un brouillon de réponse fondé sur la FAQ, toujours relu par un humain. Les CV et factures sont extraits avec contrôles automatiques.",
+    },
+    highlights: [
+      {
+        en: "96 % correct classification on 30 labelled emails, vs 67 % for a keyword rule",
+        fr: "96 % de classification correcte sur 30 emails étiquetés, contre 67 % pour une règle par mots-clés",
+      },
+      {
+        en: "0 invented data out of 54 fields expected empty, 99 % exact extracted fields",
+        fr: "0 donnée inventée sur 54 champs attendus vides, 99 % de champs extraits exacts",
+      },
+      {
+        en: "No request lost: Groq → Gemini failover, 6 real outages, 0 lost tickets",
+        fr: "Aucune demande perdue : bascule Groq → Gemini, 6 pannes réelles, 0 ticket perdu",
+      },
+      {
+        en: "Human in the loop: no reply sent automatically, sensitive cases handed straight to a human",
+        fr: "Humain dans la boucle : aucune réponse envoyée seule, cas sensibles transmis directement",
+      },
+      {
+        en: "The LLM extracts, the code computes and decides: every rule lives in a single config file",
+        fr: "Le LLM extrait, le code calcule et décide : toutes les règles dans un seul fichier de configuration",
+      },
+      {
+        en: "4 n8n workflows: email handling, CV and invoice extraction, error handling, setup",
+        fr: "4 workflows n8n : traitement des emails, extraction CV et factures, gestion des erreurs, mise en place",
+      },
+      {
+        en: "10 out of 10 CVs and invoices compliant, including one invoice with a wrong total detected",
+        fr: "10 CV et factures conformes sur 10, dont une facture au total faux détectée",
+      },
+      {
+        en: "Measured choices: model picked by comparative test, no vector database for a 25-entry FAQ",
+        fr: "Choix mesurés : modèle choisi par test comparatif, pas de base vectorielle pour une FAQ de 25 entrées",
+      },
+      {
+        en: "Limit: an unintelligible message was classified instead of going to a human (1 threshold missed out of 6)",
+        fr: "Limite : un message incompréhensible a été classé au lieu d'aller à un humain (1 seuil manqué sur 6)",
+      },
+    ],
+    image: n8nWf1,
+    // Captures paysage : affichees dans un carrousel, sans recadrage.
+    gallery: [
+      {
+        src: n8nWf0,
+        caption: {
+          en: "WF0 — Spreadsheet setup",
+          fr: "WF0 — Mise en place du classeur",
+        },
+      },
+      {
+        src: n8nWf1,
+        caption: {
+          en: "WF1 — Request handling (main workflow, 24 nodes)",
+          fr: "WF1 — Traitement des demandes (workflow principal, 24 nodes)",
+        },
+      },
+      {
+        src: n8nWf2,
+        caption: {
+          en: "WF2 — CV and invoice extraction",
+          fr: "WF2 — Extraction des CV et des factures",
+        },
+      },
+      {
+        src: n8nWf3,
+        caption: {
+          en: "WF3 — Error handling",
+          fr: "WF3 — Gestion des erreurs",
+        },
+      },
+      {
+        src: n8nSlack,
+        caption: {
+          en: "Slack alerts sent by WF3",
+          fr: "Alertes Slack envoyées par le WF3",
+        },
+      },
+    ],
+    technologies: [
+      "n8n",
+      "LLM",
+      "Groq",
+      "Gemini",
+      "Prompt engineering",
+      "JavaScript",
+      "Python",
+      "Docker",
+      "Google Sheets",
+      "Slack",
+    ],
+    links: [
+      {
+        labelKey: "work.repo",
+        url: "https://github.com/ToandroMananjara/ai-business-automation-n8n",
+      },
+    ],
+  },
   {
     id: "football-stats",
     group: "personal",

@@ -22,35 +22,43 @@ import php from "../assets/skills/PHP-Dark.svg";
 import git from "../assets/skills/Git.svg";
 import github from "../assets/skills/Github.svg";
 import docker from "../assets/skills/Docker.svg";
+import expo from "../assets/skills/Expo.svg";
+import vite from "../assets/skills/Vite.svg";
+import zustand from "../assets/skills/Zustand.png";
+import zod from "../assets/skills/Zod.svg";
+import fastapi from "../assets/skills/FastAPI.svg";
+import prisma from "../assets/skills/Prisma.svg";
+import jwt from "../assets/skills/JWT.svg";
+import swagger from "../assets/skills/Swagger.svg";
+import resend from "../assets/skills/Resend.svg";
+import stripe from "../assets/skills/Stripe.svg";
+import supabase from "../assets/skills/Supabase.svg";
+import redis from "../assets/skills/Redis.svg";
+import firebase from "../assets/skills/Firebase.svg";
+import elevenlabs from "../assets/skills/ElevenLabs.svg";
+import assemblyai from "../assets/skills/AssemblyAI.svg";
+import triggerdev from "../assets/skills/TriggerDev.svg";
+import promptfoo from "../assets/skills/Promptfoo.svg";
+import n8n from "../assets/skills/n8n.svg";
+import playwright from "../assets/skills/Playwright.svg";
+import vitest from "../assets/skills/Vitest.svg";
+import pytest from "../assets/skills/Pytest.svg";
+import jest from "../assets/skills/Jest.svg";
+import vercel from "../assets/skills/Vercel.svg";
+import caddy from "../assets/skills/Caddy.svg";
+import awsS3 from "../assets/skills/AWSS3.svg";
+// Icones generiques : reservees aux concepts, qui n'ont pas de logo officiel.
 import {
-  AudioLines,
-  Boxes,
   Braces,
-  Captions,
-  CheckCheck,
-  Cloud,
-  CreditCard,
   Database,
-  FileCode,
-  Flame,
-  FlaskConical,
-  KeyRound,
   Languages,
-  Layers,
-  Mail,
   Network,
-  Server,
   ShieldAlert,
-  ShieldCheck,
-  Smartphone,
   Sparkles,
-  TestTube,
-  TestTube2,
   Bot,
   Brain,
   MessageSquare,
   Workflow,
-  Zap,
 } from "lucide-react";
 
 /**
@@ -67,10 +75,10 @@ export const skillCategories = [
       { name: "React", src: react },
       { name: "Next.js", src: nextjs },
       { name: "React Native", src: reactNative },
-      { name: "Expo", icon: Smartphone },
-      { name: "Vite", icon: Zap },
-      { name: "Zustand", icon: Boxes },
-      { name: "Zod", icon: ShieldCheck },
+      { name: "Expo", src: expo },
+      { name: "Vite", src: vite },
+      { name: "Zustand", src: zustand },
+      { name: "Zod", src: zod },
       { name: "Tailwind", src: tailwind },
       { name: "Material UI", src: materialui },
       { name: "Bootstrap", src: bootstrap },
@@ -85,12 +93,12 @@ export const skillCategories = [
       { name: "Node.js", src: nodejs },
       { name: "NestJS", src: nestjs },
       { name: "Express.js", src: express },
-      { name: "FastAPI", icon: Braces },
-      { name: "Prisma", icon: Layers },
-      { name: "JWT", icon: KeyRound },
-      { name: "Swagger", icon: FileCode },
-      { name: "Resend", icon: Mail },
-      { name: "Stripe", icon: CreditCard },
+      { name: "FastAPI", src: fastapi },
+      { name: "Prisma", src: prisma },
+      { name: "JWT", src: jwt },
+      { name: "Swagger", src: swagger },
+      { name: "Resend", src: resend },
+      { name: "Stripe", src: stripe },
     ],
   },
   {
@@ -100,9 +108,9 @@ export const skillCategories = [
       { name: "PostgreSQL", src: postgresql },
       { name: "MySQL", src: mysql },
       { name: "MongoDB", src: mongodb },
-      { name: "Supabase", icon: Database },
-      { name: "Redis", icon: Zap },
-      { name: "Firebase", icon: Flame },
+      { name: "Supabase", src: supabase },
+      { name: "Redis", src: redis },
+      { name: "Firebase", src: firebase },
     ],
   },
   {
@@ -114,10 +122,11 @@ export const skillCategories = [
       { name: "LLM APIs", icon: Braces },
       { name: "Prompt Engineering", icon: MessageSquare },
       { name: "LLM Red Teaming", icon: ShieldAlert },
-      { name: "ElevenLabs", icon: AudioLines },
-      { name: "AssemblyAI", icon: Captions },
-      { name: "Trigger.dev", icon: Workflow },
-      { name: "promptfoo", icon: FlaskConical },
+      { name: "ElevenLabs", src: elevenlabs },
+      { name: "AssemblyAI", src: assemblyai },
+      { name: "n8n", src: n8n },
+      { name: "Trigger.dev", src: triggerdev },
+      { name: "promptfoo", src: promptfoo },
       { name: "RAG", icon: Workflow },
       { name: "Machine Learning", icon: Brain },
       { name: "Deep Learning", icon: Network },
@@ -129,10 +138,10 @@ export const skillCategories = [
     id: "testing",
     labelKey: "skills.cat.testing",
     items: [
-      { name: "Playwright", icon: TestTube2 },
-      { name: "Vitest", icon: TestTube },
-      { name: "pytest", icon: FlaskConical },
-      { name: "Jest", icon: CheckCheck },
+      { name: "Playwright", src: playwright },
+      { name: "Vitest", src: vitest },
+      { name: "pytest", src: pytest },
+      { name: "Jest", src: jest },
     ],
   },
   {
@@ -155,9 +164,9 @@ export const skillCategories = [
       { name: "Git", src: git },
       { name: "GitHub", src: github },
       { name: "Docker", src: docker },
-      { name: "Vercel", icon: Cloud },
-      { name: "Caddy", icon: Server },
-      { name: "AWS S3", icon: Cloud },
+      { name: "Vercel", src: vercel },
+      { name: "Caddy", src: caddy },
+      { name: "AWS S3", src: awsS3 },
     ],
   },
 ];

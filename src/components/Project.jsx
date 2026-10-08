@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Download,
   Eye,
@@ -60,7 +62,7 @@ function ProjectImage({ project, className = "", onZoom }) {
   return (
     <button
       type="button"
-      onClick={onZoom}
+      onClick={() => onZoom(0)}
       aria-label={`${pick(project.title)} — ${t("work.zoom")}`}
       className={`${base} cursor-zoom-in w-full text-left`}
     >
@@ -69,21 +71,129 @@ function ProjectImage({ project, className = "", onZoom }) {
   );
 }
 
+/** Images a afficher : la galerie si elle existe, sinon l'image seule. */
+function getSlides(project) {
+  if (project.gallery?.length) return project.gallery;
+  return project.image ? [{ src: project.image }] : [];
+}
+
+const AUTOPLAY_MS = 4500;
+
 /**
- * Visionneuse plein ecran. Volontairement minimale : une image, un fond, et
- * trois facons d'en sortir (Echap, le fond, la croix). Le curseur passe en
- * zoom-out sur le fond pour indiquer que cliquer referme.
+ * Carrousel a defilement automatique, pour les projets qui ont une galerie.
+ *
+ * Les captures sont des workflows en paysage : object-contain, jamais
+ * object-cover, sinon les bords (donc des nodes) seraient coupes.
+ * Le defilement se met en pause au survol, quand la visionneuse est ouverte,
+ * et ne demarre pas si l'utilisateur a demande a reduire les animations.
+ * `index` fait partie des dependances de l'effet : un clic sur une pastille
+ * relance un intervalle complet au lieu de changer d'image juste apres.
  */
-function Lightbox({ project, onClose }) {
+function ProjectGallery({ project, onZoom, paused = false }) {
   const { t, pick } = useLang();
+  const slides = getSlides(project);
+  const [index, setIndex] = useState(0);
+  const [hovered, setHovered] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const current = slides[index];
+
+  useEffect(() => {
+    if (paused || hovered || reduceMotion || slides.length < 2) return undefined;
+    const id = setTimeout(
+      () => setIndex((i) => (i + 1) % slides.length),
+      AUTOPLAY_MS
+    );
+    return () => clearTimeout(id);
+  }, [index, paused, hovered, reduceMotion, slides.length]);
+
+  return (
+    <div
+      className="flex flex-col bg-black/30"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <button
+        type="button"
+        onClick={() => onZoom(index)}
+        aria-label={`${current.caption ? pick(current.caption) : pick(project.title)} — ${t("work.zoom")}`}
+        className="group/zoom relative aspect-[16/10] w-full overflow-hidden cursor-zoom-in"
+      >
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={index}
+            src={current.src}
+            alt={current.caption ? pick(current.caption) : pick(project.title)}
+            loading="lazy"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 w-full h-full object-contain p-3"
+          />
+        </AnimatePresence>
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover/zoom:opacity-100 transition-opacity duration-300"
+        >
+          <span className="rounded-full bg-black/60 p-3 text-white_primary backdrop-blur-sm">
+            <ZoomIn className="w-5 h-5" />
+          </span>
+        </span>
+      </button>
+
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t border-white/5">
+        <p className="font-mono text-xs text-gray-400">
+          {current.caption && pick(current.caption)}
+        </p>
+        <div className="flex items-center gap-1.5">
+          {slides.map((slide, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`${t("work.slide")} ${i + 1}`}
+              aria-current={i === index}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === index
+                  ? "w-5 bg-yellow_primary"
+                  : "w-1.5 bg-white/20 hover:bg-white/40"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Visionneuse plein ecran. Un fond, et trois facons d'en sortir (Echap, le
+ * fond, la croix). Le curseur passe en zoom-out sur le fond pour indiquer que
+ * cliquer referme. Pour une galerie, pas de defilement automatique : le
+ * visiteur navigue lui-meme (fleches a l'ecran ou au clavier).
+ */
+function Lightbox({ zoom, onNavigate, onClose }) {
+  const { t, pick } = useLang();
+  const project = zoom?.project;
+  const slides = project ? getSlides(project) : [];
+  const count = slides.length;
+  const current = slides[zoom?.index ?? 0];
   useBodyScrollLock(Boolean(project));
 
   useEffect(() => {
     if (!project) return undefined;
-    const onKey = (e) => e.key === "Escape" && onClose();
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+      if (count < 2) return;
+      if (e.key === "ArrowRight") onNavigate((zoom.index + 1) % count);
+      if (e.key === "ArrowLeft") onNavigate((zoom.index - 1 + count) % count);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [project, onClose]);
+  }, [project, zoom, count, onNavigate, onClose]);
+
+  const navBtn =
+    "absolute top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white_primary transition-colors";
 
   return (
     <AnimatePresence>
@@ -115,15 +225,51 @@ function Lightbox({ project, onClose }) {
           >
             <X className="w-5 h-5" />
           </button>
-          <motion.img
-            src={project.image}
-            alt={pick(project.title)}
-            initial={{ scale: 0.94, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.96, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="relative max-w-full max-h-full object-contain rounded-lg shadow-2xl pointer-events-none"
-          />
+          {count > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={() => onNavigate((zoom.index - 1 + count) % count)}
+                aria-label={t("work.prev")}
+                className={`${navBtn} left-2 sm:left-4`}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate((zoom.index + 1) % count)}
+                aria-label={t("work.next")}
+                className={`${navBtn} right-2 sm:right-4`}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
+          <figure className="relative flex flex-col items-center max-w-full max-h-full pointer-events-none">
+            <motion.img
+              key={zoom.index}
+              src={current.src}
+              alt={current.caption ? pick(current.caption) : pick(project.title)}
+              initial={{ scale: 0.97, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className={`max-w-full object-contain rounded-lg shadow-2xl ${
+                current.caption || count > 1
+                  ? "max-h-[calc(100vh-7rem)]"
+                  : "max-h-[calc(100vh-4rem)]"
+              }`}
+            />
+            {(current.caption || count > 1) && (
+              <figcaption className="mt-3 font-mono text-xs sm:text-sm text-gray-300 text-center">
+                {count > 1 && (
+                  <span className="text-yellow_primary mr-2">
+                    {zoom.index + 1} / {count}
+                  </span>
+                )}
+                {current.caption && pick(current.caption)}
+              </figcaption>
+            )}
+          </figure>
         </motion.div>
       )}
     </AnimatePresence>
@@ -166,12 +312,18 @@ function ProjectMeta({ project }) {
  * Sans ce repli, une carte a 3 puces et une carte a 6 puces n'ont pas la meme
  * hauteur et la grille devient irreguliere. On garde donc un aperçu homogene,
  * le detail restant a un clic.
+ *
+ * `mobileVisible` replie davantage sous md : sur un ecran etroit, chaque puce
+ * prend trois ou quatre lignes et la carte devient interminable. Le repli
+ * passe par le CSS (hidden md:flex) plutot que par un media query JS, pour
+ * eviter un saut de mise en page au premier rendu.
  */
-function HighlightList({ items, visible = 2 }) {
+function HighlightList({ items, visible = 2, mobileVisible = visible }) {
   const { t, pick } = useLang();
   const [expanded, setExpanded] = useState(false);
   const shown = expanded ? items : items.slice(0, visible);
   const hidden = items.length - visible;
+  const hiddenMobile = items.length - mobileVisible;
 
   return (
     <div>
@@ -179,20 +331,32 @@ function HighlightList({ items, visible = 2 }) {
         {shown.map((item, i) => (
           <li
             key={i}
-            className="flex gap-2.5 text-sm text-gray-400 leading-relaxed"
+            className={`${
+              !expanded && i >= mobileVisible ? "hidden md:flex" : "flex"
+            } gap-2.5 text-sm text-gray-400 leading-relaxed`}
           >
             <span className="text-yellow_primary/60 mt-1.5 shrink-0 w-1 h-1 rounded-full bg-current" />
             <span>{pick(item)}</span>
           </li>
         ))}
       </ul>
-      {hidden > 0 && (
+      {hiddenMobile > 0 && (
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="mt-3 font-mono text-xs text-blue_primary hover:text-blue_primary/80 transition-colors"
+          className={`${
+            hidden > 0 || expanded ? "" : "md:hidden"
+          } mt-3 font-mono text-xs text-blue_primary hover:text-blue_primary/80 transition-colors`}
         >
-          {expanded ? t("work.less") : `+${hidden} ${t("work.more")}`}
+          {expanded ? (
+            t("work.less")
+          ) : (
+            <>
+              <span className="md:hidden">+{hiddenMobile}</span>
+              <span className="hidden md:inline">+{hidden}</span>{" "}
+              {t("work.more")}
+            </>
+          )}
         </button>
       )}
     </div>
@@ -264,12 +428,15 @@ function ProjectActions({ project, compact = false }) {
 }
 
 /**
- * Projet mis en avant. Le layout s'adapte a la presence d'une image :
- * deux colonnes avec visuel, une seule colonne sans.
+ * Projet mis en avant. Le layout s'adapte au visuel : deux colonnes avec une
+ * image, une seule colonne sans. Une galerie (captures paysage) passe en
+ * pleine largeur au-dessus du texte : en demi-colonne, les workflows seraient
+ * trop petits pour etre lisibles.
  */
-function FeaturedProject({ project, onZoom }) {
+function FeaturedProject({ project, onZoom, galleryPaused }) {
   const { t, pick } = useLang();
-  const hasImage = Boolean(project.image);
+  const hasGallery = (project.gallery?.length ?? 0) > 0;
+  const hasImage = Boolean(project.image) && !hasGallery;
 
   return (
     <motion.article
@@ -280,11 +447,19 @@ function FeaturedProject({ project, onZoom }) {
         hasImage ? "md:grid-cols-2" : ""
       }`}
     >
-      <ProjectImage
-        project={project}
-        className="aspect-[16/10] md:aspect-auto"
-        onZoom={onZoom}
-      />
+      {hasGallery ? (
+        <ProjectGallery
+          project={project}
+          onZoom={onZoom}
+          paused={galleryPaused}
+        />
+      ) : (
+        <ProjectImage
+          project={project}
+          className="aspect-[16/10] md:aspect-auto"
+          onZoom={onZoom}
+        />
+      )}
       <div className="p-6 md:p-8 flex flex-col">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3">
           <span className="font-mono text-xs text-yellow_primary">
@@ -311,7 +486,11 @@ function FeaturedProject({ project, onZoom }) {
               <span className="text-yellow_primary/70">{"//"}</span>{" "}
               {t("work.highlights")}
             </p>
-            <HighlightList items={project.highlights} visible={3} />
+            <HighlightList
+              items={project.highlights}
+              visible={3}
+              mobileVisible={2}
+            />
           </div>
         )}
 
@@ -378,8 +557,12 @@ function ProjectCard({ project, onZoom }) {
 function Project() {
   const { t } = useLang();
   const [activeGroup, setActiveGroup] = useState("enterprise");
-  // Projet dont l'image est affichee en plein ecran.
+  // Image affichee en plein ecran : { project, index } ou null.
   const [zoomed, setZoomed] = useState(null);
+  const zoomOn = (project) =>
+    getSlides(project).length > 0
+      ? (index) => setZoomed({ project, index })
+      : undefined;
 
   const { featured, rest } = useMemo(() => {
     const inGroup = projects.filter((p) => p.group === activeGroup);
@@ -429,7 +612,8 @@ function Project() {
         <FeaturedProject
           key={featured.id}
           project={featured}
-          onZoom={featured.image ? () => setZoomed(featured) : undefined}
+          onZoom={zoomOn(featured)}
+          galleryPaused={zoomed !== null}
         />
       )}
 
@@ -444,7 +628,7 @@ function Project() {
           <ProjectCard
             key={project.id}
             project={project}
-            onZoom={project.image ? () => setZoomed(project) : undefined}
+            onZoom={zoomOn(project)}
           />
         ))}
       </motion.div>
@@ -456,7 +640,11 @@ function Project() {
         </p>
       )}
 
-      <Lightbox project={zoomed} onClose={() => setZoomed(null)} />
+      <Lightbox
+        zoom={zoomed}
+        onNavigate={(index) => setZoomed((z) => ({ ...z, index }))}
+        onClose={() => setZoomed(null)}
+      />
     </Section>
   );
 }

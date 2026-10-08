@@ -108,6 +108,9 @@ export const translations = {
   "work.less": { en: "Show less", fr: "Réduire" },
   "work.zoom": { en: "enlarge", fr: "agrandir" },
   "work.close": { en: "Close", fr: "Fermer" },
+  "work.prev": { en: "Previous image", fr: "Image précédente" },
+  "work.next": { en: "Next image", fr: "Image suivante" },
+  "work.slide": { en: "Show image", fr: "Afficher l'image" },
 
   // Education
   "edu.eyebrow": { en: "education", fr: "formation" },
