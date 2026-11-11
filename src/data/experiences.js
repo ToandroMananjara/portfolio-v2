@@ -1,13 +1,13 @@
 export const experiences = [
   {
     id: "redsmite",
-    period: { en: "Mar 2026 — Present", fr: "Mars 2026 — Aujourd'hui" },
+    period: { en: "Mar — Aug 2026", fr: "Mars — Août 2026" },
     title: { en: "Full-Stack Developer & AI Engineer", fr: "Développeur Full-Stack & AI Engineer" },
     company: "Redsmite",
     location: "Madagascar",
     type: "Freelance",
     description: {
-      en: "Full-stack and AI solutions for multiple clients. Shipping AI-powered features in production (LLMs, voice / text-to-speech, automated workflows) with Next.js, TypeScript, FastAPI and Supabase. Involved in the architecture, deployment and maintenance of production solutions.",
+      en: "Full-stack and AI solutions for multiple clients. Shipped AI-powered features to production (LLMs, voice / text-to-speech, automated workflows) with Next.js, TypeScript, FastAPI and Supabase. Involved in the architecture, deployment and maintenance of production solutions.",
       fr: "Solutions full-stack et IA pour plusieurs clients. Mise en production de fonctionnalités IA (LLMs, synthèse vocale, workflows automatisés) avec Next.js, TypeScript, FastAPI et Supabase. Participation à l'architecture, au déploiement et à la maintenance de solutions en production.",
     },
     technologies: [

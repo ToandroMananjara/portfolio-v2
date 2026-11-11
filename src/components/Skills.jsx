@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import Section from "./ui/Section";
 import { expertise } from "../data/expertise";
 import { skillCategories } from "../data/skills";
@@ -7,6 +9,9 @@ import { useLang } from "../lib/i18n.jsx";
 
 function Skills() {
   const { t, pick } = useLang();
+  // Repliée par défaut : un client vient pour les services, la liste
+  // complète des technos reste accessible aux visiteurs techniques.
+  const [stackOpen, setStackOpen] = useState(false);
 
   return (
     <Section
@@ -55,49 +60,74 @@ function Skills() {
       </motion.div>
 
       <motion.div variants={fadeUp} className="mt-16 md:mt-20">
-        <p className="font-mono text-sm text-blue_primary mb-6">
-          <span className="text-yellow_primary">{"//"}</span> {t("skills.techStack")}
-        </p>
-        <div className="space-y-8">
-          {skillCategories.map((category) => (
-            <div
-              key={category.id}
-              className="grid md:grid-cols-[140px_1fr] gap-4 md:gap-6 items-start"
+        <button
+          type="button"
+          onClick={() => setStackOpen((open) => !open)}
+          aria-expanded={stackOpen}
+          aria-controls="tech-stack"
+          className="group inline-flex items-center gap-2 font-mono text-sm text-blue_primary hover:text-yellow_primary transition-colors"
+        >
+          <span className="text-yellow_primary">{"//"}</span>
+          {t(stackOpen ? "skills.hideStack" : "skills.showStack")}
+          <ChevronDown
+            className={`w-4 h-4 transition-transform duration-300 ${
+              stackOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+        <AnimatePresence initial={false}>
+          {stackOpen && (
+            <motion.div
+              id="tech-stack"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
             >
-              <h4 className="text-sm font-mono text-gray-400 uppercase tracking-wider md:pt-3">
-                {t(category.labelKey)}
-              </h4>
-              <ul className="flex flex-wrap gap-3">
-                {category.items.map((skill) => {
-                  const Icon = skill.icon;
-                  return (
-                    <li
-                      key={skill.name}
-                      className="group flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.02] border border-white/5 hover:border-blue_primary/40 hover:bg-white/[0.04] transition-colors"
-                    >
-                      {skill.src ? (
-                        <img
-                          src={skill.src}
-                          alt=""
-                          aria-hidden="true"
-                          className="w-5 h-5"
-                        />
-                      ) : Icon ? (
-                        <Icon
-                          className="w-5 h-5 text-blue_primary"
-                          aria-hidden="true"
-                        />
-                      ) : null}
-                      <span className="text-sm text-gray-300 group-hover:text-white_primary transition-colors">
-                        {skill.name}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-        </div>
+              <div className="space-y-8 pt-6">
+                {skillCategories.map((category) => (
+                  <div
+                    key={category.id}
+                    className="grid md:grid-cols-[140px_1fr] gap-4 md:gap-6 items-start"
+                  >
+                    <h4 className="text-sm font-mono text-gray-400 uppercase tracking-wider md:pt-3">
+                      {t(category.labelKey)}
+                    </h4>
+                    <ul className="flex flex-wrap gap-3">
+                      {category.items.map((skill) => {
+                        const Icon = skill.icon;
+                        return (
+                          <li
+                            key={skill.name}
+                            className="group flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.02] border border-white/5 hover:border-blue_primary/40 hover:bg-white/[0.04] transition-colors"
+                          >
+                            {skill.src ? (
+                              <img
+                                src={skill.src}
+                                alt=""
+                                aria-hidden="true"
+                                className="w-5 h-5"
+                              />
+                            ) : Icon ? (
+                              <Icon
+                                className="w-5 h-5 text-blue_primary"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            <span className="text-sm text-gray-300 group-hover:text-white_primary transition-colors">
+                              {skill.name}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </Section>
   );

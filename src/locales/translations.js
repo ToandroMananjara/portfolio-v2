@@ -1,4 +1,10 @@
 export const translations = {
+  // Titre de l'onglet
+  "meta.title": {
+    en: "Toandro Mananjara — Full Stack Developer & AI Engineer",
+    fr: "Toandro Mananjara — Développeur Full Stack & AI Engineer",
+  },
+
   // Nav
   "nav.home": { en: "home", fr: "accueil" },
   "nav.about": { en: "about", fr: "à-propos" },
@@ -13,50 +19,58 @@ export const translations = {
 
   // Hero
   "hero.role": { en: "Full Stack Developer & AI Engineer", fr: "Développeur Full Stack & AI Engineer" },
+  "hero.tagline": {
+    en: "Web and mobile apps, and AI agents, that automate what slows your business down.",
+    fr: "Des applications web et mobile, et des agents IA, pour automatiser ce qui ralentit votre activité.",
+  },
+  "hero.reassurance": { en: "I usually reply within 24 hours", fr: "Réponse en général sous 24 h" },
+  "hero.ctaContact": { en: "Discuss your project", fr: "Discuter de votre projet" },
+  "hero.ctaWork": { en: "See my work", fr: "Voir les projets" },
+  "hero.scroll": { en: "Scroll to the next section", fr: "Aller à la section suivante" },
 
   // About
   "about.eyebrow": { en: "about-me", fr: "à-propos" },
   "about.title": {
-    en: "A developer who cares about the details.",
-    fr: "Un développeur soucieux du détail.",
+    en: "Less manual work, more time for what matters.",
+    fr: "Moins de tâches manuelles, plus de temps utile.",
   },
   "about.subtitle": {
-    en: "I'm MAHASALOTRA Toandromananjara, a {age}-year-old full-stack developer from Antananarivo. I build modern web and mobile products with a strong eye for code quality, accessibility and craft.",
-    fr: "Je suis MAHASALOTRA Toandromananjara, développeur full-stack de {age} ans, basé à Antananarivo. Je construis des produits web et mobile modernes, avec un vrai souci du code, de l'accessibilité et du soin.",
+    en: "I'm MAHASALOTRA Toandromananjara, a full-stack developer and AI engineer based in Antananarivo. I take the heaviest parts of your operations — repetitive data entry, manual back-and-forth, scattered data — and turn them into clear web and mobile apps where AI handles the repetitive work.",
+    fr: "Je suis MAHASALOTRA Toandromananjara, développeur full-stack et AI engineer basé à Antananarivo. Je pars de ce qui alourdit votre activité — saisies répétitives, allers-retours manuels, données éparpillées — pour en faire des applications web et mobile claires, où l'IA prend en charge le travail répétitif.",
   },
-  "about.p1.before": { en: "I'm finishing my ", fr: "Je termine mon " },
+  "about.p1.before": {
+    en: "In companies and as a freelancer, I build products ",
+    fr: "En entreprise comme en freelance, je conçois des produits ",
+  },
   "about.p1.highlight": {
-    en: "M2 in Computer Science at the University of Antananarivo (MISA)",
-    fr: "M2 en Informatique à l'Université d'Antananarivo (MISA)",
+    en: "end to end, from design to deployment",
+    fr: "de bout en bout, de la conception au déploiement",
   },
   "about.p1.after": {
-    en: ", after earning my Bachelor's degree there.",
-    fr: ", après y avoir obtenu ma Licence.",
+    en: ": architecture, APIs, interfaces and production releases.",
+    fr: " : architecture, APIs, interfaces et mise en production.",
   },
   "about.p2": {
-    en: "I work across the stack — frontend, backend and mobile — and increasingly ship AI-powered features in production. With AI, the differentiator is no longer the framework you know but how you think: understanding the problem, picking the right trade-offs, and shipping something maintainable.",
-    fr: "Je travaille sur toute la stack — frontend, backend et mobile — et je livre de plus en plus de fonctionnalités IA en production. Avec l'IA, ce qui fait la différence n'est plus le framework qu'on maîtrise mais la façon de penser : comprendre le problème, choisir les bons compromis, livrer du code maintenable.",
-  },
-  "about.quote": {
-    en: "“Code is read more often than it is written — so I write it for the next person who has to maintain it.”",
-    fr: "« Le code est plus lu qu'il n'est écrit — alors je l'écris pour la prochaine personne qui devra le maintenir. »",
+    en: "I always start by understanding your business and where time gets lost. Only then comes the tech: a right-sized solution, shipped to production, that your team actually adopts and that you can keep evolving.",
+    fr: "Je commence toujours par comprendre votre métier et ce qui vous fait perdre du temps. La technique vient ensuite : une solution à la bonne taille, mise en production, que vos équipes adoptent vraiment et que vous pouvez faire évoluer.",
   },
   "about.stat.years": { en: "Years coding", fr: "Années de code" },
   "about.stat.projects": { en: "Projects shipped", fr: "Projets livrés" },
-  "about.stat.misa": { en: "MISA — Antananarivo", fr: "MISA — Antananarivo" },
+  "about.stat.roles": { en: "Professional roles", fr: "Expériences pro" },
   "about.cv": { en: "Download CV", fr: "Télécharger le CV" },
 
   // Skills / Expertise
   "skills.eyebrow": { en: "expertise", fr: "expertise" },
   "skills.title": {
-    en: "What I do, and how.",
-    fr: "Ce que je fais, et comment.",
+    en: "What I can build for you.",
+    fr: "Ce que je peux faire pour vous.",
   },
   "skills.subtitle": {
-    en: "I work across the stack with a focus on shipping maintainable products — and increasingly, AI-powered ones. Below are the areas I focus on day-to-day, and the tools I reach for.",
-    fr: "Je travaille sur toute la stack, en livrant des produits maintenables — et de plus en plus, dopés à l'IA. Voici mes domaines au quotidien, et les outils que j'utilise.",
+    en: "Four ways to save time and simplify how your business runs — each one already delivered in real projects.",
+    fr: "Quatre façons de gagner du temps et de simplifier votre activité — chacune déjà livrée sur de vrais projets.",
   },
-  "skills.techStack": { en: "tech-stack", fr: "tech-stack" },
+  "skills.showStack": { en: "Show the full tech stack", fr: "Voir toute la stack technique" },
+  "skills.hideStack": { en: "Hide the tech stack", fr: "Masquer la stack technique" },
   "skills.cat.frontend": { en: "Frontend", fr: "Frontend" },
   "skills.cat.backend": { en: "Backend", fr: "Backend" },
   "skills.cat.databases": { en: "Databases & BaaS", fr: "Bases de données" },
@@ -122,13 +136,15 @@ export const translations = {
   // Footer
   "footer.eyebrow": { en: "contact", fr: "contact" },
   "footer.title": {
-    en: "Have something to build?",
-    fr: "Un projet à construire ?",
+    en: "Let's talk about your project.",
+    fr: "Parlons de votre projet.",
   },
   "footer.subtitle": {
-    en: "I'm open to freelance work and collaborations. Drop a message — I usually reply within a day.",
-    fr: "Disponible pour des missions freelance et collaborations. Écris-moi — je réponds en général sous 24h.",
+    en: "Tell me what slows your team down or what you want to build. I usually reply within 24 hours.",
+    fr: "Dites-moi ce qui ralentit votre activité ou ce que vous voulez construire. Je vous réponds en général sous 24 h.",
   },
+  "footer.cta": { en: "Contact me", fr: "Contactez-moi" },
+  "footer.mailSubject": { en: "New project", fr: "Nouveau projet" },
   "footer.sitemap": { en: "Sitemap", fr: "Plan du site" },
   "footer.connect": { en: "Connect", fr: "Réseaux" },
   "footer.rights": {

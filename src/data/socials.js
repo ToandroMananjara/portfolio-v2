@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Facebook } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export const socials = [
   {
@@ -12,12 +12,6 @@ export const socials = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/toandromananjara-mahasalotra-44b289280",
     icon: Linkedin,
-  },
-  {
-    id: "facebook",
-    label: "Facebook",
-    href: "https://www.facebook.com/anwar.mananjara",
-    icon: Facebook,
   },
   {
     id: "email",
