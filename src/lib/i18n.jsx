@@ -17,6 +17,9 @@ export function LanguageProvider({ children }) {
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;
+    // Titre de l'onglet dans la langue choisie (index.html porte la version
+    // française, celle que lisent les moteurs et les aperçus de liens).
+    document.title = translations["meta.title"][lang];
   }, [lang]);
 
   const value = useMemo(() => {

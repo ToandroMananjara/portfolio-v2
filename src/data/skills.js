@@ -1,12 +1,9 @@
-import html from "../assets/skills/HTML.svg";
-import css from "../assets/skills/CSS.svg";
 import javascript from "../assets/skills/JavaScript.svg";
 import typescript from "../assets/skills/TypeScript.svg";
 import react from "../assets/skills/React-Dark.svg";
 import nextjs from "../assets/skills/NextJS.svg";
 import reactNative from "../assets/skills/ReactNative.svg";
 import tailwind from "../assets/skills/TailwindCSS.svg";
-import bootstrap from "../assets/skills/Bootstrap.svg";
 import materialui from "../assets/skills/MaterialUI.svg";
 import nodejs from "../assets/skills/NodeJS.svg";
 import express from "../assets/skills/ExpressJs.svg";
@@ -15,10 +12,6 @@ import mysql from "../assets/skills/MySQL-Dark.svg";
 import postgresql from "../assets/skills/PostgreSQL.svg";
 import mongodb from "../assets/skills/MongoDB.svg";
 import python from "../assets/skills/Python.svg";
-import java from "../assets/skills/Java.svg";
-import c from "../assets/skills/C.svg";
-import cpp from "../assets/skills/CPP.svg";
-import php from "../assets/skills/PHP-Dark.svg";
 import git from "../assets/skills/Git.svg";
 import github from "../assets/skills/Github.svg";
 import docker from "../assets/skills/Docker.svg";
@@ -81,9 +74,6 @@ export const skillCategories = [
       { name: "Zod", src: zod },
       { name: "Tailwind", src: tailwind },
       { name: "Material UI", src: materialui },
-      { name: "Bootstrap", src: bootstrap },
-      { name: "HTML5", src: html },
-      { name: "CSS3", src: css },
     ],
   },
   {
@@ -118,7 +108,7 @@ export const skillCategories = [
     labelKey: "skills.cat.ai",
     items: [
       { name: "Generative AI", icon: Sparkles },
-      { name: "AI Agentic", icon: Bot },
+      { name: "AI Agents", icon: Bot },
       { name: "LLM APIs", icon: Braces },
       { name: "Prompt Engineering", icon: MessageSquare },
       { name: "LLM Red Teaming", icon: ShieldAlert },
@@ -151,10 +141,6 @@ export const skillCategories = [
       { name: "TypeScript", src: typescript },
       { name: "JavaScript", src: javascript },
       { name: "Python", src: python },
-      { name: "Java", src: java },
-      { name: "PHP", src: php },
-      { name: "C", src: c },
-      { name: "C++", src: cpp },
     ],
   },
   {

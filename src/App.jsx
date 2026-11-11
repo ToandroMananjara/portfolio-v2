@@ -19,8 +19,10 @@ function App() {
         <Hero />
         <About />
         <Skills />
-        <Experience />
+        {/* Projets avant Expérience : pour un client, les réalisations sont
+            la preuve la plus parlante. */}
         <Project />
+        <Experience />
         <Education />
       </main>
       <Footer />

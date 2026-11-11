@@ -5,13 +5,23 @@ import { navItems } from "../data/navigation";
 import { fadeUp, inViewProps, stagger } from "../lib/motion";
 import { useLang } from "../lib/i18n.jsx";
 
+const EMAIL = "mahasalotra@gmail.com";
+
 function Footer() {
   const { t } = useLang();
   const year = new Date().getFullYear();
-  const quickLinks = navItems.filter((i) => i.href.startsWith("#"));
+  // « contact » pointe sur cette section même : inutile dans le plan du site.
+  const quickLinks = navItems.filter(
+    (i) => i.href.startsWith("#") && i.id !== "contact"
+  );
+  // Objet pré-rempli : le client n'a plus qu'à décrire son besoin.
+  const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(
+    t("footer.mailSubject")
+  )}`;
 
   return (
     <motion.footer
+      id="contact"
       variants={stagger(0.05, 0.08)}
       {...inViewProps}
       className="relative border-t border-white/5 bg-white/[0.015]"
@@ -29,11 +39,11 @@ function Footer() {
               {t("footer.subtitle")}
             </p>
             <a
-              href="mailto:mahasalotra@gmail.com"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-blue_primary text-blue_primary hover:bg-blue_primary hover:text-gray_primary transition-colors duration-300 font-medium"
+              href={mailto}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-yellow_primary text-gray_primary font-semibold hover:bg-yellow_primary/90 transition-colors duration-300"
             >
               <Mail className="w-4 h-4" />
-              mahasalotra@gmail.com
+              {t("footer.cta")}
             </a>
           </motion.div>
 

@@ -17,7 +17,7 @@ function Experience() {
   return (
     <Section
       id="experience"
-      index="03"
+      index="04"
       eyebrow={t("exp.eyebrow")}
       title={t("exp.title")}
       subtitle={t("exp.subtitle")}

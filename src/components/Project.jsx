@@ -576,7 +576,7 @@ function Project() {
   return (
     <Section
       id="work"
-      index="04"
+      index="03"
       eyebrow={t("work.eyebrow")}
       title={t("work.title")}
       subtitle={t("work.subtitle")}

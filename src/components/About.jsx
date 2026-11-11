@@ -5,17 +5,16 @@ import myCv from "../assets/data/CV_Toandro.pdf";
 import Section from "./ui/Section";
 import { fadeUp } from "../lib/motion";
 import { useLang } from "../lib/i18n.jsx";
-
-const calculateAge = (birthYear) => new Date().getFullYear() - birthYear;
+import { experiences } from "../data/experiences";
 
 function About() {
   const { t } = useLang();
-  const age = calculateAge(2001);
 
   const stats = [
     { value: "4+", label: t("about.stat.years") },
     { value: "10+", label: t("about.stat.projects") },
-    { value: "M2", label: t("about.stat.misa") },
+    // Calculé depuis les données : reste juste quand une expérience est ajoutée.
+    { value: String(experiences.length), label: t("about.stat.roles") },
   ];
 
   return (
@@ -24,7 +23,7 @@ function About() {
       index="01"
       eyebrow={t("about.eyebrow")}
       title={t("about.title")}
-      subtitle={t("about.subtitle").replace("{age}", age)}
+      subtitle={t("about.subtitle")}
     >
       <div className="grid md:grid-cols-12 gap-10 items-center">
         <motion.div
@@ -53,9 +52,6 @@ function About() {
               {t("about.p1.after")}
             </p>
             <p>{t("about.p2")}</p>
-            <p className="text-gray-400 italic border-l-2 border-yellow_primary/60 pl-4">
-              {t("about.quote")}
-            </p>
           </div>
 
           <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-2">
